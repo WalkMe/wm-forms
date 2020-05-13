@@ -1,0 +1,86 @@
+.icon {
+  --articleIcon: url("../images/icons/Article.svg");
+  --videoIcon: url("../images/icons/Video.svg");
+  --WalkthruIcon: url("../images/icons/Walkthru.svg");
+
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 20px;
+
+  &.arrow-left {
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 16px;
+      height: 1.3px;
+      background-color: currentColor;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      left: 1px;
+      top: 5px;
+      width: 10px;
+      height: 10px;
+      border-top: solid 1.3px currentColor;
+      border-right: solid 1.3px currentColor;
+      -webkit-transform: rotate(-135deg);
+      transform: rotate(-135deg);
+    }
+  }
+
+  &.check {
+    &:before {
+      content: "";
+      color: #000;
+      position: absolute;
+      margin-left: 3px;
+      margin-top: 4px;
+      width: 10px;
+      height: 4px;
+      border-bottom: solid 1px var(--success);
+      border-left: solid 1px var(--success);
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      top: -3px;
+      left: 0;
+    }
+  }
+
+  &.article {
+    background-image: var(--articleIcon);
+    background-repeat: no-repeat;
+  }
+
+  &.walk-thru {
+    background-image: var(--WalkthruIcon);
+    background-repeat: no-repeat;
+  }
+
+  &.video {
+    background-image: var(--videoIcon);
+    background-repeat: no-repeat;
+  }
+}
+
+.triangleRight(@color: currentColor, @borderWidth: 1.5px, @size: 4.5px) {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: @size;
+  height: @size;
+  border-bottom: solid @borderWidth @color;
+  border-right: solid @borderWidth @color;
+  -webkit-transform: rotate(-45deg) translateY(-50%);
+  transform: rotate(-45deg) translateY(-50%);
+}
+
+.triangleLeft(@color: currentColor, @borderWidth: 1.5px, @size: 4.5px) {
+  .triangleRight(@color, @borderWidth,  @size);
+  transform: rotate(135deg) translateY(-50%);
+}

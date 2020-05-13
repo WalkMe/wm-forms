@@ -1,0 +1,53 @@
+.progress-bar-wrapper {
+  position: relative;
+
+  .progress-bar-info {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    .title {
+      .fRegular();
+      color: var(--neutral500);
+      margin-bottom: 10px;
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
+
+    .percentages {
+      .fLight();
+      color: var(--neutral300);
+      margin-bottom: 5px;
+      margin-left: auto;
+      font-size: 12px;
+    }
+  }
+
+  .progress-bar {
+    height: 10px;
+    overflow: hidden;
+    position: relative;
+    background: var(--primary100);
+
+    .value {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 10px;
+      background: var(--primary);
+      width: 0;
+      -webkit-transition: all 800ms cubic-bezier(0.68, 0, 0.265, 1);
+      -webkit-transition: all 800ms cubic-bezier(0.68, -0.55, 0.265, 1.2);
+      -moz-transition: all 800ms cubic-bezier(0.68, -0.55, 0.265, 1.2);
+      -o-transition: all 800ms cubic-bezier(0.68, -0.55, 0.265, 1.2);
+      transition: all 800ms cubic-bezier(0.68, -0.55, 0.265, 1.2);
+
+      -webkit-transition-timing-function: cubic-bezier(0.68, 0, 0.265, 1);
+      -webkit-transition-timing-function: cubic-bezier(0.68, -0.2, 0.265, 1.2);
+      -moz-transition-timing-function: cubic-bezier(0.68, -0.2, 0.265, 1.2);
+      -o-transition-timing-function: cubic-bezier(0.68, -0.2, 0.265, 1.2);
+      transition-timing-function: cubic-bezier(0.68, -0.2, 0.265, 1.2);
+    }
+  }
+}

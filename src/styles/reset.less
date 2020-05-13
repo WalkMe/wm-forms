@@ -1,0 +1,157 @@
+body,
+html {
+  .fRegular();
+  color: var(--neutral500);
+  margin: 0;
+  position: relative;
+  font-size: 12px;
+  line-height: 1.2 !important;
+  height: 100%;
+  overflow: hidden;
+  background-color: #373737;
+
+  * {
+    .boxSizing();
+  }
+
+  /*scroll-bar reset*/
+  /* width */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    width: 5px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollBarBG);
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollBarBG);
+  }
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: 100%;
+  max-width: var(--wrapperMaxWidth);
+  padding: 0 0 0 10px;
+  position: relative;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: normal;
+}
+
+h1 {
+  .fBold();
+  font-size: 50px;
+  line-height: 1.2 !important;
+}
+
+h2 {
+  .fBold();
+  font-size: 50px;
+  line-height: 1.2 !important;
+}
+
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+button,
+button:active,
+button:focus,
+button:hover,
+.btn,
+.btn:active,
+.btn:focus,
+.btn:hover {
+  outline: none !important;
+}
+a,
+a:hover,
+a:active,
+a:visited,
+a:focus {
+  text-decoration: none;
+}
+:hover,
+:active,
+:visited,
+:focus {
+  outline: none !important;
+}
+a[href^="tel"] {
+  color: inherit;
+  text-decoration: none;
+  border: none !important;
+}
+a {
+  cursor: pointer;
+  text-decoration: none;
+  .transition();
+}
+a img {
+  border: none;
+}
+img {
+  max-width: 100%;
+}
+:invalid {
+  outline: none;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+}
+:-moz-ui-invalid {
+  outline: none;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+}
+input,
+textarea,
+button {
+  outline: none;
+}
+form {
+  padding: 0;
+  margin: 0;
+}
+header,
+section,
+footer,
+nav,
+aside,
+article {
+  display: block;
+}
+
+hr {
+  margin: 15px auto;
+
+  &.separator {
+    border: 1px solid var(--borderLightGray);
+    border-width: 1px 0 0 0;
+  }
+}

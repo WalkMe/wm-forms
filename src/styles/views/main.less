@@ -1,0 +1,17 @@
+.main {
+  width: var(--appWrapperWidth);
+  display: flex;
+  flex-direction: column;
+
+  transform: translateX(0);
+  -webkit-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  -moz-transition: all 300ms;
+  -o-transition: all 300ms;
+  transition: all 300ms;
+
+  &.sidebar-open {
+    width: var(--wrapperMaxWidth);
+    transform: translateX(150px);
+  }
+}

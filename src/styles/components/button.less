@@ -1,0 +1,81 @@
+:root {
+  --default: var(--primary);
+  --currentColor: var(--default);
+}
+
+.btn {
+  position: relative;
+  background-color: var(--primary100);
+  border: 1px solid var(--neutral900);
+  color: var(--neutral900);
+  border-radius: 15px;
+  height: 28px;
+  min-width: 85px;
+  width: fit-content;
+  font-size: 11px;
+  padding: 0 7px;
+  cursor: pointer;
+  transition: border 0.3s, background-color 0.3s, color 0.3s;
+
+  &.no-border {
+    border: none;
+    border-radius: 0;
+    max-width: fit-content;
+    background-color: transparent;
+
+    &:hover {
+      border: 0;
+      background-color: transparent;
+    }
+  }
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    &:link,
+    &:visited,
+    &:hover,
+    &:active {
+      color: currentColor;
+      transition: none;
+    }
+  }
+
+  &.default {
+    background-color: var(--currentColor);
+    border: 1px solid var(--primary);
+    color: var(--white);
+  }
+
+  &.completed {
+    background-color: var(--white);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+
+    &:hover {
+      color: var(--white);
+    }
+  }
+
+  &:hover {
+    border: 1px solid var(--primaryHover);
+    background-color: var(--primaryHover);
+  }
+
+  .btn-label {
+    line-height: 11px;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -2px;
+
+    .icon {
+      margin-right: 10px;
+      color: var(--primary);
+    }
+  }
+}

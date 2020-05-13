@@ -1,0 +1,47 @@
+{
+  "name": "wm-forms",
+  "version": "1.0.0",
+  "description": "wm-forms",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo Tests TBD",
+    "start": "webpack-dev-server --open",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WalkMe/wm-forms"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WalkMe/wm-forms/issues"
+  },
+  "homepage": "https://github.com/WalkMe/wm-forms#readme",
+  "dependencies": {
+    "@types/react-router-dom": "^5.1.5",
+    "@walkme/sdk": "^1.0.22-5",
+    "file-loader": "^6.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.3",
+    "html-webpack-plugin": "^4.2.0",
+    "less": "^3.11.1",
+    "less-loader": "^6.0.0",
+    "style-loader": "^1.2.0",
+    "typescript": "^3.8.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  }
+}

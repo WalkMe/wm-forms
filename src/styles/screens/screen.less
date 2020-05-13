@@ -1,0 +1,67 @@
+.screen {
+  height: 580px;
+  max-width: var(--wrapperMaxWidth);
+  overflow-y: hidden;
+  padding-right: 10px;
+  padding-top: 15px;
+  margin: 0 auto;
+  width: 100%;
+
+  @media @desktopOnly {
+    &:hover {
+      overflow-y: scroll;
+    }
+  }
+
+  @media @tabletOnly {
+    overflow-y: scroll;
+  }
+
+  &-title {
+    .fSecondaryMedium();
+    font-size: 18px;
+    color: var(--neutral900);
+    margin-bottom: 10px;
+  }
+
+  .animated-element {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    .transition();
+    opacity: 0;
+    -webkit-transition: all 500ms cubic-bezier(0.68, 0, 0.265, 1);
+    -webkit-transition: all 500ms cubic-bezier(0.68, -0.55, 0.265, 1.2);
+    -moz-transition: all 500ms cubic-bezier(0.68, -0.55, 0.265, 1.2);
+    -o-transition: all 500ms cubic-bezier(0.68, -0.55, 0.265, 1.2);
+    transition: all 500ms cubic-bezier(0.68, -0.55, 0.265, 1.2);
+    -webkit-transition-timing-function: cubic-bezier(0.68, 0, 0.265, 1);
+    -webkit-transition-timing-function: cubic-bezier(0.68, -0.2, 0.265, 1.2);
+    -moz-transition-timing-function: cubic-bezier(0.68, -0.2, 0.265, 1.2);
+    -o-transition-timing-function: cubic-bezier(0.68, -0.2, 0.265, 1.2);
+    transition-timing-function: cubic-bezier(0.68, -0.2, 0.265, 1.2);
+
+    &.fadeInUp {
+      animation: fadeInUp 0.3s linear both;
+    }
+  }
+}
+
+.animated-screen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  .transition();
+
+  &.fadeInUp {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}

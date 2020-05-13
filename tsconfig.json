@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "entry": "./src/index.ts",
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true
+  }
+}

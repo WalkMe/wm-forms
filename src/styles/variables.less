@@ -1,0 +1,68 @@
+html {
+  --appWrapperWidth: 1200px;
+  --wrapperMaxWidth: 900px;
+  --sidebarWidth: 250px;
+  --sidebarGap: 20px;
+  --appMinHeight: 532px;
+  --webAppHeight: 610px;
+  --scrolledContentMaxWidth: calc(var(--wrapperMaxWidth) - 15px);
+
+  // background color of the app
+  --white: #fff;
+  --scrollBarBG: #d1d7da;
+  --elementShadow: 0 2px 1px rgba(0, 0, 0, 0.05);
+
+  // should match logo color, used for hovered and active icons, progress bar,
+  // active tab, active tab underline, when search input is focused
+  --primary: #348bd8;
+  --primaryHover: #00aaff;
+
+  // used as category background when hovered and unfilled progress bar background
+  --primary100: #f4fafd;
+
+  // used in unfocused icons, screen headlines, search input text
+  --secondary500: #aac4d1;
+
+  // background of search input and tabs panel
+  --secondary100: #f9fbfc;
+
+  // used in titles, main text content
+  --neutral900: #424242;
+
+  // regular text color, item descriptions, crossed off tasks
+  --neutral500: #8d8d8d;
+  --neutral300: #97adb8;
+
+  // a small dot next to notifications icon
+  --warning: #ffc341;
+
+  // for checked icon
+  --success: #a6e41f;
+
+  // tab panel top and bottom border
+  --border500: rgba(170, 196, 209, 0.3);
+
+  --iconBGLight: #adc4d2;
+
+  // used for borders that seperate categories from other items
+  --border100: rgba(170, 196, 209, 0.2);
+  // used for dropdown
+  --borderLightGray: #e1e6e9;
+
+  // logo
+  --logoPath: url("../images/logo-2.svg");
+  --logoWidth: 76px;
+  --logoHeight: 74px;
+}
+
+// images
+@imagesPath: "../../images/";
+
+// Responsive Variables
+@tinyOnly: ~"screen and (max-width:580px)";
+@mobileOnly: ~"screen and (max-width:667px)";
+@tabletOnly: ~"screen and (max-width:799px)";
+@mobileToDesktop: ~"screen and (min-width:668px) and (max-width:800px)";
+@tabletToDesktop: ~"screen and (min-width:799px)";
+@desktopOnly: ~"screen and (min-width:800px)";
+@noSidebar: ~"screen and (max-width:1200px)";
