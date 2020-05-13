@@ -1,7 +1,7 @@
 {
-  "name": "wm-forms",
+  "name": "walkme-ui-template",
   "version": "1.0.0",
-  "description": "wm-forms",
+  "description": "Walkme UI template",
   "main": "index.ts",
   "scripts": {
     "test": "echo Tests TBD",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WalkMe/wm-forms"
+    "url": "git+https://github.com/WalkMe/wm-ui-template.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/WalkMe/wm-forms/issues"
+    "url": "https://github.com/WalkMe/wm-ui-template/issues"
   },
-  "homepage": "https://github.com/WalkMe/wm-forms#readme",
+  "homepage": "https://github.com/WalkMe/wm-ui-template#readme",
   "dependencies": {
     "@types/react-router-dom": "^5.1.5",
     "@walkme/sdk": "^1.0.22-5",

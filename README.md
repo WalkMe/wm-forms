@@ -1,6 +1,6 @@
-# wm-forms
+# walkme-forms
 
-This project based [wm-ui-template](https://github.com/WalkMe/wm-ui-template).
+This project based on [wm-ui-template](https://github.com/WalkMe/wm-ui-template)
 A basic react typescript setup with webpack and babel.
 
 ## Available Scripts
