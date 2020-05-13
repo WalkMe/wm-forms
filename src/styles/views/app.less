@@ -1,7 +1,7 @@
 .app {
   position: relative;
   width: 100%;
-  height: var(--webAppHeight);
+  min-height: var(--appMinHeight);
   background: var(--white);
   max-width: 100%;
   margin: 0 auto;
@@ -25,19 +25,10 @@
 
   &.wrapper {
     width: 100%;
-    max-width: var(--appWrapperWidth);
+    max-width: var(--appWidth);
     display: flex;
     justify-content: center;
     overflow: hidden;
     padding: 0;
-
-    @media @noSidebar {
-      max-width: var(--appWrapperWidth);
-      padding: 0 0 0 10px;
-
-      .sidebar {
-        display: none;
-      }
-    }
   }
 }

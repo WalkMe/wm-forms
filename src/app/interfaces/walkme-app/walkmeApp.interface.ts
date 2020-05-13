@@ -1,9 +1,11 @@
-import { WalkMeApp, ISdk } from "@walkme/sdk/dist/interfaces/sdk";
+import { ISdk } from "@walkme/sdk/dist/interfaces/sdk";
+import { IFormBE } from "../form/form.interface";
 
 export interface IAppState {
   initiated: boolean;
   debugError: string;
   platformType: string;
+  form: IFormBE;
 }
 
 export interface sidebarOptions {

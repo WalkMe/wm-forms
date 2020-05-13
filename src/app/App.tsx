@@ -1,10 +1,10 @@
 import React, { useEffect, createContext, useState } from "react";
-import { HashRouter } from "react-router-dom";
-import walkme, { ISdk, WalkMeApp } from "@walkme/sdk";
+import { HashRouter, Switch, Route } from "react-router-dom";
+import walkme, { ISdk } from "@walkme/sdk";
 
 import {
-  tmPlatformType,
   PLATFORM_ERROR,
+  TEACHME_ERROR,
   defaultInitialAppState,
 } from "./consts/app";
 import { config } from "./config";
@@ -21,9 +21,11 @@ import {
 import useAppManager from "./hooks/useAppManager";
 import InformationScreen from "./layout/screens/information-screen/InformationScreen";
 import Debug from "./layout/debug/Debug";
-import Main from "./layout/main/Main";
 
 import "../styles/index.less";
+import WelcomeScreen from "./layout/screens/welcome-screen/WelcomeScreen";
+import SummaryScreen from "./layout/screens/summary-screen/SummaryScreen";
+import FormScreen from "./layout/screens/form-screen/FormScreen";
 
 export const AppContext = createContext<IAppContext | null>(null);
 
@@ -71,11 +73,12 @@ export default function App() {
       let timeout;
       let informationScreenData = informationScreen as IInformationScreenData;
       const platformTypeParam = getUrlParamValueByName("platform");
+      const teachmeParam = getUrlParamValueByName("teachme");
 
-      if (!platformTypeParam) {
+      if (!platformTypeParam || !teachmeParam) {
         informationScreenData = {
           type: InformationScreenType.NoConnection,
-          error: PLATFORM_ERROR,
+          error: !platformTypeParam ? PLATFORM_ERROR : TEACHME_ERROR,
         };
         setInformationScreen(informationScreenData);
       } else {
@@ -87,6 +90,20 @@ export default function App() {
           if (walkme) {
             setWalkmeSDK(walkme);
           }
+
+          const teachme = await walkme.apps.getApp("teachme");
+
+          // TODO: should change
+          const tmCourses = await teachme.getContent();
+          const currentCourse = tmCourses.find((course: any, index: number) => {
+            if (index === 0) {
+              return course;
+            }
+          });
+
+          const { quiz } = currentCourse;
+
+          console.log("quiz ", quiz);
 
           // Cleanups before set state
           timeout = setTimeout(() => {
@@ -100,6 +117,7 @@ export default function App() {
             ...appState,
             initiated: true,
             platformType: platformTypeParam,
+            form: quiz,
           });
         } catch (err) {
           console.error(err);
@@ -122,7 +140,11 @@ export default function App() {
             }}
           >
             <Debug />
-            <Main />
+            <Switch>
+              <Route exact path="/" component={WelcomeScreen} />
+              <Route path="/form/:id" component={FormScreen} />
+              <Route path="/summary/:passmark?" component={SummaryScreen} />
+            </Switch>
           </AppContext.Provider>
         )}
       </div>
