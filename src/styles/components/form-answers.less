@@ -22,6 +22,12 @@
     cursor: pointer;
   }
 
+  input[type="radio"]:disabled {
+    + label {
+      cursor: auto;
+    }
+  }
+
   input[type="radio"]:checked {
     + label {
       border: 1px solid var(--primary);

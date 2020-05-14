@@ -26,6 +26,7 @@ export default function Form(props: IFormProps) {
         if (submitted) {
           resultsClass = answer.isCorrect ? "correct" : "wrong";
         }
+
         return (
           <li className="option" key={`answer-${index}`}>
             <input
@@ -34,10 +35,9 @@ export default function Form(props: IFormProps) {
               value={answer.text}
               name={`question-${currentId}`}
               className={resultsClass}
+              disabled={submitted}
               onChange={() => {
-                if (!submitted) {
-                  handleChange(index);
-                }
+                handleChange(index);
               }}
             />
             <label htmlFor={optionId}>{answer.text}</label>
