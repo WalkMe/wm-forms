@@ -18,7 +18,8 @@ export default function RouteButton({
   iconType?: IconType;
   className?: string;
 }) {
-  const icon = useIconManager(iconType);
+  const { getIconByType } = useIconManager();
+  const icon = getIconByType(iconType);
 
   return (
     <Button className={className} id={id} tmButtonType={buttonType}>
