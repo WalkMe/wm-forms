@@ -1,5 +1,6 @@
 .header {
   --welcomeBG: url("../../images/quiz/quiz.jpg");
+  --formBG: url("../../images/quiz/quiz.jpg");
 
   width: 100%;
   position: relative;
@@ -7,6 +8,14 @@
 
   &.welcome,
   &.summary {
+    height: 200px;
+    background-position: center;
+    background-image: var(--welcomeBG);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  &.form {
     height: 200px;
     background-position: center;
     background-image: var(--welcomeBG);

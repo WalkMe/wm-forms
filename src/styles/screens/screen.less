@@ -1,4 +1,5 @@
 .screen {
+  position: relative;
   min-height: var(--appMinHeight);
   max-width: var(--appWidth);
   margin: 0 auto;
@@ -18,7 +19,22 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 55px 20px;
+    margin-top: 50px;
+
+    > * {
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      max-width: var(--screenContentMaxWidth);
+    }
+  }
+
+  .progress-bar-wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 
   .animated-element {
