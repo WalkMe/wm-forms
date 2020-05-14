@@ -4,9 +4,13 @@ import MasterScreen from "../master-screen/MasterScreen";
 import { RouteComponentProps } from "react-router-dom";
 import { AppContext } from "../../../App";
 import Button, { ButtonType } from "../../../components/buttons/Button";
-import { IFormQuestionBE } from "../../../interfaces/form/form.interface";
+import {
+  IFormQuestionBE,
+  IFormAnswerBE,
+} from "../../../interfaces/form/form.interface";
 import FormHeader from "./FormHeader";
 import FormFooter from "./FormFooter";
+import Form from "./Form";
 
 type FormParams = { id: string };
 
@@ -43,9 +47,14 @@ export default function FormScreen(props?: IFormScreenProps) {
     console.log("handleSubmitted ");
   };
 
+  const handleSelected = (selected: IFormAnswerBE) => {
+    console.log("handleSelected selected ", selected);
+  };
+
   return (
     <MasterScreen type={ScreenType.Form} header={<FormHeader {...form} />}>
       <>
+        <Form {...form} onSelected={handleSelected} />
         <FormFooter onSubmitted={handleSubmitted} />
       </>
     </MasterScreen>

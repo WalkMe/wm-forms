@@ -1,0 +1,29 @@
+.form-answers {
+  margin-bottom: 50px;
+
+  .option {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    display: flex;
+    margin-bottom: 20px;
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      opacity: 0;
+    }
+  }
+
+  label {
+    border: 1px solid var(--borderLightGray);
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+  }
+
+  input[type="radio"]:checked {
+    + label {
+      border: 1px solid var(--primary);
+    }
+  }
+}
