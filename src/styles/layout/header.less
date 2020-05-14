@@ -16,11 +16,26 @@
   }
 
   &.form {
-    height: 200px;
-    background-position: center;
-    background-image: var(--welcomeBG);
-    background-size: cover;
-    background-repeat: no-repeat;
+    height: 130px;
+    background-color: var(--secondary500);
+    // background-position: center;
+    // background-image: var(--welcomeBG);
+    // background-size: cover;
+    // background-repeat: no-repeat;
+  }
+
+  &-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .title {
+      text-align: center;
+      .fSecondaryRegular();
+      font-size: 25px;
+      color: var(--neutral900);
+    }
   }
 
   .btn.back-btn {
