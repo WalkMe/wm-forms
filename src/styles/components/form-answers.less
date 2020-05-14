@@ -19,11 +19,24 @@
     padding: 10px;
     width: 100%;
     border-radius: 5px;
+    cursor: pointer;
   }
 
   input[type="radio"]:checked {
     + label {
       border: 1px solid var(--primary);
+    }
+
+    &.correct {
+      + label {
+        border: 1px solid var(--success);
+      }
+    }
+
+    &.wrong {
+      + label {
+        border: 1px solid var(--error);
+      }
     }
   }
 }

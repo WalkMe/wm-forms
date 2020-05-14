@@ -1,4 +1,4 @@
-import React, { useContext, createContext, useState } from "react";
+import React, { useContext, createContext, useState, useEffect } from "react";
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import MasterScreen from "../master-screen/MasterScreen";
 import { RouteComponentProps } from "react-router-dom";
@@ -29,7 +29,7 @@ export default function FormScreen(props?: IFormScreenProps) {
   const { appState } = useContext(AppContext);
   const { questions } = appState.form;
   const { match } = props;
-  const [answer, setAnswer] = useState(null);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [submitted, setSubmitted] = useState(false);
 
   const currentId = parseInt(match.params.id);
@@ -44,18 +44,27 @@ export default function FormScreen(props?: IFormScreenProps) {
   };
 
   const handleSubmitted = () => {
-    console.log("handleSubmitted ");
+    setSubmitted(true);
   };
 
   const handleSelected = (selected: IFormAnswerBE) => {
-    console.log("handleSelected selected ", selected);
+    setSelectedAnswer(selected);
   };
+
+  // useEffect(() => {
+
+  // }, [submitted])
 
   return (
     <MasterScreen type={ScreenType.Form} header={<FormHeader {...form} />}>
       <>
-        <Form {...form} onSelected={handleSelected} />
-        <FormFooter onSubmitted={handleSubmitted} />
+        <Form {...form} onSelected={handleSelected} submitted={submitted} />
+        <FormFooter
+          {...form}
+          onSubmitted={handleSubmitted}
+          selected={selectedAnswer}
+          submitted={submitted}
+        />
       </>
     </MasterScreen>
   );

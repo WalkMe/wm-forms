@@ -16,6 +16,7 @@ interface IButtonProps {
   className?: string;
   tmButtonType?: ButtonType;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
   buttonClicked?: (id: string) => void;
   children: ReactElement;
 }
@@ -28,7 +29,10 @@ export default function Button(props: IButtonProps) {
     children,
     className = "",
     buttonClicked,
+    disabled,
   } = props;
+
+  const disabledClass = disabled ? "disabled" : "";
 
   const handleClick = () => {
     if (buttonClicked) {
@@ -39,9 +43,10 @@ export default function Button(props: IButtonProps) {
   return (
     <button
       id={`button-${id}`}
-      className={`btn ${className} ${tmButtonType}`}
+      className={`btn ${tmButtonType} ${disabledClass} ${className}`}
       type={type}
       onClick={handleClick}
+      disabled={disabled}
     >
       {children}
     </button>

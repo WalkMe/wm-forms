@@ -82,6 +82,13 @@ button:hover,
 .btn:hover {
   outline: none !important;
 }
+
+button[disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+  transform: opacity 0.3s;
+}
+
 a,
 a:hover,
 a:active,
