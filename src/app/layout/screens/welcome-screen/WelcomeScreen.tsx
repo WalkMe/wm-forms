@@ -15,7 +15,7 @@ export default function WelcomeScreen(props?: IWelcomeScreenProps) {
 
   return (
     <>
-      <MasterScreen type={ScreenType.Welcome}>
+      <MasterScreen isAnimatedScreen type={ScreenType.Welcome}>
         <>
           <ContentScreenTemplate
             {...welcomeScreen}

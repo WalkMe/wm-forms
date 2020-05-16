@@ -64,7 +64,11 @@ export default function FormScreen(props?: IFormScreenProps) {
   console.log("formData ", formData);
 
   return (
-    <MasterScreen type={ScreenType.Form} header={<FormHeader {...form} />}>
+    <MasterScreen
+      isAnimatedScreen
+      type={ScreenType.Form}
+      header={<FormHeader {...form} />}
+    >
       <>
         <Form {...form} onSelected={handleSelected} submitted={submitted} />
         <FormFooter

@@ -8,12 +8,21 @@ export interface IMasterScreenProps {
   type?: ScreenType;
   header?: ReactElement;
   children: ReactElement;
+  isAnimatedScreen?: boolean;
 }
 
 export default function MasterScreen(props: IMasterScreenProps) {
-  const { className = "", header, children, type = ScreenType.Default } = props;
+  const {
+    className = "",
+    isAnimatedScreen,
+    header,
+    children,
+    type = ScreenType.Default,
+  } = props;
+  const animatedClass = isAnimatedScreen ? "animated-screen" : "";
+
   return (
-    <div className={`screen ${type} ${className}`}>
+    <div className={`screen ${type} ${animatedClass} ${className}`}>
       <Header type={type}>{header}</Header>
       <div className="screen-content">{children}</div>
       <footer className={`footer ${type}`}>

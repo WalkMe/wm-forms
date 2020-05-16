@@ -1,5 +1,7 @@
 import React, { useEffect, createContext, useState } from "react";
-import { HashRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+
 import walkme, { ISdk } from "@walkme/sdk";
 
 import {
@@ -128,26 +130,41 @@ export default function App() {
   }, []);
 
   return (
-    <HashRouter>
-      <div className={`app show wrapper`}>
-        {informationScreen ? (
-          <InformationScreen {...informationScreen} />
-        ) : (
-          <AppContext.Provider
-            value={{
-              walkmeSDK,
-              appState,
-            }}
-          >
-            <Debug />
-            <Switch>
-              <Route exact path="/" component={WelcomeScreen} />
-              <Route path="/form/:id" component={FormScreen} />
-              <Route path="/summary/:passmark?" component={SummaryScreen} />
-            </Switch>
-          </AppContext.Provider>
+    <BrowserRouter>
+      <Route
+        render={({ location }) => (
+          <div className={`app show wrapper`}>
+            {informationScreen ? (
+              <InformationScreen {...informationScreen} />
+            ) : (
+              <AppContext.Provider
+                value={{
+                  walkmeSDK,
+                  appState,
+                }}
+              >
+                <Debug />
+                <TransitionGroup className="page-transition-group">
+                  <CSSTransition
+                    key={location.key}
+                    timeout={5000}
+                    classNames="fade-in-left"
+                  >
+                    <Switch location={location}>
+                      <Route exact path="/" component={WelcomeScreen} />
+                      <Route path="/form/:id" component={FormScreen} />
+                      <Route
+                        path="/summary/:passmark?"
+                        component={SummaryScreen}
+                      />
+                    </Switch>
+                  </CSSTransition>
+                </TransitionGroup>
+              </AppContext.Provider>
+            )}
+          </div>
         )}
-      </div>
-    </HashRouter>
+      />
+    </BrowserRouter>
   );
 }
