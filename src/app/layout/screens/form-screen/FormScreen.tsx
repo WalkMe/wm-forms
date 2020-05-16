@@ -28,20 +28,20 @@ export interface IFormContext {
 export default function FormScreen(props?: IFormScreenProps) {
   const { appState } = useContext(AppContext);
   const { questions } = appState.form;
-  const { match } = props;
+  const { id } = props.match.params;
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [submitted, setSubmitted] = useState(false);
 
-  const currentId = parseInt(match.params.id);
+  const currentId = parseInt(id);
   const currentIndex = currentId - 1;
   const currentQuestion = questions[currentIndex];
-
   const form = {
     currentId,
     currentIndex,
     currentQuestion,
     questionsLength: questions.length,
   };
+  const [formData, setFormData] = useState(form);
 
   const handleSubmitted = () => {
     setSubmitted(true);
@@ -50,6 +50,18 @@ export default function FormScreen(props?: IFormScreenProps) {
   const handleSelected = (selected: IFormAnswerBE) => {
     setSelectedAnswer(selected);
   };
+
+  useEffect(() => {
+    setSubmitted(false);
+    setSelectedAnswer(null);
+    setFormData(form);
+  }, [id]);
+
+  useEffect(() => {
+    setFormData(form);
+  }, []);
+
+  console.log("formData ", formData);
 
   return (
     <MasterScreen type={ScreenType.Form} header={<FormHeader {...form} />}>

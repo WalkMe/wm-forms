@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { IFormContext } from "./FormScreen";
 import { IFormAnswerBE } from "../../../interfaces/form/form.interface";
 
@@ -17,6 +17,10 @@ export default function Form(props: IFormProps) {
     setSelectedIndex(index);
   };
 
+  useEffect(() => {
+    setSelectedIndex(undefined);
+  }, [currentId]);
+
   return (
     <ul className="options form-answers">
       {answers.map((answer, index) => {
@@ -33,6 +37,7 @@ export default function Form(props: IFormProps) {
               type="radio"
               id={optionId}
               value={answer.text}
+              checked={selectedIndex === index}
               name={`question-${currentId}`}
               className={resultsClass}
               disabled={submitted}
