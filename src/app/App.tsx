@@ -1,5 +1,5 @@
 import React, { useEffect, createContext, useState } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Switch, Route, HashRouter } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import walkme, { ISdk } from "@walkme/sdk";
@@ -130,7 +130,7 @@ export default function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Route
         render={({ location }) => (
           <div className={`app show wrapper`}>
@@ -146,7 +146,7 @@ export default function App() {
                 <Debug />
                 <TransitionGroup className="page-transition-group">
                   <CSSTransition
-                    key={location.key}
+                    key={location.pathname}
                     timeout={5000}
                     classNames="fade-in-left"
                   >
@@ -165,6 +165,6 @@ export default function App() {
           </div>
         )}
       />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
