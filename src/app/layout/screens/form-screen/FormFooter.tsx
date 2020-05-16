@@ -2,6 +2,7 @@ import React from "react";
 import { IFormContext } from "./FormScreen";
 import Button, { ButtonType } from "../../../components/buttons/Button";
 import { IFormAnswerBE } from "../../../interfaces/form/form.interface";
+import RouteButton from "../../../components/buttons/route-button/RouteButton";
 
 interface IFormFooterProps extends IFormContext {
   onSubmitted: () => void;
@@ -10,8 +11,21 @@ interface IFormFooterProps extends IFormContext {
 }
 
 export default function FormFooter(props: IFormFooterProps) {
-  const { onSubmitted, selected, submitted } = props;
-  console.log("selected ", selected);
+  const {
+    onSubmitted,
+    selected,
+    submitted,
+    questionsLength,
+    currentId,
+  } = props;
+
+  const isLastQuestion = currentId >= questionsLength;
+  const formCTALabel = isLastQuestion ? "Finish" : "Next";
+
+  const formCTATargetLink = isLastQuestion
+    ? "/summary/50" // TODO: calculate passmark for dynamic flow
+    : `/form/${currentId + 1}`;
+
   return (
     <footer className="form-footer">
       {!submitted ? (
@@ -21,12 +35,15 @@ export default function FormFooter(props: IFormFooterProps) {
           buttonClicked={onSubmitted}
           disabled={!Boolean(selected)}
         >
-          <span className="text">Submit</span>
+          <span className="btn-label">Submit</span>
         </Button>
       ) : (
-        <Button id="next" tmButtonType={ButtonType.Default}>
-          <span className="text">Next</span>
-        </Button>
+        <RouteButton
+          linkTo={formCTATargetLink}
+          id="form-action"
+          buttonType={ButtonType.Default}
+          label={formCTALabel}
+        />
       )}
     </footer>
   );

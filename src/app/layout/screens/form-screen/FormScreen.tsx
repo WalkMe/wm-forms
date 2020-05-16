@@ -51,10 +51,6 @@ export default function FormScreen(props?: IFormScreenProps) {
     setSelectedAnswer(selected);
   };
 
-  // useEffect(() => {
-
-  // }, [submitted])
-
   return (
     <MasterScreen type={ScreenType.Form} header={<FormHeader {...form} />}>
       <>
