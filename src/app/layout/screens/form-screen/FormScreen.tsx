@@ -61,8 +61,6 @@ export default function FormScreen(props?: IFormScreenProps) {
     setFormData(form);
   }, []);
 
-  console.log("formData ", formData);
-
   return (
     <MasterScreen
       isAnimatedScreen
