@@ -1,4 +1,6 @@
 import React from "react";
+import Confetti from "react-dom-confetti";
+
 import { IFormContext } from "./FormScreen";
 import Button, { ButtonType } from "../../../components/buttons/Button";
 import { IFormAnswerBE } from "../../../interfaces/form/form.interface";
@@ -9,6 +11,12 @@ interface IFormFooterProps extends IFormContext {
   selected: null | IFormAnswerBE;
   submitted: boolean;
 }
+
+const confettiConfig = {
+  angle: 90,
+  spread: 120,
+  colors: ["#348bd8", "#1F569D", "#89d1ef", "#348bd8", "#ACD2ED"],
+};
 
 export default function FormFooter(props: IFormFooterProps) {
   const {
@@ -28,6 +36,10 @@ export default function FormFooter(props: IFormFooterProps) {
 
   return (
     <footer className="form-footer">
+      <Confetti
+        active={submitted && selected.isCorrect}
+        config={confettiConfig}
+      />
       {!submitted ? (
         <Button
           id="form-submit"

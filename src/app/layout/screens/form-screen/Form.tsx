@@ -1,15 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { IFormContext } from "./FormScreen";
 import { IFormAnswerBE } from "../../../interfaces/form/form.interface";
 
 interface IFormProps extends IFormContext {
+  selected: IFormAnswerBE;
   onSelected: (selected: IFormAnswerBE) => void;
   submitted: boolean;
 }
 
 export default function Form(props: IFormProps) {
   const [selectedIndex, setSelectedIndex] = useState(undefined);
-  const { onSelected, currentQuestion, currentId, submitted } = props;
+
+  const { onSelected, currentQuestion, currentId, submitted, selected } = props;
   const { answers, type } = currentQuestion;
 
   const handleChange = (index: number) => {

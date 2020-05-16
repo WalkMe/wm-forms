@@ -1,9 +1,8 @@
-import React, { useContext, createContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import MasterScreen from "../master-screen/MasterScreen";
 import { RouteComponentProps } from "react-router-dom";
 import { AppContext } from "../../../App";
-import Button, { ButtonType } from "../../../components/buttons/Button";
 import {
   IFormQuestionBE,
   IFormAnswerBE,
@@ -68,7 +67,12 @@ export default function FormScreen(props?: IFormScreenProps) {
       header={<FormHeader {...form} />}
     >
       <>
-        <Form {...form} onSelected={handleSelected} submitted={submitted} />
+        <Form
+          {...form}
+          onSelected={handleSelected}
+          selected={selectedAnswer}
+          submitted={submitted}
+        />
         <FormFooter
           {...form}
           onSubmitted={handleSubmitted}
