@@ -3,12 +3,10 @@ import Confetti from "react-dom-confetti";
 
 import { IFormContext } from "./FormScreen";
 import Button, { ButtonType } from "../../../components/buttons/Button";
-import { IFormAnswerBE } from "../../../interfaces/form/form.interface";
 import RouteButton from "../../../components/buttons/route-button/RouteButton";
 
 interface IFormFooterProps extends IFormContext {
   onSubmitted: () => void;
-  selected: null | IFormAnswerBE;
   submitted: boolean;
 }
 
@@ -21,7 +19,7 @@ const confettiConfig = {
 export default function FormFooter(props: IFormFooterProps) {
   const {
     onSubmitted,
-    selected,
+    selectedAnswer,
     submitted,
     questionsLength,
     currentId,
@@ -37,7 +35,7 @@ export default function FormFooter(props: IFormFooterProps) {
   return (
     <footer className="form-footer">
       <Confetti
-        active={submitted && selected.isCorrect}
+        active={submitted && selectedAnswer.isCorrect}
         config={confettiConfig}
       />
       {!submitted ? (
@@ -45,7 +43,7 @@ export default function FormFooter(props: IFormFooterProps) {
           id="form-submit"
           tmButtonType={ButtonType.Default}
           buttonClicked={onSubmitted}
-          disabled={!Boolean(selected)}
+          disabled={!Boolean(selectedAnswer)}
         >
           <span className="btn-label">Submit</span>
         </Button>

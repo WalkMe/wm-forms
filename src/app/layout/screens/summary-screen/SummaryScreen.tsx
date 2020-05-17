@@ -10,7 +10,11 @@ export interface IResultsScreenProps
 
 export default function SummaryScreen(props: IResultsScreenProps) {
   return (
-    <MasterScreen isAnimatedScreen type={ScreenType.Summary}>
+    <MasterScreen
+      isAnimatedScreen
+      type={ScreenType.Summary}
+      percentCompletion={100}
+    >
       <span>Summary</span>
     </MasterScreen>
   );

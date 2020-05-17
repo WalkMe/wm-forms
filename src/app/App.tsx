@@ -147,7 +147,7 @@ export default function App() {
                 <TransitionGroup className="page-transition-group">
                   <CSSTransition
                     key={location.pathname}
-                    timeout={5000}
+                    timeout={300}
                     classNames="fade-in-left"
                   >
                     <Switch location={location}>

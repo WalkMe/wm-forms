@@ -11,7 +11,7 @@ export function ProgressBar({
   customTitle?: string;
   showPercentages?: boolean;
 }) {
-  const [progressValue, setProgressValue] = useState(0);
+  const [progressValue, setProgressValue] = useState(percentCompletion);
   const percentages = `${progressValue}%`;
 
   useEffect(() => {
@@ -21,6 +21,10 @@ export function ProgressBar({
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    setProgressValue(percentCompletion);
+  }, [percentCompletion]);
 
   return (
     <div className="progress-bar-wrapper">

@@ -1,7 +1,8 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Header from "../../header/Header";
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import { ProgressBar } from "../../../components/progress-bar/ProgressBar";
+import { IFormContext } from "../form-screen/FormScreen";
 
 export interface IMasterScreenProps {
   className?: string;
@@ -9,6 +10,7 @@ export interface IMasterScreenProps {
   header?: ReactElement;
   children: ReactElement;
   isAnimatedScreen?: boolean;
+  percentCompletion?: number;
 }
 
 export default function MasterScreen(props: IMasterScreenProps) {
@@ -18,6 +20,7 @@ export default function MasterScreen(props: IMasterScreenProps) {
     header,
     children,
     type = ScreenType.Default,
+    percentCompletion = 0,
   } = props;
   const animatedClass = isAnimatedScreen ? "animated-screen" : "";
 
@@ -26,7 +29,7 @@ export default function MasterScreen(props: IMasterScreenProps) {
       <Header type={type}>{header}</Header>
       <div className="screen-content">{children}</div>
       <footer className={`footer ${type}`}>
-        <ProgressBar percentCompletion={0} showPercentages />
+        <ProgressBar percentCompletion={percentCompletion} showPercentages />
       </footer>
     </div>
   );

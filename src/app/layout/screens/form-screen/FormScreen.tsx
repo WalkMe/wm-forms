@@ -20,26 +20,46 @@ export interface IFormContext {
   currentIndex: number;
   currentQuestion: IFormQuestionBE;
   questionsLength: number;
+  submitted?: boolean;
+  selectedAnswer?: IFormAnswerBE;
 }
-
-// export const FormContext = createContext<IFormContext | null>(null);
 
 export default function FormScreen(props?: IFormScreenProps) {
   const { appState } = useContext(AppContext);
   const { questions } = appState.form;
   const { id } = props.match.params;
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [selectedAnswer, setSelectedAnswer] = useState(null as IFormAnswerBE);
   const [submitted, setSubmitted] = useState(false);
 
   const currentId = parseInt(id);
   const currentIndex = currentId - 1;
   const currentQuestion = questions[currentIndex];
+
+  const calculateCompletion = () => {
+    // Default current percentages calculation
+    let currentPercentages = ((currentId - 1) / questions.length / 1) * 100;
+
+    // current percentages calculation changing id current question submitted
+    if (submitted) {
+      currentPercentages = (currentId / questions.length / 1) * 100;
+    }
+    return currentPercentages;
+  };
+
+  const [percentCompletion, setPercentCompletion] = useState(
+    calculateCompletion()
+  );
+
   const form = {
     currentId,
     currentIndex,
     currentQuestion,
     questionsLength: questions.length,
+    selectedAnswer,
+    submitted,
+    percentCompletion,
   };
+
   const [formData, setFormData] = useState(form);
 
   const handleSubmitted = () => {
@@ -58,27 +78,19 @@ export default function FormScreen(props?: IFormScreenProps) {
 
   useEffect(() => {
     setFormData(form);
-  }, []);
+    setPercentCompletion(calculateCompletion());
+  }, [selectedAnswer, submitted]);
 
   return (
     <MasterScreen
       isAnimatedScreen
       type={ScreenType.Form}
-      header={<FormHeader {...form} />}
+      header={<FormHeader {...formData} />}
+      percentCompletion={percentCompletion}
     >
       <>
-        <Form
-          {...form}
-          onSelected={handleSelected}
-          selected={selectedAnswer}
-          submitted={submitted}
-        />
-        <FormFooter
-          {...form}
-          onSubmitted={handleSubmitted}
-          selected={selectedAnswer}
-          submitted={submitted}
-        />
+        <Form {...formData} onSelected={handleSelected} />
+        <FormFooter {...formData} onSubmitted={handleSubmitted} />
       </>
     </MasterScreen>
   );
