@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import pluralize from "pluralize";
 
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import { AppContext } from "../../../App";
@@ -19,7 +18,7 @@ export default function WelcomeScreen(props?: IWelcomeScreenProps) {
         <>
           <ContentScreenTemplate
             {...welcomeScreen}
-            buttonTargetRoute="/form/1"
+            buttonTargetRoute="/form/1/0"
           />
           <FormProperties />
         </>

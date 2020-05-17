@@ -23,14 +23,24 @@ export default function FormFooter(props: IFormFooterProps) {
     submitted,
     questionsLength,
     currentId,
+    currentScore,
   } = props;
+
+  const calculateScore = () => {
+    const scoring = 100 / questionsLength;
+
+    if (submitted && selectedAnswer.isCorrect) {
+      return currentScore + scoring;
+    }
+    return currentScore;
+  };
 
   const isLastQuestion = currentId >= questionsLength;
   const formCTALabel = isLastQuestion ? "Finish" : "Next";
 
   const formCTATargetLink = isLastQuestion
-    ? "/summary/50" // TODO: calculate passmark for dynamic flow
-    : `/form/${currentId + 1}`;
+    ? `/summary/${calculateScore()}`
+    : `/form/${currentId + 1}/${calculateScore()}`;
 
   return (
     <footer className="form-footer">
