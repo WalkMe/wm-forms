@@ -3,15 +3,18 @@ import { RouteComponentProps } from "react-router-dom";
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import MasterScreen from "../master-screen/MasterScreen";
 
-type FormParams = { passmark: string };
+type SummaryParams = { passmark: string };
 
-export interface IResultsScreenProps {
-  match: RouteComponentProps<FormParams>;
-}
+export interface IResultsScreenProps
+  extends RouteComponentProps<SummaryParams> {}
 
 export default function SummaryScreen(props: IResultsScreenProps) {
   return (
-    <MasterScreen type={ScreenType.Summary}>
+    <MasterScreen
+      isAnimatedScreen
+      type={ScreenType.Summary}
+      percentCompletion={100}
+    >
       <span>Summary</span>
     </MasterScreen>
   );

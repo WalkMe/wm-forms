@@ -50,11 +50,20 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+p {
   margin-block-start: 0;
   margin-block-end: 0;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   .fSecondaryRegular();
 }
 
@@ -73,6 +82,13 @@ button:hover,
 .btn:hover {
   outline: none !important;
 }
+
+button[disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+  transform: opacity 0.3s;
+}
+
 a,
 a:hover,
 a:active,

@@ -1,7 +1,8 @@
 html {
-  --appWidth: 600px;
-  --appMinHeight: 600px;
-  --webAppHeight: 610px;
+  --appWidth: 550px;
+  --screenContentMaxWidth: 450px;
+  --appMinHeight: var(--appWidth);
+  --webAppHeight: var(--appWidth);
 
   // background color of the app
   --white: #fff;
@@ -24,6 +25,7 @@ html {
 
   // used in titles, main text content
   --neutral900: #424242;
+  --neutral700: #737373;
 
   // regular text color, item descriptions, crossed off tasks
   --neutral500: #8d8d8d;
@@ -32,8 +34,11 @@ html {
   // a small dot next to notifications icon
   --warning: #ffc341;
 
-  // for checked icon
+  // for checked icon, correct answer
   --success: #a6e41f;
+
+  // for wrong answer
+  --error: red;
 
   // tab panel top and bottom border
   --border500: rgba(170, 196, 209, 0.3);

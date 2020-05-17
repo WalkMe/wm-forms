@@ -14,11 +14,16 @@ export default function WelcomeScreen(props?: IWelcomeScreenProps) {
   const { welcomeScreen } = appState.form;
 
   return (
-    <MasterScreen type={ScreenType.Welcome}>
-      <>
-        <ContentScreenTemplate {...welcomeScreen} buttonTargetRoute="/form/1" />
-        <FormProperties />
-      </>
-    </MasterScreen>
+    <>
+      <MasterScreen isAnimatedScreen type={ScreenType.Welcome}>
+        <>
+          <ContentScreenTemplate
+            {...welcomeScreen}
+            buttonTargetRoute="/form/1"
+          />
+          <FormProperties />
+        </>
+      </MasterScreen>
+    </>
   );
 }

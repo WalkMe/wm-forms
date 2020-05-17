@@ -19,15 +19,18 @@
   },
   "homepage": "https://github.com/WalkMe/wm-ui-template#readme",
   "dependencies": {
-    "@types/react-router-dom": "^5.1.5",
     "@walkme/sdk": "^1.0.22-5",
     "file-loader": "^6.0.0",
     "pluralize": "^8.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2"
+    "react-dom-confetti": "^0.1.3",
+    "react-router-dom": "^5.1.2",
+    "react-transition-group": "^4.4.1"
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.1.5",
+    "@types/react-transition-group": "^4.2.4",
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",

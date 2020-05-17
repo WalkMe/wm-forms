@@ -7,13 +7,6 @@ export interface IProperties {
   isCompleted?: boolean;
 }
 
-export interface IAnswerBE {
-  type: number;
-  title: string;
-  description: string;
-  explanation: string;
-  answers: any[];
-}
 export interface IFormAnswerBE {
   isCorrect: boolean;
   text: string;
