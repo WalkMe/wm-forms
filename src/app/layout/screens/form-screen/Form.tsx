@@ -1,25 +1,47 @@
 import React, { useState, useEffect } from "react";
 import { IFormContext } from "./FormScreen";
-import { IFormAnswerBE } from "../../../interfaces/form/form.interface";
+import {
+  IFormAnswerBE,
+  QuestionType,
+} from "../../../interfaces/form/form.interface";
 
 interface IFormProps extends IFormContext {
-  onSelected: (selected: IFormAnswerBE) => void;
+  onSelected: (selected: IFormAnswerBE[]) => void;
 }
 
 export default function Form(props: IFormProps) {
-  const [selectedIndex, setSelectedIndex] = useState(undefined);
-
+  const [selectedIndexes, setSelectedIndexes] = useState([]);
   const { onSelected, currentQuestion, currentId, submitted } = props;
   const { answers, type } = currentQuestion;
 
+  const isSingleSelect = type === QuestionType.SingleSelect;
+
   const handleChange = (index: number) => {
-    onSelected(answers[index]);
-    setSelectedIndex(index);
+    if (isSingleSelect) {
+      setSelectedIndexes([index]);
+    } else {
+      const cloned = [...selectedIndexes];
+      const existSelection = Boolean(cloned) ? cloned.indexOf(index) : -1;
+
+      if (existSelection > -1) {
+        cloned.splice(existSelection, 1);
+        setSelectedIndexes(cloned);
+      } else {
+        setSelectedIndexes([...cloned, index]);
+      }
+    }
   };
 
   useEffect(() => {
-    setSelectedIndex(undefined);
+    setSelectedIndexes([]);
   }, [currentId]);
+
+  useEffect(() => {
+    const selectedAnswers = selectedIndexes.map((index) => {
+      return answers[index];
+    });
+    onSelected(selectedAnswers);
+  }, [selectedIndexes]);
 
   return (
     <ul className="options form-answers">
@@ -34,11 +56,15 @@ export default function Form(props: IFormProps) {
         return (
           <li className="option" key={`answer-${index}`}>
             <input
-              type="radio"
+              type={isSingleSelect ? "radio" : "checkbox"}
               id={optionId}
               value={answer.text}
-              checked={selectedIndex === index}
-              name={`question-${currentId}`}
+              checked={selectedIndexes.indexOf(index) > -1}
+              name={
+                isSingleSelect
+                  ? `question-${currentId}`
+                  : `question-${currentId}-${index}`
+              }
               className={resultsClass}
               disabled={submitted}
               onChange={() => {

@@ -18,8 +18,9 @@ const confettiConfig = {
 
 export default function FormFooter(props: IFormFooterProps) {
   const {
+    currentQuestion,
     onSubmitted,
-    selectedAnswer,
+    selectedAnswers,
     submitted,
     questionsLength,
     currentId,
@@ -29,7 +30,7 @@ export default function FormFooter(props: IFormFooterProps) {
   const calculateScore = () => {
     const scoring = 100 / questionsLength;
 
-    if (submitted && selectedAnswer.isCorrect) {
+    if (submitted && selectedAnswers.every((answer) => answer.isCorrect)) {
       return currentScore + scoring;
     }
     return currentScore;
@@ -42,10 +43,20 @@ export default function FormFooter(props: IFormFooterProps) {
     ? `/summary/${calculateScore()}`
     : `/form/${currentId + 1}/${calculateScore()}`;
 
+  const isCorrectAnswers = () => {
+    const correctAnswers = currentQuestion.answers.filter(
+      (answer) => answer.isCorrect
+    );
+
+    return selectedAnswers.every((answer) =>
+      correctAnswers.some((correct) => correct.text === answer.text)
+    );
+  };
+
   return (
     <footer className="form-footer">
       <Confetti
-        active={submitted && selectedAnswer.isCorrect}
+        active={submitted && isCorrectAnswers()}
         config={confettiConfig}
       />
       {!submitted ? (
@@ -53,7 +64,7 @@ export default function FormFooter(props: IFormFooterProps) {
           id="form-submit"
           tmButtonType={ButtonType.Default}
           buttonClicked={onSubmitted}
-          disabled={!Boolean(selectedAnswer)}
+          disabled={!Boolean(selectedAnswers.length)}
         >
           <span className="btn-label">Submit</span>
         </Button>

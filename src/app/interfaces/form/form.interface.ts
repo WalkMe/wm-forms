@@ -1,3 +1,8 @@
+export enum QuestionType {
+  SingleSelect,
+  MultipleSelect,
+}
+
 export interface IProperties {
   isAvailable?: boolean;
   isDisabled?: boolean;
@@ -13,7 +18,7 @@ export interface IFormAnswerBE {
 }
 
 export interface IFormQuestionBE {
-  type: number;
+  type: QuestionType;
   title: string;
   description: string;
   explanation: string;

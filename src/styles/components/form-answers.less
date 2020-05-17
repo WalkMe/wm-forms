@@ -11,6 +11,9 @@
     input[type="radio"],
     input[type="checkbox"] {
       opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
     }
   }
 
@@ -24,13 +27,15 @@
     .hoverFloating();
   }
 
-  input[type="radio"]:disabled {
+  input[type="radio"]:disabled,
+  input[type="checkbox"]:disabled {
     + label {
       cursor: auto;
     }
   }
 
-  input[type="radio"]:checked {
+  input[type="radio"]:checked,
+  input[type="checkbox"]:checked {
     + label {
       border: 1px solid var(--primary);
     }
