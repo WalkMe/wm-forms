@@ -11,7 +11,7 @@ import FormHeader from "./FormHeader";
 import FormFooter from "./FormFooter";
 import Form from "./Form";
 
-type FormParams = { id: string };
+type FormParams = { id: string; score: string };
 
 export interface IFormScreenProps extends RouteComponentProps<FormParams> {}
 
@@ -22,19 +22,20 @@ export interface IFormContext {
   questionsLength: number;
   submitted?: boolean;
   selectedAnswer?: IFormAnswerBE;
+  currentScore?: number;
 }
 
 export default function FormScreen(props?: IFormScreenProps) {
   const { appState } = useContext(AppContext);
   const { questions } = appState.form;
-  const { id } = props.match.params;
+  const { id, score } = props.match.params;
   const [selectedAnswer, setSelectedAnswer] = useState(null as IFormAnswerBE);
   const [submitted, setSubmitted] = useState(false);
 
   const currentId = parseInt(id);
+  const currentScore = score ? parseInt(score) : 0;
   const currentIndex = currentId - 1;
   const currentQuestion = questions[currentIndex];
-
   const calculateCompletion = () => {
     // Default current percentages calculation
     let currentPercentages = ((currentId - 1) / questions.length / 1) * 100;
@@ -58,6 +59,7 @@ export default function FormScreen(props?: IFormScreenProps) {
     selectedAnswer,
     submitted,
     percentCompletion,
+    currentScore,
   };
 
   const [formData, setFormData] = useState(form);

@@ -152,7 +152,7 @@ export default function App() {
                   >
                     <Switch location={location}>
                       <Route exact path="/" component={WelcomeScreen} />
-                      <Route path="/form/:id" component={FormScreen} />
+                      <Route path="/form/:id/:score?" component={FormScreen} />
                       <Route
                         path="/summary/:passmark?"
                         component={SummaryScreen}

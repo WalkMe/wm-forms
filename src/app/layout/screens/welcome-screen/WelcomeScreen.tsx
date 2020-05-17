@@ -18,7 +18,7 @@ export default function WelcomeScreen(props?: IWelcomeScreenProps) {
         <>
           <ContentScreenTemplate
             {...welcomeScreen}
-            buttonTargetRoute="/form/1"
+            buttonTargetRoute="/form/1/0"
           />
           <FormProperties />
         </>
