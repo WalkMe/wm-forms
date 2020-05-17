@@ -50,16 +50,12 @@ export default function FormProperties({
   };
 
   const getCustomProperties = () => {
-    if (customProperties && customProperties.passmark) {
-      return (
-        <>
-          {customProperties.passmark && getPassmark(customProperties.passmark)}
-        </>
-      );
+    if (customProperties && Number.isInteger(customProperties.passmark)) {
+      return <>{getPassmark(customProperties.passmark)}</>;
     }
   };
 
-  if (!Boolean(customProperties)) {
+  if (!customProperties) {
     return <div className="form-properties">{getWelcomeProperties()}</div>;
   }
 
