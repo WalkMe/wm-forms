@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import pluralize from "pluralize";
 
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import { AppContext } from "../../../App";
