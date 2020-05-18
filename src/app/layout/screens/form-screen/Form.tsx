@@ -4,16 +4,26 @@ import {
   IFormAnswerBE,
   QuestionType,
 } from "../../../interfaces/form/form.interface";
+import RadioInput from "../../../components/inputs/radio-input/RadioInput";
+import CheckboxInput from "../../../components/inputs/checkbox-input/CheckboxInput";
+import useFormManager from "../../../hooks/useFormManager";
 
-interface IFormProps extends IFormContext {
+interface IFormProps {
   onSelected: (selected: IFormAnswerBE[]) => void;
 }
 
-export default function Form(props: IFormProps) {
+export default function Form({
+  props,
+  formContext,
+}: {
+  props: IFormProps;
+  formContext: IFormContext;
+}) {
   const [selectedIndexes, setSelectedIndexes] = useState([]);
-  const { onSelected, currentQuestion, currentId, submitted } = props;
+  const { getInput } = useFormManager({ ...formContext, selectedIndexes });
+  const { onSelected } = props;
+  const { currentQuestion, currentId, submitted } = formContext;
   const { answers, type } = currentQuestion;
-
   const isSingleSelect = type === QuestionType.SingleSelect;
 
   const handleChange = (index: number) => {
@@ -46,36 +56,16 @@ export default function Form(props: IFormProps) {
   return (
     <ul className="options form-answers">
       {answers.map((answer, index) => {
-        const optionId = `option-${index}`;
-        let selectedResultsClass = "";
-        let unselectedResultsClass = "";
-        const isSelected = selectedIndexes.indexOf(index) > -1;
-        const resultsClass = answer.isCorrect ? "correct" : "wrong";
-
-        if (submitted) {
-          selectedResultsClass = isSelected && resultsClass;
-          unselectedResultsClass = answer.isCorrect && "unselected-correct";
-        }
+        const inputData = getInput({ type, option: answer, index });
+        const input = { ...inputData, handleChange: () => handleChange(index) };
 
         return (
           <li className="option" key={`answer-${index}`}>
-            <input
-              type={isSingleSelect ? "radio" : "checkbox"}
-              id={optionId}
-              value={answer.text}
-              checked={isSelected}
-              name={
-                isSingleSelect
-                  ? `question-${currentId}`
-                  : `question-${currentId}-${index}`
-              }
-              className={`${selectedResultsClass} ${unselectedResultsClass}`}
-              disabled={submitted}
-              onChange={() => {
-                handleChange(index);
-              }}
-            />
-            <label htmlFor={optionId}>{answer.text}</label>
+            {isSingleSelect ? (
+              <RadioInput {...input} />
+            ) : (
+              <CheckboxInput {...input} />
+            )}
           </li>
         );
       })}

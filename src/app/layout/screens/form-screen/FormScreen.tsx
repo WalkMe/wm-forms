@@ -24,6 +24,7 @@ export interface IFormContext {
   submitted?: boolean;
   selectedAnswers?: IFormAnswerBE[];
   currentScore?: number;
+  selectedIndexes?: number[];
 }
 
 export default function FormScreen(props?: IFormScreenProps) {
@@ -85,7 +86,7 @@ export default function FormScreen(props?: IFormScreenProps) {
       percentCompletion={percentCompletion}
     >
       <>
-        <Form {...formData} onSelected={handleSelected} />
+        <Form formContext={formData} props={{ onSelected: handleSelected }} />
         <FormFooter
           formContext={formData}
           props={{ onSubmitted: handleSubmitted }}
