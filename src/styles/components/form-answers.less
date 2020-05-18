@@ -34,6 +34,14 @@
     }
   }
 
+  input[type="radio"]:not(:checked),
+  input[type="checkbox"]:not(:checked) {
+    &.unselected-correct {
+      + label {
+        border: 1px solid var(--success);
+      }
+    }
+  }
   input[type="radio"]:checked,
   input[type="checkbox"]:checked {
     + label {

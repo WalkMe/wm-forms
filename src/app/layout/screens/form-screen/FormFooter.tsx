@@ -4,10 +4,10 @@ import Confetti from "react-dom-confetti";
 import { IFormContext } from "./FormScreen";
 import Button, { ButtonType } from "../../../components/buttons/Button";
 import RouteButton from "../../../components/buttons/route-button/RouteButton";
+import useFormManager from "../../../hooks/useFormManager";
 
-interface IFormFooterProps extends IFormContext {
+interface IFormFooterProps {
   onSubmitted: () => void;
-  submitted: boolean;
 }
 
 const confettiConfig = {
@@ -16,25 +16,24 @@ const confettiConfig = {
   colors: ["#348bd8", "#1F569D", "#89d1ef", "#348bd8", "#ACD2ED"],
 };
 
-export default function FormFooter(props: IFormFooterProps) {
+export default function FormFooter({
+  props,
+  formContext,
+}: {
+  props: IFormFooterProps;
+  formContext: IFormContext;
+}) {
+  const { onSubmitted } = props;
+
   const {
     currentQuestion,
-    onSubmitted,
     selectedAnswers,
     submitted,
     questionsLength,
     currentId,
-    currentScore,
-  } = props;
+  } = formContext;
 
-  const calculateScore = () => {
-    const scoring = 100 / questionsLength;
-
-    if (submitted && selectedAnswers.every((answer) => answer.isCorrect)) {
-      return currentScore + scoring;
-    }
-    return currentScore;
-  };
+  const { calculateScore } = useFormManager(formContext);
 
   const isLastQuestion = currentId >= questionsLength;
   const formCTALabel = isLastQuestion ? "Finish" : "Next";
@@ -48,9 +47,14 @@ export default function FormFooter(props: IFormFooterProps) {
       (answer) => answer.isCorrect
     );
 
-    return selectedAnswers.every((answer) =>
+    const allAnswersAreCorrect = selectedAnswers.every((answer) =>
       correctAnswers.some((correct) => correct.text === answer.text)
     );
+
+    const correctItemsAreEqual =
+      correctAnswers.length === selectedAnswers.length;
+
+    return allAnswersAreCorrect && correctItemsAreEqual;
   };
 
   return (

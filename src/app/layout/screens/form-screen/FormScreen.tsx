@@ -10,6 +10,7 @@ import {
 import FormHeader from "./FormHeader";
 import FormFooter from "./FormFooter";
 import Form from "./Form";
+import useFormManager from "../../../hooks/useFormManager";
 
 type FormParams = { id: string; score: string };
 
@@ -31,35 +32,28 @@ export default function FormScreen(props?: IFormScreenProps) {
   const { id, score } = props.match.params;
   const [selectedAnswers, setSelectedAnswers] = useState([] as IFormAnswerBE[]);
   const [submitted, setSubmitted] = useState(false);
-
   const currentId = parseInt(id);
-  const currentScore = score ? parseInt(score) : 0;
   const currentIndex = currentId - 1;
-  const currentQuestion = questions[currentIndex];
-  const calculateCompletion = () => {
-    // Default current percentages calculation
-    let currentPercentages = ((currentId - 1) / questions.length / 1) * 100;
 
-    // current percentages calculation changing id current question submitted
-    if (submitted) {
-      currentPercentages = (currentId / questions.length / 1) * 100;
-    }
-    return currentPercentages;
+  const formGlobals = {
+    currentId,
+    currentIndex,
+    currentScore: score ? parseInt(score) : 0,
+    currentQuestion: questions[currentIndex],
+    questionsLength: questions.length,
+    selectedAnswers,
+    submitted,
   };
+
+  const { calculateCompletion } = useFormManager(formGlobals);
 
   const [percentCompletion, setPercentCompletion] = useState(
     calculateCompletion()
   );
 
   const form = {
-    currentId,
-    currentIndex,
-    currentQuestion,
-    questionsLength: questions.length,
-    selectedAnswers,
-    submitted,
+    ...formGlobals,
     percentCompletion,
-    currentScore,
   };
 
   const [formData, setFormData] = useState(form);
@@ -92,7 +86,10 @@ export default function FormScreen(props?: IFormScreenProps) {
     >
       <>
         <Form {...formData} onSelected={handleSelected} />
-        <FormFooter {...formData} onSubmitted={handleSubmitted} />
+        <FormFooter
+          formContext={formData}
+          props={{ onSubmitted: handleSubmitted }}
+        />
       </>
     </MasterScreen>
   );

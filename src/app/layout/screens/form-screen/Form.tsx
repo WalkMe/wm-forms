@@ -47,10 +47,14 @@ export default function Form(props: IFormProps) {
     <ul className="options form-answers">
       {answers.map((answer, index) => {
         const optionId = `option-${index}`;
-        let resultsClass = "";
+        let selectedResultsClass = "";
+        let unselectedResultsClass = "";
+        const isSelected = selectedIndexes.indexOf(index) > -1;
+        const resultsClass = answer.isCorrect ? "correct" : "wrong";
 
         if (submitted) {
-          resultsClass = answer.isCorrect ? "correct" : "wrong";
+          selectedResultsClass = isSelected && resultsClass;
+          unselectedResultsClass = answer.isCorrect && "unselected-correct";
         }
 
         return (
@@ -59,13 +63,13 @@ export default function Form(props: IFormProps) {
               type={isSingleSelect ? "radio" : "checkbox"}
               id={optionId}
               value={answer.text}
-              checked={selectedIndexes.indexOf(index) > -1}
+              checked={isSelected}
               name={
                 isSingleSelect
                   ? `question-${currentId}`
                   : `question-${currentId}-${index}`
               }
-              className={resultsClass}
+              className={`${selectedResultsClass} ${unselectedResultsClass}`}
               disabled={submitted}
               onChange={() => {
                 handleChange(index);
