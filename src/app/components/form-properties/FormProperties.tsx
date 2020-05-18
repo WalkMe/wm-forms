@@ -1,63 +1,49 @@
-import React, { useContext } from "react";
+import React, { useContext, ReactElement } from "react";
 import pluralize from "pluralize";
 
 import { AppContext } from "../../App";
 import useIconManager, { Icon } from "../../hooks/useIconManager";
-import { ScreenType } from "../../interfaces/screen/screen.interface";
+import PropertyLabel from "../property-label/PropertyLabel";
 
-export interface IFormProperties {
-  passmark?: number;
+export interface IFormPropertiesConfig {
+  passmark?: boolean;
+  questions?: boolean;
 }
 
 export default function FormProperties({
-  customProperties,
+  children,
+  config,
 }: {
-  customProperties?: IFormProperties;
+  children?: ReactElement;
+  config?: IFormPropertiesConfig;
 }) {
   const { getIconByType } = useIconManager();
+  const { appState } = useContext(AppContext);
+  const { questions, properties } = appState.form;
+  const { passmark } = properties;
 
-  const getPassmark = (passmark: number) => {
-    let content = <span className="text">Passmark: {passmark}</span>;
+  if (children) {
+    return <div className="form-properties">{children}</div>;
+  }
 
-    if (customProperties) {
-      content = <span className="text">Score: {passmark}</span>;
-    }
-
-    return (
-      <div className="passmark-info">
-        {getIconByType(Icon.Check)}
-        {content}
-      </div>
-    );
-  };
-
-  const getWelcomeProperties = () => {
-    const { appState } = useContext(AppContext);
-    const { questions, properties } = appState.form;
-    const { passmark } = properties;
-
-    return (
-      <>
+  return (
+    <div className="form-properties">
+      {config.questions && (
         <div className="question-counter">
           {getIconByType(Icon.Question)}
-          <span className="text">
+          <span className="questions-label text">
             {pluralize("Question", questions.length, true)}
           </span>
         </div>
-        {passmark && getPassmark(passmark)}
-      </>
-    );
-  };
-
-  const getCustomProperties = () => {
-    if (customProperties && Number.isInteger(customProperties.passmark)) {
-      return <>{getPassmark(customProperties.passmark)}</>;
-    }
-  };
-
-  if (!customProperties) {
-    return <div className="form-properties">{getWelcomeProperties()}</div>;
-  }
-
-  return <div className="form-properties">{getCustomProperties()}</div>;
+      )}
+      {config.passmark && (
+        <PropertyLabel
+          iconType={Icon.Check}
+          className="passmark-info"
+          label="Passmark:"
+          value={passmark}
+        />
+      )}
+    </div>
+  );
 }
