@@ -22,7 +22,7 @@ export default function Form({
   const [selectedIndexes, setSelectedIndexes] = useState([]);
   const { getInput } = useFormManager({ ...formContext, selectedIndexes });
   const { onSelected } = props;
-  const { currentQuestion, currentId, submitted } = formContext;
+  const { currentQuestion, currentId } = formContext;
   const { answers, type } = currentQuestion;
   const isSingleSelect = type === QuestionType.SingleSelect;
 

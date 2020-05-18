@@ -33,7 +33,7 @@ export default function FormFooter({
     currentId,
   } = formContext;
 
-  const { calculateScore } = useFormManager(formContext);
+  const { calculateScore, isCorrectAnswers } = useFormManager(formContext);
 
   const isLastQuestion = currentId >= questionsLength;
   const formCTALabel = isLastQuestion ? "Finish" : "Next";
@@ -41,21 +41,6 @@ export default function FormFooter({
   const formCTATargetLink = isLastQuestion
     ? `/summary/${calculateScore()}`
     : `/form/${currentId + 1}/${calculateScore()}`;
-
-  const isCorrectAnswers = () => {
-    const correctAnswers = currentQuestion.answers.filter(
-      (answer) => answer.isCorrect
-    );
-
-    const allAnswersAreCorrect = selectedAnswers.every((answer) =>
-      correctAnswers.some((correct) => correct.text === answer.text)
-    );
-
-    const correctItemsAreEqual =
-      correctAnswers.length === selectedAnswers.length;
-
-    return allAnswersAreCorrect && correctItemsAreEqual;
-  };
 
   return (
     <footer className="form-footer">

@@ -6,6 +6,7 @@ import { IFormAnswerBE, QuestionType } from "../interfaces/form/form.interface";
 export default function useFormManager(
   props: IFormContext
 ): {
+  isCorrectAnswers: () => boolean;
   calculateCompletion: () => number;
   calculateScore: () => number;
   getInput: (data: {
@@ -21,7 +22,23 @@ export default function useFormManager(
     currentScore,
     selectedAnswers,
     selectedIndexes,
+    currentQuestion,
   } = props;
+
+  const isCorrectAnswers = () => {
+    const correctAnswers = currentQuestion.answers.filter(
+      (answer) => answer.isCorrect
+    );
+
+    const allAnswersAreCorrect = selectedAnswers.every((answer) =>
+      correctAnswers.some((correct) => correct.text === answer.text)
+    );
+
+    const correctItemsAreEqual =
+      correctAnswers.length === selectedAnswers.length;
+
+    return allAnswersAreCorrect && correctItemsAreEqual;
+  };
 
   const calculateCompletion = () => {
     // Default current percentages calculation
@@ -36,11 +53,8 @@ export default function useFormManager(
   const calculateScore = () => {
     // default scoring
     const scoring = 100 / questionsLength;
-    const allAnswersAreCorrect = selectedAnswers.every(
-      (answer) => answer.isCorrect
-    );
 
-    if (submitted && allAnswersAreCorrect) {
+    if (submitted && isCorrectAnswers()) {
       return currentScore + scoring;
     }
 
@@ -79,6 +93,7 @@ export default function useFormManager(
   };
 
   return {
+    isCorrectAnswers,
     calculateCompletion,
     calculateScore,
     getInput: (data: {
