@@ -21,7 +21,10 @@ export default function CheckboxInput(props: ISelectInput) {
         <span className="selection-icon">
           {checked && getIconByType(Icon.Check)}
         </span>
-        <span className="text">{value}</span>
+        <span className="text">
+          <span className="icon"></span>
+          {value}
+        </span>
       </label>
     </>
   );

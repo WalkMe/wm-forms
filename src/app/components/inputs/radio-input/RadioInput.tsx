@@ -16,7 +16,10 @@ export default function RadioInput(props: ISelectInput) {
         onChange={handleChange}
       />
       <label htmlFor={id}>
-        <span className="text">{value}</span>
+        <span className="text">
+          <span className="icon"></span>
+          {value}
+        </span>
       </label>
     </>
   );

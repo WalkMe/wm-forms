@@ -34,42 +34,15 @@
   }
 
   &.check {
-    width: 15px;
-    height: 10px;
+    .checkIcon();
+  }
 
-    &:before {
-      content: "";
-      color: #000;
-      position: absolute;
-      margin-left: 3px;
-      margin-top: 4px;
-      width: 10px;
-      height: 4px;
-      border-bottom: solid 1px var(--success);
-      border-left: solid 1px var(--success);
-      -webkit-transform: rotate(-45deg);
-      transform: rotate(-45deg);
-      top: -3px;
-      left: 0;
-    }
+  &.error {
+    .errorIcon();
   }
 
   &.question {
-    width: 15px;
-    height: 15px;
-
-    &:before {
-      content: "?";
-      width: 100%;
-      height: 100%;
-      color: var(--white);
-      border-radius: 50%;
-      background: var(--primary);
-      display: block;
-      font-size: 10px;
-      line-height: 15px;
-      text-align: center;
-    }
+    .questionIcon();
   }
 
   &.article {
@@ -104,4 +77,69 @@
 .triangleLeft(@color: currentColor, @borderWidth: 1.5px, @size: 4.5px) {
   .triangleRight(@color, @borderWidth,  @size);
   transform: rotate(135deg) translateY(-50%);
+}
+
+.checkIcon () {
+  width: 15px;
+  height: 10px;
+
+  &:before {
+    content: "";
+    color: #000;
+    position: absolute;
+    margin-left: 3px;
+    margin-top: 4px;
+    width: 10px;
+    height: 4px;
+    border-bottom: solid 1px var(--success);
+    border-left: solid 1px var(--success);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    top: -3px;
+    left: 0;
+  }
+}
+
+.errorIcon () {
+  width: 15px;
+  height: 15px;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--error);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--error);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}
+
+.questionIcon() {
+  width: 15px;
+  height: 15px;
+
+  &:before {
+    content: "?";
+    width: 100%;
+    height: 100%;
+    color: var(--white);
+    border-radius: 50%;
+    background: var(--primary);
+    display: block;
+    font-size: 10px;
+    line-height: 15px;
+    text-align: center;
+  }
 }
