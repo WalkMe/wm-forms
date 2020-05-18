@@ -1,7 +1,9 @@
 import React from "react";
 import { ISelectInput } from "../input.interface";
+import useIconManager, { Icon } from "../../../hooks/useIconManager";
 
 export default function CheckboxInput(props: ISelectInput) {
+  const { getIconByType } = useIconManager();
   const { id, value, name, className, disabled, checked, handleChange } = props;
   return (
     <>
@@ -15,7 +17,12 @@ export default function CheckboxInput(props: ISelectInput) {
         disabled={disabled}
         onChange={handleChange}
       />
-      <label htmlFor={id}>{value}</label>
+      <label htmlFor={id}>
+        <span className="selection-icon">
+          {checked && getIconByType(Icon.Check)}
+        </span>
+        <span className="text">{value}</span>
+      </label>
     </>
   );
 }

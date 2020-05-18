@@ -25,6 +25,7 @@ export default function Form({
   const { currentQuestion, currentId } = formContext;
   const { answers, type } = currentQuestion;
   const isSingleSelect = type === QuestionType.SingleSelect;
+  const formClass = isSingleSelect ? "single" : "multiple";
 
   const handleChange = (index: number) => {
     if (isSingleSelect) {
