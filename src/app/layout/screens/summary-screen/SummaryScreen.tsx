@@ -5,6 +5,7 @@ import MasterScreen from "../master-screen/MasterScreen";
 import ContentScreenTemplate from "../../../components/content-screen-template/ContentScreenTemplate";
 import { AppContext } from "../../../App";
 import FormProperties from "../../../components/form-properties/FormProperties";
+import PropertyLabel from "../../../components/property-label/PropertyLabel";
 
 type SummaryParams = { score: string };
 
@@ -28,7 +29,9 @@ export default function SummaryScreen(props: IResultsScreenProps) {
     >
       <>
         <ContentScreenTemplate {...screenProps} buttonTargetRoute="/" />
-        <FormProperties customProperties={{ passmark: score }} />
+        <FormProperties>
+          <PropertyLabel className="score-info" label="Score:" value={score} />
+        </FormProperties>
       </>
     </MasterScreen>
   );

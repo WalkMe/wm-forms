@@ -4,17 +4,28 @@ import {
   IFormAnswerBE,
   QuestionType,
 } from "../../../interfaces/form/form.interface";
+import RadioInput from "../../../components/inputs/radio-input/RadioInput";
+import CheckboxInput from "../../../components/inputs/checkbox-input/CheckboxInput";
+import useFormManager from "../../../hooks/useFormManager";
 
-interface IFormProps extends IFormContext {
+interface IFormProps {
   onSelected: (selected: IFormAnswerBE[]) => void;
 }
 
-export default function Form(props: IFormProps) {
+export default function Form({
+  props,
+  formContext,
+}: {
+  props: IFormProps;
+  formContext: IFormContext;
+}) {
   const [selectedIndexes, setSelectedIndexes] = useState([]);
-  const { onSelected, currentQuestion, currentId, submitted } = props;
+  const { getInput } = useFormManager({ ...formContext, selectedIndexes });
+  const { onSelected } = props;
+  const { currentQuestion, currentId } = formContext;
   const { answers, type } = currentQuestion;
-
   const isSingleSelect = type === QuestionType.SingleSelect;
+  const formClass = isSingleSelect ? "single" : "multiple";
 
   const handleChange = (index: number) => {
     if (isSingleSelect) {
@@ -46,32 +57,16 @@ export default function Form(props: IFormProps) {
   return (
     <ul className="options form-answers">
       {answers.map((answer, index) => {
-        const optionId = `option-${index}`;
-        let resultsClass = "";
-
-        if (submitted) {
-          resultsClass = answer.isCorrect ? "correct" : "wrong";
-        }
+        const inputData = getInput({ type, option: answer, index });
+        const input = { ...inputData, handleChange: () => handleChange(index) };
 
         return (
           <li className="option" key={`answer-${index}`}>
-            <input
-              type={isSingleSelect ? "radio" : "checkbox"}
-              id={optionId}
-              value={answer.text}
-              checked={selectedIndexes.indexOf(index) > -1}
-              name={
-                isSingleSelect
-                  ? `question-${currentId}`
-                  : `question-${currentId}-${index}`
-              }
-              className={resultsClass}
-              disabled={submitted}
-              onChange={() => {
-                handleChange(index);
-              }}
-            />
-            <label htmlFor={optionId}>{answer.text}</label>
+            {isSingleSelect ? (
+              <RadioInput {...input} />
+            ) : (
+              <CheckboxInput {...input} />
+            )}
           </li>
         );
       })}

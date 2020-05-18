@@ -20,7 +20,7 @@ export default function WelcomeScreen(props?: IWelcomeScreenProps) {
             {...welcomeScreen}
             buttonTargetRoute="/form/1/0"
           />
-          <FormProperties />
+          <FormProperties config={{ passmark: true, questions: true }} />
         </>
       </MasterScreen>
     </>
