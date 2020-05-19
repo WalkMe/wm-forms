@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { IFormContext } from "./FormScreen";
 import {
   IFormAnswerBE,
   QuestionType,
 } from "../../../interfaces/form/form.interface";
+import { IFormContext } from "./FormScreen";
+
+import localization from "../../../consts/localization";
 import RadioInput from "../../../components/inputs/radio-input/RadioInput";
 import CheckboxInput from "../../../components/inputs/checkbox-input/CheckboxInput";
 import useFormManager from "../../../hooks/useFormManager";
+import MessageContainer from "../../../components/message-container/MessageContainer";
 
 interface IFormProps {
   onSelected: (selected: IFormAnswerBE[]) => void;
@@ -25,6 +28,8 @@ export default function Form({
   const { currentQuestion, currentId } = formContext;
   const { answers, type } = currentQuestion;
   const isSingleSelect = type === QuestionType.SingleSelect;
+  const isMultipleSelect = type === QuestionType.MultipleSelect;
+  const { multipleSelectMsg } = localization;
   const formClass = isSingleSelect ? "single" : "multiple";
 
   const handleChange = (index: number) => {
@@ -55,21 +60,27 @@ export default function Form({
   }, [selectedIndexes]);
 
   return (
-    <ul className="options form-answers">
-      {answers.map((answer, index) => {
-        const inputData = getInput({ type, option: answer, index });
-        const input = { ...inputData, handleChange: () => handleChange(index) };
+    <div className={`form-answers ${formClass}`}>
+      {isMultipleSelect && <MessageContainer message={multipleSelectMsg} />}
+      <ul className={`options`}>
+        {answers.map((answer, index) => {
+          const inputData = getInput({ type, option: answer, index });
+          const input = {
+            ...inputData,
+            handleChange: () => handleChange(index),
+          };
 
-        return (
-          <li className="option" key={`answer-${index}`}>
-            {isSingleSelect ? (
-              <RadioInput {...input} />
-            ) : (
-              <CheckboxInput {...input} />
-            )}
-          </li>
-        );
-      })}
-    </ul>
+          return (
+            <li className="option" key={`answer-${index}`}>
+              {isSingleSelect ? (
+                <RadioInput {...input} />
+              ) : (
+                <CheckboxInput {...input} />
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }

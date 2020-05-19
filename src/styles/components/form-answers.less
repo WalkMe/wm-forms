@@ -5,6 +5,7 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    line-height: 14px;
 
     .icon {
       position: absolute;
@@ -13,7 +14,23 @@
   }
 }
 .form-answers {
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+
+  &.single {
+    margin-top: 35px;
+  }
+
+  .container-message {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .options {
+    width: 100%;
+  }
 
   .option {
     width: 100%;
@@ -96,7 +113,7 @@
         border: 1px solid var(--success);
 
         .text .icon {
-          .checkIcon();
+          .successIcon();
         }
       }
     }
@@ -107,7 +124,9 @@
 
         .text .icon {
           .errorIcon();
-          width: 12px;
+          width: 14px;
+          height: 14px;
+          top: -1px;
 
           &:before,
           &:after {
