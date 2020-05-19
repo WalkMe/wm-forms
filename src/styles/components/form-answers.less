@@ -104,27 +104,38 @@
       }
     }
 
-    &:checked + label {
-      border: 1px solid var(--primary);
-    }
-
-    &:checked.correct,
-    &.unselected-correct {
+    &.unselected-error {
       + label {
-        border: 1px solid var(--success);
-
         .text .icon {
-          .successIcon();
+          display: none;
         }
       }
     }
 
-    &:checked.wrong {
+    &:checked + label {
+      border: 1px solid var(--primary);
+    }
+
+    &:checked.success,
+    &.unselected-success {
+      + label {
+        border: 1px solid var(--success);
+
+        .text .icon {
+          &:before {
+            margin-left: 0px;
+            margin-top: 3px;
+            width: 11px;
+          }
+        }
+      }
+    }
+
+    &:checked.error {
       + label {
         border: 1px solid var(--error);
 
         .text .icon {
-          .errorIcon();
           width: 14px;
           height: 14px;
           top: -1px;

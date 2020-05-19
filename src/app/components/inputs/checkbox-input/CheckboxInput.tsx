@@ -4,7 +4,16 @@ import useIconManager, { Icon } from "../../../hooks/useIconManager";
 
 export default function CheckboxInput(props: ISelectInput) {
   const { getIconByType } = useIconManager();
-  const { id, value, name, className, disabled, checked, handleChange } = props;
+  const {
+    id,
+    value,
+    name,
+    className,
+    disabled,
+    checked,
+    handleChange,
+    iconType,
+  } = props;
   return (
     <>
       <input
@@ -22,7 +31,7 @@ export default function CheckboxInput(props: ISelectInput) {
           {checked && getIconByType(Icon.Check)}
         </span>
         <span className="text">
-          <span className="icon"></span>
+          {iconType && getIconByType(iconType)}
           {value}
         </span>
       </label>
