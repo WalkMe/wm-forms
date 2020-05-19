@@ -9,4 +9,5 @@ export interface ISelectInput {
   className: string;
   handleChange?: () => void;
   iconType?: Icon;
+  labelType?: string;
 }

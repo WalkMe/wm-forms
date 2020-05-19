@@ -39,8 +39,13 @@
     text-align: center;
     display: flex;
     margin-bottom: 20px;
+
     input[type="radio"] {
       opacity: 0;
+
+      + label {
+        padding-left: 10px;
+      }
     }
 
     input[type="radio"],
@@ -58,6 +63,15 @@
     cursor: pointer;
     transition: border 0.3s;
     .answerIcons();
+
+    &.long-text {
+      text-align: left;
+
+      .selection-icon {
+        top: 9px;
+        transform: none;
+      }
+    }
   }
 
   .selection-icon {

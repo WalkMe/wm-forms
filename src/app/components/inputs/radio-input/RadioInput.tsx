@@ -13,7 +13,9 @@ export default function RadioInput(props: ISelectInput) {
     checked,
     handleChange,
     iconType,
+    labelType,
   } = props;
+
   return (
     <>
       <input
@@ -26,7 +28,7 @@ export default function RadioInput(props: ISelectInput) {
         disabled={disabled}
         onChange={handleChange}
       />
-      <label htmlFor={id}>
+      <label className={labelType} htmlFor={id}>
         <span className="text">
           {iconType && getIconByType(iconType)}
           {value}

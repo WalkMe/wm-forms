@@ -13,6 +13,7 @@ export default function CheckboxInput(props: ISelectInput) {
     checked,
     handleChange,
     iconType,
+    labelType,
   } = props;
   return (
     <>
@@ -26,7 +27,7 @@ export default function CheckboxInput(props: ISelectInput) {
         disabled={disabled}
         onChange={handleChange}
       />
-      <label htmlFor={id}>
+      <label className={labelType} htmlFor={id}>
         <span className="selection-icon">
           {checked && getIconByType(Icon.Check)}
         </span>
