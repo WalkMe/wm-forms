@@ -19,6 +19,7 @@ interface IButtonProps {
   disabled?: boolean;
   buttonClicked?: (id: string) => void;
   children: ReactElement;
+  loading?: boolean;
 }
 
 export default function Button(props: IButtonProps) {
@@ -30,10 +31,10 @@ export default function Button(props: IButtonProps) {
     className = "",
     buttonClicked,
     disabled,
+    loading,
   } = props;
 
-  const disabledClass = disabled ? "disabled" : "";
-
+  const loadingClass = loading ? "loading" : "";
   const handleClick = () => {
     if (buttonClicked) {
       buttonClicked(id);
@@ -43,7 +44,7 @@ export default function Button(props: IButtonProps) {
   return (
     <button
       id={`button-${id}`}
-      className={`btn ${tmButtonType} ${disabledClass} ${className}`}
+      className={`btn ${tmButtonType} ${loadingClass} ${className}`}
       type={type}
       onClick={handleClick}
       disabled={disabled}

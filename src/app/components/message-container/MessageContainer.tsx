@@ -2,10 +2,10 @@ import React from "react";
 
 export default function MessageContainer({
   message,
-  className = "disabled-message",
+  className = "",
 }: {
   message: string;
-  className: string;
+  className?: string;
 }) {
   return (
     <div className={`container-message ${className}`}>

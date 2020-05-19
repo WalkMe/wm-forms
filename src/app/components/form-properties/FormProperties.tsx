@@ -38,7 +38,7 @@ export default function FormProperties({
       )}
       {config.passmark && (
         <PropertyLabel
-          iconType={Icon.Check}
+          iconType={Icon.Success}
           className="passmark-info"
           label="Passmark:"
           value={passmark}

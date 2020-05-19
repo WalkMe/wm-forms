@@ -22,6 +22,7 @@ export interface IFormContext {
   currentQuestion: IFormQuestionBE;
   questionsLength: number;
   submitted?: boolean;
+  loading?: boolean;
   selectedAnswers?: IFormAnswerBE[];
   currentScore?: number;
   selectedIndexes?: number[];
@@ -33,6 +34,7 @@ export default function FormScreen(props?: IFormScreenProps) {
   const { id, score } = props.match.params;
   const [selectedAnswers, setSelectedAnswers] = useState([] as IFormAnswerBE[]);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const currentId = parseInt(id);
   const currentIndex = currentId - 1;
 
@@ -44,6 +46,7 @@ export default function FormScreen(props?: IFormScreenProps) {
     questionsLength: questions.length,
     selectedAnswers,
     submitted,
+    loading,
   };
 
   const { calculateCompletion } = useFormManager(formGlobals);
@@ -60,7 +63,12 @@ export default function FormScreen(props?: IFormScreenProps) {
   const [formData, setFormData] = useState(form);
 
   const handleSubmitted = () => {
-    setSubmitted(true);
+    setLoading(true);
+
+    setTimeout(() => {
+      setSubmitted(true);
+      setLoading(false);
+    }, 2000);
   };
 
   const handleSelected = (selected: IFormAnswerBE[]) => {
@@ -70,13 +78,12 @@ export default function FormScreen(props?: IFormScreenProps) {
   useEffect(() => {
     setSubmitted(false);
     setSelectedAnswers([]);
-    setFormData(form);
   }, [id]);
 
   useEffect(() => {
     setFormData(form);
     setPercentCompletion(calculateCompletion());
-  }, [selectedAnswers, submitted]);
+  }, [id, selectedAnswers, submitted, loading]);
 
   return (
     <MasterScreen

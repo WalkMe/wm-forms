@@ -1,8 +1,21 @@
 import React from "react";
 import { ISelectInput } from "../input.interface";
+import useIconManager from "../../../hooks/useIconManager";
 
 export default function RadioInput(props: ISelectInput) {
-  const { id, value, name, className, disabled, checked, handleChange } = props;
+  const { getIconByType } = useIconManager();
+  const {
+    id,
+    value,
+    name,
+    className,
+    disabled,
+    checked,
+    handleChange,
+    iconType,
+    labelType,
+  } = props;
+
   return (
     <>
       <input
@@ -15,9 +28,9 @@ export default function RadioInput(props: ISelectInput) {
         disabled={disabled}
         onChange={handleChange}
       />
-      <label htmlFor={id}>
+      <label className={labelType} htmlFor={id}>
         <span className="text">
-          <span className="icon"></span>
+          {iconType && getIconByType(iconType)}
           {value}
         </span>
       </label>

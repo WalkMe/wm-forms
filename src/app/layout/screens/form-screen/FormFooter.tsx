@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import Confetti from "react-dom-confetti";
 
 import { IFormContext } from "./FormScreen";
 import Button, { ButtonType } from "../../../components/buttons/Button";
 import RouteButton from "../../../components/buttons/route-button/RouteButton";
 import useFormManager from "../../../hooks/useFormManager";
+import useViewManager from "../../../hooks/useViewManager";
 
 interface IFormFooterProps {
   onSubmitted: () => void;
@@ -23,17 +24,18 @@ export default function FormFooter({
   props: IFormFooterProps;
   formContext: IFormContext;
 }) {
+  const formCTA = useRef();
   const { onSubmitted } = props;
-
   const {
-    currentQuestion,
     selectedAnswers,
     submitted,
     questionsLength,
     currentId,
+    loading,
   } = formContext;
 
   const { calculateScore, isCorrectAnswers } = useFormManager(formContext);
+  const { animateCoreElements } = useViewManager();
 
   const isLastQuestion = currentId >= questionsLength;
   const formCTALabel = isLastQuestion ? "Finish" : "Next";
@@ -42,28 +44,40 @@ export default function FormFooter({
     ? `/summary/${calculateScore()}`
     : `/form/${currentId + 1}/${calculateScore()}`;
 
+  useEffect(() => {
+    if (formCTA.current) {
+      animateCoreElements({
+        elements: [formCTA.current],
+        animateClassName: "fadeInUp",
+        timeout: 3200,
+        remove: true,
+      });
+    }
+  }, [submitted]);
+
   return (
     <footer className="form-footer">
       <Confetti
         active={submitted && isCorrectAnswers()}
         config={confettiConfig}
       />
-      {!submitted ? (
-        <Button
-          id="form-submit"
-          tmButtonType={ButtonType.Default}
-          buttonClicked={onSubmitted}
-          disabled={!Boolean(selectedAnswers.length)}
-        >
-          <span className="btn-label">Submit</span>
-        </Button>
-      ) : (
+      {submitted ? (
         <RouteButton
           linkTo={formCTATargetLink}
           id="form-action"
           buttonType={ButtonType.Default}
           label={formCTALabel}
         />
+      ) : (
+        <Button
+          id="form-submit"
+          tmButtonType={ButtonType.Default}
+          buttonClicked={onSubmitted}
+          disabled={!Boolean(selectedAnswers.length)}
+          loading={loading}
+        >
+          <span className="btn-label">Submit</span>
+        </Button>
       )}
     </footer>
   );
