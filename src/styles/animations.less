@@ -261,3 +261,25 @@
   -webkit-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0);
 }
+
+@-webkit-keyframes loaderSpin {
+  0% {
+    opacity: 1;
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes loaderSpin {
+  0% {
+    opacity: 1;
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(360deg);
+  }
+}

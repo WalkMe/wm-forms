@@ -24,6 +24,7 @@ export default function useFormManager(
     selectedAnswers,
     selectedIndexes,
     currentQuestion,
+    loading,
   } = props;
 
   const isCorrectAnswers = () => {
@@ -48,7 +49,7 @@ export default function useFormManager(
     // current percentages calculation changing id current question submitted
     const submittedCalculation = (currentId / questionsLength / 1) * 100;
 
-    return submitted ? submittedCalculation : defaultCalculation;
+    return submitted && !loading ? submittedCalculation : defaultCalculation;
   };
 
   const calculateScore = () => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MutableRefObject } from "react";
 import Button, { ButtonType } from "../Button";
 import { Link, useLocation } from "react-router-dom";
 import useIconManager, { IconType } from "../../../hooks/useIconManager";

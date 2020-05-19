@@ -174,3 +174,24 @@
     text-align: center;
   }
 }
+
+.loaderIcon(@size: 15px, @opacity: 1,  @borderWidth: 2px, @top: 0, ) {
+  &:before {
+    content: "";
+    border: @borderWidth solid var(--bgLight);
+    border-top: @borderWidth solid var(--primary);
+    border-radius: 50%;
+    width: @size;
+    height: @size;
+    -webkit-animation: loaderSpin 2s linear infinite; /* Safari */
+    animation: loaderSpin 2s linear infinite;
+    animation-delay: 0.3s;
+    display: block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    top: @top;
+    opacity: 0;
+  }
+}
