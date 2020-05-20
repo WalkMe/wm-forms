@@ -14,11 +14,16 @@ export interface IResultsScreenProps
 
 export default function SummaryScreen(props: IResultsScreenProps) {
   const { appState } = useContext(AppContext);
+
   const score = parseInt(props.match.params.score);
 
-  const { successScreen, failScreen } = appState.form;
+  const { successScreen, failScreen, properties } = appState.form;
+  const isSuccess = score >= properties.passmark;
+  let screenProps = isSuccess ? successScreen : failScreen;
+  const summaryClassName = isSuccess ? "success" : "fail";
 
-  let screenProps = score === 100 ? successScreen : failScreen;
+  console.log("isSuccess ", isSuccess);
+
   screenProps.description = screenProps.description.replace(/&#39;/, "'");
 
   return (
@@ -26,6 +31,7 @@ export default function SummaryScreen(props: IResultsScreenProps) {
       isAnimatedScreen
       type={ScreenType.Summary}
       percentCompletion={100}
+      className={summaryClassName}
     >
       <>
         <ContentScreenTemplate {...screenProps} buttonTargetRoute="/" />
