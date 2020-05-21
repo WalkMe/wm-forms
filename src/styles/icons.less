@@ -6,6 +6,8 @@
   --doubleArrowsLeftIcon: url("../images/icons/double-arrows-left.svg");
   --checkMarkIcon: url("../images/icons/checkmark.svg");
   --closeIcon: url("../images/icons/close.svg");
+  --backArrowIcon: url("../images/icons/back-arrow.svg");
+  --doubleCheckMarkIcon: url("../images/icons/double-checkmarks.svg");
 
   position: relative;
   display: block;
@@ -15,6 +17,11 @@
   mask-repeat: no-repeat;
   background-repeat: no-repeat;
   transition: background-color 0.3s;
+  pointer-events: none;
+
+  &.tested {
+    .doubleCheckMarkIcon();
+  }
 
   &.back-arrow {
     .backArrowIcon();
@@ -57,7 +64,7 @@
   }
 
   &.sidebar-handler {
-    .doubleArrowsLeftIcon(var(--bgLight));
+    .doubleArrowsLeftIcon(var(--iconBGLight));
   }
 }
 
@@ -87,6 +94,14 @@
   mask-image: var(--doubleArrowsLeftIcon);
 }
 
+.doubleCheckMarkIcon(@color: var(--primary)) {
+  width: 15px;
+  height: 8px;
+  background-color: @color;
+  -webkit-mask-image: var(--doubleCheckMarkIcon);
+  mask-image: var(--doubleCheckMarkIcon);
+}
+
 .fillTriangleDown(@color: currentColor, @size: 4.5px) {
   width: 9px;
   height: 6px;
@@ -112,28 +127,11 @@
 }
 
 .backArrowIcon() {
-  &:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 10px;
-    width: 16px;
-    height: 1.3px;
-    background-color: currentColor;
-  }
-
-  &:after {
-    content: "";
-    position: absolute;
-    left: 1px;
-    top: 5px;
-    width: 10px;
-    height: 10px;
-    border-top: solid 1.3px currentColor;
-    border-right: solid 1.3px currentColor;
-    -webkit-transform: rotate(-135deg);
-    transform: rotate(-135deg);
-  }
+  height: 18px;
+  width: 20px;
+  background-color: var(--primary300);
+  -webkit-mask-image: var(--backArrowIcon);
+  mask-image: var(--backArrowIcon);
 }
 
 .checkIcon () {
@@ -163,8 +161,8 @@
 }
 
 .closeIcon (@color: currentColor) {
-  width: 11px;
-  height: 11px;
+  width: 9px;
+  height: 9px;
   background-color: @color;
   -webkit-mask-image: var(--closeIcon);
   mask-image: var(--closeIcon);
