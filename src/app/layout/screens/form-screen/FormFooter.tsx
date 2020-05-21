@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import Confetti from "react-dom-confetti";
 
+import { config } from "../../../config";
 import { IFormContext } from "./FormScreen";
 import Button, { ButtonType } from "../../../components/buttons/Button";
 import RouteButton from "../../../components/buttons/route-button/RouteButton";
@@ -57,10 +58,12 @@ export default function FormFooter({
 
   return (
     <footer className="form-footer">
-      <Confetti
-        active={submitted && isCorrectAnswers()}
-        config={confettiConfig}
-      />
+      {config.successConfetti && (
+        <Confetti
+          active={submitted && isCorrectAnswers()}
+          config={confettiConfig}
+        />
+      )}
       {submitted ? (
         <RouteButton
           linkTo={formCTATargetLink}
