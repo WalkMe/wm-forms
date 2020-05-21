@@ -68,7 +68,7 @@ export default function FormScreen(props?: IFormScreenProps) {
     setTimeout(() => {
       setSubmitted(true);
       setLoading(false);
-    }, 2000);
+    }, 500);
   };
 
   const handleSelected = (selected: IFormAnswerBE[]) => {

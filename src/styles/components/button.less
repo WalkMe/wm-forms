@@ -4,6 +4,18 @@
   --buttonSize: 30px;
 }
 
+.noBorder () {
+  border: none;
+  border-radius: 0;
+  max-width: fit-content;
+  background-color: transparent;
+
+  &:hover {
+    border: 0;
+    background-color: transparent;
+  }
+}
+
 .btn {
   position: relative;
   background-color: var(--primary100);
@@ -18,17 +30,22 @@
   cursor: pointer;
   transition: min-width 0.3s, border 0.3s, background-color 0.3s, color 0.3s;
 
+  &.link {
+    .noBorder();
+    color: var(--primary);
+    text-decoration: underline;
+  }
+
   &.default {
     &.loading {
       pointer-events: none;
       background-color: transparent;
       border: 2px solid var(--bgLight);
       border-top: 2px solid var(--primary);
-      animation: loaderSpin 2s linear infinite;
-      animation-delay: 0.3s;
       min-width: var(--buttonSize);
       width: var(--buttonSize);
       padding: 0;
+      .loaderSpin(0.5s);
 
       > * {
         opacity: 0;
@@ -38,15 +55,7 @@
   }
 
   &.no-border {
-    border: none;
-    border-radius: 0;
-    max-width: fit-content;
-    background-color: transparent;
-
-    &:hover {
-      border: 0;
-      background-color: transparent;
-    }
+    .noBorder();
   }
 
   a {

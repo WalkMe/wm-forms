@@ -9,6 +9,7 @@ export enum ButtonType {
   Help = "help",
   Visited = "visited",
   Completed = "completed",
+  Link = "link",
 }
 
 interface IButtonProps {

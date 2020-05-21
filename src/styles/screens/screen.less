@@ -19,18 +19,23 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+    padding-top: 50px;
     color: var(--neutral900);
     .fRegular();
     font-size: 14px;
+    max-height: 290px;
+    overflow-y: scroll;
 
     > * {
-      width: 100%;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      max-width: var(--screenContentMaxWidth);
-      text-align: center;
+      &:not(.btn) {
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        display: flex;
+        justify-content: center;
+        max-width: var(--screenContentMaxWidth);
+        text-align: center;
+      }
     }
 
     .btn {
@@ -40,11 +45,12 @@
     }
   }
 
-  .progress-bar-wrapper {
+  .footer {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
+    background-color: var(--white);
   }
 
   .animated-element {

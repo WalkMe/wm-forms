@@ -3,6 +3,7 @@ interface IConfig {
   debug_appVersion: number;
   timeoutIfUiTreeNotFound: number;
   searchInputDelay: number;
+  successConfetti?: boolean;
 }
 
 export const config: IConfig = {
@@ -10,4 +11,5 @@ export const config: IConfig = {
   debug_appVersion: 0.12,
   timeoutIfUiTreeNotFound: 10000,
   searchInputDelay: 250,
+  successConfetti: true,
 };

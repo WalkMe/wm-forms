@@ -3,4 +3,5 @@ export enum ScreenType {
   Welcome = "welcome",
   Form = "form",
   Summary = "summary",
+  Overview = "overview",
 }

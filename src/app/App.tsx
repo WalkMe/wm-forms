@@ -23,11 +23,12 @@ import {
 import useAppManager from "./hooks/useAppManager";
 import InformationScreen from "./layout/screens/information-screen/InformationScreen";
 import Debug from "./layout/debug/Debug";
-
-import "../styles/index.less";
 import WelcomeScreen from "./layout/screens/welcome-screen/WelcomeScreen";
 import SummaryScreen from "./layout/screens/summary-screen/SummaryScreen";
 import FormScreen from "./layout/screens/form-screen/FormScreen";
+import OverviewScreen from "./layout/screens/overview-screen/OverviewScreen";
+
+import "../styles/index.less";
 
 export const AppContext = createContext<IAppContext | null>(null);
 
@@ -157,6 +158,7 @@ export default function App() {
                         path="/summary/:score?"
                         component={SummaryScreen}
                       />
+                      <Route path="/overview" component={OverviewScreen} />
                     </Switch>
                   </CSSTransition>
                 </TransitionGroup>
