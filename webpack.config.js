@@ -1,5 +1,12 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+
+const shareByVersion = (module) => {
+  const vendorVersion = require(`${module}/package.json`).version;
+  const trimmedVersion = vendorVersion.substring(0, vendorVersion.length - 2);
+  return { [trimmedVersion]: module };
+};
 
 module.exports = {
   mode: "development",
@@ -14,7 +21,10 @@ module.exports = {
   devServer: {
     contentBase: "./src",
     compress: true,
-    port: 9000,
+    port: 9001,
+  },
+  output: {
+    publicPath: "http://localhost:9001/",
   },
   devtool: "inline-source-map",
   module: {
@@ -50,10 +60,22 @@ module.exports = {
       },
     ],
   },
-  // add a custom index.html as the template
   plugins: [
+    // add a custom index.html as the template
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "src", "index.html"),
+    }),
+    new ModuleFederationPlugin({
+      name: "wmForms",
+      filename: "remoteEntry.js",
+      exposes: {
+        Form: "./src/app/App",
+      },
+      shared: Object.assign(
+        {},
+        shareByVersion("react"),
+        shareByVersion("react-dom")
+      ),
     }),
   ],
 };
