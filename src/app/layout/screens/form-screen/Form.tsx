@@ -71,7 +71,7 @@ export default function Form({
 
   return (
     <div className={`form-answers ${formClass}`}>
-      {isMultipleSelect && <MessageContainer message={multipleSelectMsg} />}
+      <MessageContainer message={isMultipleSelect ? multipleSelectMsg : ""} />
       <ul className={`options`}>
         {answers.map((answer, index) => {
           const inputData = getInput({ type, option: answer, index });
