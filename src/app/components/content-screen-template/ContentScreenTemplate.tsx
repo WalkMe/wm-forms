@@ -9,18 +9,21 @@ import { ButtonType } from "../buttons/Button";
 interface IContentScreenTemplate {
   type?: ScreenType;
   buttonTargetRoute?: string;
+  buttonType?: ButtonType;
 }
 
 export default function ContentScreenTemplate(
   props: IFormScreenBE & IContentScreenTemplate
 ) {
-  const { title, description, buttonText, buttonTargetRoute = "/" } = props;
+  const {
+    title,
+    description,
+    buttonText,
+    buttonTargetRoute = "/",
+    buttonType = ButtonType.Default,
+  } = props;
   const includeContent = Boolean(description);
   const includeFooter = Boolean(buttonText);
-
-  const handleClick = () => {
-    console.log("ContentTemplate button clicked");
-  };
 
   return (
     <>
@@ -40,7 +43,7 @@ export default function ContentScreenTemplate(
         <footer className="temp-footer">
           <RouteButton
             id={`temp-button`}
-            buttonType={ButtonType.Default}
+            buttonType={buttonType}
             label={buttonText}
             linkTo={buttonTargetRoute}
           ></RouteButton>

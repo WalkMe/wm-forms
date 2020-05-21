@@ -4,6 +4,18 @@
   --buttonSize: 30px;
 }
 
+.noBorder () {
+  border: none;
+  border-radius: 0;
+  max-width: fit-content;
+  background-color: transparent;
+
+  &:hover {
+    border: 0;
+    background-color: transparent;
+  }
+}
+
 .btn {
   position: relative;
   background-color: var(--primary100);
@@ -17,6 +29,12 @@
   padding: 0 20px;
   cursor: pointer;
   transition: min-width 0.3s, border 0.3s, background-color 0.3s, color 0.3s;
+
+  &.link {
+    .noBorder();
+    color: var(--primary);
+    text-decoration: underline;
+  }
 
   &.default {
     &.loading {
@@ -38,15 +56,7 @@
   }
 
   &.no-border {
-    border: none;
-    border-radius: 0;
-    max-width: fit-content;
-    background-color: transparent;
-
-    &:hover {
-      border: 0;
-      background-color: transparent;
-    }
+    .noBorder();
   }
 
   a {

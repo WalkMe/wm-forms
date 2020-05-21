@@ -22,10 +22,6 @@ export default function FormProperties({
   const { questions, properties } = appState.form;
   const { passmark } = properties;
 
-  if (children) {
-    return <div className="form-properties">{children}</div>;
-  }
-
   return (
     <div className="form-properties">
       {config.questions && (
@@ -37,13 +33,14 @@ export default function FormProperties({
         </div>
       )}
       {config.passmark && (
-        <PropertyLabel
-          iconType={Icon.Success}
-          className="passmark-info"
-          label="Passmark:"
-          value={passmark}
-        />
+        <PropertyLabel iconType={Icon.Success} className="passmark-info">
+          <>
+            <span className="label">Passmark: </span>
+            <span className="text">{passmark}</span>
+          </>
+        </PropertyLabel>
       )}
+      {children && <div className="additional-properties">{children}</div>}
     </div>
   );
 }

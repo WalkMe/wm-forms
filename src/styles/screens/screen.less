@@ -25,12 +25,14 @@
     font-size: 14px;
 
     > * {
-      width: 100%;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      max-width: var(--screenContentMaxWidth);
-      text-align: center;
+      &:not(.btn) {
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        max-width: var(--screenContentMaxWidth);
+        text-align: center;
+      }
     }
 
     .btn {
