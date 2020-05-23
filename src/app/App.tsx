@@ -77,11 +77,21 @@ export default function App() {
       let informationScreenData = informationScreen as IInformationScreenData;
       const platformTypeParam = getUrlParamValueByName("platform");
       const teachmeParam = getUrlParamValueByName("teachme");
+      const courseIdParam = getUrlParamValueByName("courseId");
 
-      if (!platformTypeParam || !teachmeParam) {
+      if (!platformTypeParam || !teachmeParam || !courseIdParam) {
+        let errorMsg = "";
+        if (!platformTypeParam) {
+          errorMsg = PLATFORM_ERROR;
+        } else if (!teachmeParam) {
+          errorMsg = TEACHME_ERROR;
+        } else if (!courseIdParam) {
+          errorMsg =
+            "Teachme did not return data, try setting a query param for example `&courseId=1`";
+        }
         informationScreenData = {
           type: InformationScreenType.NoConnection,
-          error: !platformTypeParam ? PLATFORM_ERROR : TEACHME_ERROR,
+          error: errorMsg,
         };
         setInformationScreen(informationScreenData);
       } else {
@@ -99,14 +109,30 @@ export default function App() {
           // TODO: should change
           const tmCourses = await teachme.getContent();
           const currentCourse = tmCourses.find((course: any, index: number) => {
-            if (index === 0) {
+            const courseIdIndex = parseInt(courseIdParam) - 1;
+            if (index === courseIdIndex) {
               return course;
             }
           });
 
-          const { quiz } = currentCourse;
+          const currentCourseQuizExist =
+            currentCourse && currentCourse.quiz.questions;
 
-          console.log("quiz ", quiz);
+          if (!currentCourseQuizExist) {
+            const courseErrorMsg = !currentCourse.quiz.questions
+                ? "This course doesn't include quiz"
+                : "Teachme did not return course data",
+              informationScreenData = {
+                type: InformationScreenType.NoConnection,
+                error: !currentCourse
+                  ? "Teachme did not return course data"
+                  : "This course doesn't include quiz",
+              };
+            setInformationScreen(informationScreenData);
+            throw new Error(courseErrorMsg);
+          }
+
+          console.log("currentCourse.quiz ", currentCourse.quiz);
 
           // Cleanups before set state
           timeout = setTimeout(() => {
@@ -120,7 +146,7 @@ export default function App() {
             ...appState,
             initiated: true,
             platformType: platformTypeParam,
-            form: quiz,
+            form: currentCourseQuizExist && currentCourse.quiz,
           });
         } catch (err) {
           console.error(err);
