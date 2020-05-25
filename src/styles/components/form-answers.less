@@ -1,6 +1,6 @@
 @import "../variables.less";
 
-.answerIcons {
+.answerIcons() {
   .text {
     position: relative;
     padding: 0 20px;
@@ -15,6 +15,7 @@
     }
   }
 }
+
 .form-answers {
   position: relative;
   margin-bottom: 20px;
@@ -104,21 +105,19 @@
     }
   }
 
-  /*
-  * Reset radio / checkbox styles
-  */
-  input[type="radio"]:disabled,
-  input[type="checkbox"]:disabled {
-    + label {
-      cursor: auto;
-      .selection-icon {
-        display: none;
-      }
-    }
-  }
-
   input[type="radio"],
   input[type="checkbox"] {
+    &:disabled,
+    &:disabled {
+      + label {
+        cursor: auto;
+
+        .selection-icon {
+          display: none;
+        }
+      }
+    }
+
     &:not(:disabled) {
       + label {
         .hoverFloating();
@@ -141,14 +140,6 @@
     &.unselected-success {
       + label {
         border: 1px solid var(--success);
-
-        .text .icon {
-          &:before {
-            margin-left: 0px;
-            margin-top: 3px;
-            width: 11px;
-          }
-        }
       }
     }
 
