@@ -7,7 +7,7 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    line-height: 14px;
+    line-height: 18px;
 
     .icon {
       position: absolute;
@@ -21,8 +21,6 @@
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  max-height: 270px;
-  overflow-y: scroll;
 
   > * {
     max-width: var(--screenContentMaxWidth);
@@ -79,6 +77,12 @@
         top: 9px;
         transform: none;
       }
+
+      .text {
+        .icon {
+          top: 5px;
+        }
+      }
     }
   }
 
@@ -94,15 +98,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    .icon.check {
-      margin-left: -2px;
-
-      &:before {
-        border-bottom: solid 1px var(--primary);
-        border-left: solid 1px var(--primary);
-      }
-    }
   }
 
   input[type="radio"],
