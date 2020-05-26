@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "entry": "./src/index.js",
     "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": true,
