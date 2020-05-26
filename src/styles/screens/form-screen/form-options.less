@@ -1,6 +1,6 @@
-@import "../variables.less";
+@import "../../variables.less";
 
-.answerIcons() {
+.optionIcons() {
   .text {
     position: relative;
     padding: 0 20px;
@@ -16,7 +16,7 @@
   }
 }
 
-.form-answers {
+.form-options {
   position: relative;
   margin-bottom: 20px;
   display: flex;
@@ -68,7 +68,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: border 0.3s, background-color 0.3s;
-    .answerIcons();
+    .optionIcons();
 
     &.long-text {
       text-align: left;
@@ -119,6 +119,12 @@
       }
     }
 
+    // selected option
+    &:checked + label {
+      border: 1px solid var(--primary);
+    }
+
+    // hiding icon for unselected option
     &.unselected-error {
       + label {
         .text .icon {
@@ -127,10 +133,7 @@
       }
     }
 
-    &:checked + label {
-      border: 1px solid var(--primary);
-    }
-
+    // correct option - selected & unselected styles
     &:checked.success,
     &.unselected-success {
       + label {
@@ -138,12 +141,12 @@
       }
     }
 
-    &:checked.success {
-      + label {
-        background-color: var(--success200);
-      }
+    // correct option - selected styles
+    &:checked.success + label {
+      background-color: var(--success200);
     }
 
+    // wrong option - selected styles
     &:checked.error {
       + label {
         border: 1px solid var(--error);

@@ -20,15 +20,15 @@ export default function SummaryScreen(props: IResultsScreenProps) {
   const { appState } = useContext(AppContext);
   const score = parseInt(props.match.params.score);
   const { overviewButtonLabel } = localization;
-
   const { successScreen, failScreen, properties } = appState.form;
   const { passmark } = properties;
   const isSuccess = score >= passmark;
-
   const screenProps = isSuccess ? successScreen : failScreen;
   const summaryClassName = isSuccess ? "success" : "fail";
 
   if (isSuccess) {
+    // temporary encoding solution
+    // TODO: discuss encoding issues
     screenProps.description = screenProps.description.replace(/&#39;/, "'");
   }
 

@@ -53,12 +53,13 @@ export default function FormScreen(props?: IFormScreenProps) {
   const { appState } = useContext(AppContext);
   const { questions } = appState.form;
   const { id, score } = props.match.params;
+
   const [selectedAnswers, setSelectedAnswers] = useState([] as IFormAnswerBE[]);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const currentId = parseInt(id);
   const currentIndex = currentId - 1;
-
   const formGlobals = {
     currentId,
     currentIndex,
@@ -71,7 +72,6 @@ export default function FormScreen(props?: IFormScreenProps) {
   };
 
   const { calculateCompletion } = useFormManager(formGlobals);
-
   const [percentCompletion, setPercentCompletion] = useState(
     calculateCompletion()
   );
@@ -84,8 +84,11 @@ export default function FormScreen(props?: IFormScreenProps) {
   const [formData, setFormData] = useState(form);
 
   const handleSubmitted = () => {
+    /**
+     * fake loading button
+     * Preparation for future asynchronous behavior
+     */
     setLoading(true);
-
     setTimeout(() => {
       setSubmitted(true);
       setLoading(false);
@@ -96,11 +99,13 @@ export default function FormScreen(props?: IFormScreenProps) {
     setSelectedAnswers(selected);
   };
 
+  /** reset form */
   useEffect(() => {
     setSubmitted(false);
     setSelectedAnswers([]);
   }, [id]);
 
+  /** updating data when each of dependencies change */
   useEffect(() => {
     setFormData(form);
     setPercentCompletion(calculateCompletion());

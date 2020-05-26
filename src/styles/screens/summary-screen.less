@@ -6,22 +6,18 @@
   }
 
   .header {
-    height: 220px;
-    background-position: center;
+    height: 170px;
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: top;
   }
 
-  &.fail {
-    .header {
-      background-image: var(--summaryFailBG);
-    }
+  &.fail .header {
+    background-image: var(--summaryFailBG);
   }
 
-  &.success {
-    .header {
-      background-image: var(--summarySuccessBG);
-    }
+  &.success .header {
+    background-image: var(--summarySuccessBG);
   }
 
   .screen-content {
