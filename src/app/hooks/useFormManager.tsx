@@ -77,12 +77,13 @@ export default function useFormManager(
     let selectedResultsClass = "unselected";
     const isSelected = selectedIndexes.indexOf(index) > -1;
     const resultsIcon = option.isCorrect ? Icon.Success : Icon.Error;
+
     if (submitted) {
       selectedResultsClass = isSelected
         ? resultsIcon
         : `unselected-${resultsIcon}`;
-      //unselectedResultsClass = option.isCorrect ? "unselected-success" : "";
     }
+
     return {
       id: optionId,
       value: option.text,

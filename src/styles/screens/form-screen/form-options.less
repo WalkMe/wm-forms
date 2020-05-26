@@ -1,13 +1,13 @@
-@import "../variables.less";
+@import "../../variables.less";
 
-.answerIcons {
+.optionIcons() {
   .text {
     position: relative;
     padding: 0 20px;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    line-height: 14px;
+    line-height: 18px;
 
     .icon {
       position: absolute;
@@ -15,13 +15,12 @@
     }
   }
 }
-.form-answers {
+
+.form-options {
   position: relative;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  max-height: 270px;
-  overflow-y: scroll;
 
   > * {
     max-width: var(--screenContentMaxWidth);
@@ -69,7 +68,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: border 0.3s, background-color 0.3s;
-    .answerIcons();
+    .optionIcons();
 
     &.long-text {
       text-align: left;
@@ -77,6 +76,12 @@
       .selection-icon {
         top: 9px;
         transform: none;
+      }
+
+      .text {
+        .icon {
+          top: 5px;
+        }
       }
     }
   }
@@ -93,38 +98,33 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    .icon.check {
-      margin-left: -2px;
-
-      &:before {
-        border-bottom: solid 1px var(--primary);
-        border-left: solid 1px var(--primary);
-      }
-    }
-  }
-
-  /*
-  * Reset radio / checkbox styles
-  */
-  input[type="radio"]:disabled,
-  input[type="checkbox"]:disabled {
-    + label {
-      cursor: auto;
-      .selection-icon {
-        display: none;
-      }
-    }
   }
 
   input[type="radio"],
   input[type="checkbox"] {
+    &:disabled,
+    &:disabled {
+      + label {
+        cursor: auto;
+
+        .selection-icon {
+          display: none;
+        }
+      }
+    }
+
     &:not(:disabled) {
       + label {
         .hoverFloating();
       }
     }
 
+    // selected option
+    &:checked + label {
+      border: 1px solid var(--primary);
+    }
+
+    // hiding icon for unselected option
     &.unselected-error {
       + label {
         .text .icon {
@@ -133,31 +133,20 @@
       }
     }
 
-    &:checked + label {
-      border: 1px solid var(--primary);
-    }
-
+    // correct option - selected & unselected styles
     &:checked.success,
     &.unselected-success {
       + label {
         border: 1px solid var(--success);
-
-        .text .icon {
-          &:before {
-            margin-left: 0px;
-            margin-top: 3px;
-            width: 11px;
-          }
-        }
       }
     }
 
-    &:checked.success {
-      + label {
-        background-color: var(--success200);
-      }
+    // correct option - selected styles
+    &:checked.success + label {
+      background-color: var(--success200);
     }
 
+    // wrong option - selected styles
     &:checked.error {
       + label {
         border: 1px solid var(--error);

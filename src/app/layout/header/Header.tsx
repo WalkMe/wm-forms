@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, ReactElement } from "react";
-
+import React, { useEffect, useRef, ReactElement, useState } from "react";
+import { config } from "../../config";
 import useViewManager from "../../hooks/useViewManager";
 import { ScreenType } from "../../interfaces/screen/screen.interface";
 
@@ -11,7 +11,8 @@ export interface IHeaderProps {
 export default function Header(props: IHeaderProps) {
   const { children, type = ScreenType.Default } = props;
   const { animateCoreElements } = useViewManager();
-  const innerHeader = useRef();
+  const [headerPosition, setHeaderPosition] = useState("");
+  const innerHeader = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (children) {
@@ -20,11 +21,17 @@ export default function Header(props: IHeaderProps) {
         animateClassName: "fadeInDown",
         timeout: 300,
       });
+
+      // header position - depend on header content height
+      const headerHeight = innerHeader.current.offsetHeight;
+      setHeaderPosition(
+        headerHeight > config.formHeaderMaxHeight ? "static" : "sticky"
+      );
     }
   }, [children]);
 
   return (
-    <div className={`header ${type}`}>
+    <div className={`header ${type} ${headerPosition}`}>
       {children && (
         <div ref={innerHeader} className="header-inner topElement">
           {children}

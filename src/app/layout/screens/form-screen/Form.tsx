@@ -5,6 +5,7 @@ import {
 } from "../../../interfaces/form/form.interface";
 import { IFormContext } from "./FormScreen";
 
+import { config } from "../../../config";
 import localization from "../../../consts/localization";
 import RadioInput from "../../../components/inputs/radio-input/RadioInput";
 import CheckboxInput from "../../../components/inputs/checkbox-input/CheckboxInput";
@@ -22,25 +23,22 @@ export default function Form({
   props: IFormProps;
   formContext: IFormContext;
 }) {
+  const { onSelected } = props;
   const [selectedIndexes, setSelectedIndexes] = useState([]);
   const { getInput } = useFormManager({ ...formContext, selectedIndexes });
-  const { onSelected } = props;
   const { currentQuestion, currentId } = formContext;
   const { type } = currentQuestion;
+
   const isSingleSelect = type === QuestionType.SingleSelect;
   const isMultipleSelect = type === QuestionType.MultipleSelect;
   const { multipleSelectMsg } = localization;
   const formClass = isSingleSelect ? "single" : "multiple";
-  // const fakeAnswers = [
-  //   {
-  //     isCorrect: true,
-  //     text:
-  //       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
-  //   },
-  //   { isCorrect: false, text: "This is not the correct answer" },
-  // ];
-  const answers = currentQuestion.answers;
-  const isLongTextAnswer = answers.some((answer) => answer.text.length > 50);
+
+  // In case one of the answers characters greater than configuration property
+  const options = currentQuestion.answers;
+  const isLongTextAnswer = options.some(
+    (option) => option.text.length > config.answerMinimumCharacters
+  );
 
   const handleChange = (index: number) => {
     if (isSingleSelect) {
@@ -62,19 +60,20 @@ export default function Form({
     setSelectedIndexes([]);
   }, [currentId]);
 
+  /** managing   */
   useEffect(() => {
     const selectedAnswers = selectedIndexes.map((index) => {
-      return answers[index];
+      return options[index];
     });
     onSelected(selectedAnswers);
   }, [selectedIndexes]);
 
   return (
-    <div className={`form-answers ${formClass}`}>
+    <div className={`form-options ${formClass}`}>
       <MessageContainer message={isMultipleSelect ? multipleSelectMsg : ""} />
       <ul className={`options`}>
-        {answers.map((answer, index) => {
-          const inputData = getInput({ type, option: answer, index });
+        {options.map((option, index) => {
+          const inputData = getInput({ type, option, index });
           const input = {
             ...inputData,
             labelType: isLongTextAnswer ? "long-text" : "",
@@ -82,7 +81,7 @@ export default function Form({
           };
 
           return (
-            <li className="option" key={`answer-${index}`}>
+            <li className="option" key={`option-${index}`}>
               {isSingleSelect ? (
                 <RadioInput {...input} />
               ) : (

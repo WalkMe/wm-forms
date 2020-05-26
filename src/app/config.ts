@@ -4,6 +4,10 @@ interface IConfig {
   timeoutIfUiTreeNotFound: number;
   searchInputDelay: number;
   successConfetti?: boolean;
+  // UI configuration
+  appSize: number;
+  formHeaderMaxHeight: number;
+  answerMinimumCharacters: number;
 }
 
 export const config: IConfig = {
@@ -12,4 +16,7 @@ export const config: IConfig = {
   timeoutIfUiTreeNotFound: 10000,
   searchInputDelay: 250,
   successConfetti: true,
+  appSize: 500,
+  formHeaderMaxHeight: 150,
+  answerMinimumCharacters: 50,
 };
