@@ -1,55 +1,52 @@
 import React, { useRef, useEffect } from "react";
-import useViewManager from "../../../hooks/useViewManager";
+
+import localization from "../../../consts/localization";
 
 import {
   IInformationScreenData,
   InformationScreenType,
 } from "../../../interfaces/information-screen/informationScreen.interface";
 
-const DEFAULT_ERROR = "Something is wrong, please try again";
+import useViewManager from "../../../hooks/useViewManager";
 
 export default function InformationScreen(props: IInformationScreenData) {
   const { type, error } = props;
   const loading = useRef(null);
-  const noConnection = useRef(null);
+  const noResults = useRef(null);
   const isLoading = type === InformationScreenType.Loading;
-  const isNoConnection = type === InformationScreenType.NoConnection;
+  const isError = type === InformationScreenType.Error;
+  const {
+    informationScreen: { defaultErrorMassage, loadingMassage },
+  } = localization;
+
   const { animateCoreElements } = useViewManager();
 
   useEffect(() => {
-    if (isLoading) {
-      animateCoreElements({
-        elements: [loading.current],
-        animateClassName: "fadeInUp",
-        timeout: 300,
-      });
-    } else if (isNoConnection) {
-      animateCoreElements({
-        elements: [noConnection.current],
-        animateClassName: "fadeInUp",
-        timeout: 300,
-      });
+    animateCoreElements({
+      elements: [noResults.current, loading.current],
+      animateClassName: "fadeInUp",
+      timeout: 300,
+    });
+
+    if (type === InformationScreenType.Error) {
+      if (error) {
+        console.error(error);
+      } else {
+        console.error(defaultErrorMassage);
+      }
     }
   }, [type]);
-
-  if (type === InformationScreenType.Error) {
-    if (error) {
-      console.error(error);
-    } else {
-      console.error(DEFAULT_ERROR);
-    }
-  }
 
   return (
     <div className="information-screen">
       {isLoading && (
         <div ref={loading} className="screen info loading">
           <div className="preloader"></div>
-          <span>Loading</span>
+          <span>{loadingMassage}</span>
         </div>
       )}
-      {isNoConnection && (
-        <div ref={noConnection} className="screen info no-connection">
+      {isError && (
+        <div ref={noResults} className="screen info no-results">
           <svg
             viewBox="0 0 88 66"
             fill="none"
@@ -77,14 +74,7 @@ export default function InformationScreen(props: IInformationScreenData) {
               strokeLinejoin="round"
             />
           </svg>
-          <span className="title">
-            WalkMe can’t load due to internet connection
-          </span>
-          {}
-          <span>
-            {error ||
-              "Check your connection and try again or contact your IT department"}
-          </span>
+          <span>{defaultErrorMassage}</span>
         </div>
       )}
     </div>

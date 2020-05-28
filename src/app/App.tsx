@@ -4,11 +4,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import walkme, { ISdk } from "@walkme/sdk";
 
-import {
-  PLATFORM_ERROR,
-  TEACHME_ERROR,
-  defaultInitialAppState,
-} from "./consts/app";
+import { defaultInitialAppState } from "./consts/app";
 import { config } from "./config";
 
 import {
@@ -68,33 +64,33 @@ export default function App() {
     }
   }, [initiated]);
 
+  const isLoadedInIframe = () => {
+    try {
+      return window.self !== window.top;
+    } catch (e) {
+      return true;
+    }
+  };
+
+  const handlePostMessage = (event: MessageEvent) => {
+    if (event.data.type === "loadData") {
+      setAppState({
+        ...appState,
+        initiated: true,
+        form: event.data.data,
+      });
+    }
+  };
+
   /**
    * Initial SDK and
    */
   useEffect(() => {
-    (async () => {
-      let timeout;
-      let informationScreenData = informationScreen as IInformationScreenData;
-      const platformTypeParam = getUrlParamValueByName("platform");
-      const teachmeParam = getUrlParamValueByName("teachme");
-      const courseIdParam = getUrlParamValueByName("courseId");
+    if (!isLoadedInIframe()) {
+      (async () => {
+        const platformTypeParam = getUrlParamValueByName("platform");
+        const courseIdParam = getUrlParamValueByName("courseId");
 
-      if (!platformTypeParam || !teachmeParam || !courseIdParam) {
-        let errorMsg = "";
-        if (!platformTypeParam) {
-          errorMsg = PLATFORM_ERROR;
-        } else if (!teachmeParam) {
-          errorMsg = TEACHME_ERROR;
-        } else if (!courseIdParam) {
-          errorMsg =
-            "Teachme did not return data, try setting a query param for example `&courseId=1`";
-        }
-        informationScreenData = {
-          type: InformationScreenType.NoConnection,
-          error: errorMsg,
-        };
-        setInformationScreen(informationScreenData);
-      } else {
         try {
           await walkme.init();
           console.log("WalkMe ready =>", walkme);
@@ -104,66 +100,75 @@ export default function App() {
             setWalkmeSDK(walkme);
           }
 
-          const teachme = await walkme.apps.getApp("teachme");
+          const teachmeApp = await walkme.apps.getApp("teachme");
 
-          // TODO: should change
-          const tmCourses = await teachme.getContent();
-          const currentCourse = tmCourses.find((course: any, index: number) => {
-            const courseIdIndex = parseInt(courseIdParam) - 1;
-            if (index === courseIdIndex) {
-              return course;
-            }
-          });
-
-          const currentCourseQuizExist =
-            currentCourse && currentCourse.quiz.questions;
-
-          if (!currentCourseQuizExist) {
-            const courseErrorMsg = !currentCourse.quiz.questions
-                ? "This course doesn't include quiz"
-                : "Teachme did not return course data",
-              informationScreenData = {
-                type: InformationScreenType.NoConnection,
-                error: !currentCourse
-                  ? "Teachme did not return course data"
-                  : "This course doesn't include quiz",
-              };
-            setInformationScreen(informationScreenData);
-            throw new Error(courseErrorMsg);
+          // teachmeApp Guard
+          if (!teachmeApp) {
+            throw new Error("Something is wrong, No teachmeApp");
           }
 
-          console.log("currentCourse.quiz ", currentCourse.quiz);
+          const data = await walkme.content.getContent({
+            types: ["teachme"],
+            segmentation: true,
+          });
 
-          // Cleanups before set state
-          timeout = setTimeout(() => {
-            throw new Error(
-              `Search timeout, could not get uiTree in ${config.timeoutIfUiTreeNotFound}ms`
-            );
-          }, config.timeoutIfUiTreeNotFound);
+          const tmCourses = (data as any).teachme;
 
-          clearTimeout(timeout);
+          let currentCourse = null;
+
+          if (tmCourses) {
+            console.log("tmCourses =>", tmCourses);
+
+            currentCourse = tmCourses.find((course: any, index: number) => {
+              const courseIdIndex = parseInt(courseIdParam) - 1;
+              if (index === courseIdIndex) {
+                return course;
+              }
+            });
+          } else {
+            throw new Error("Something is wrong, No tmCourses");
+          }
+
+          if (currentCourse && currentCourse.quiz.questions) {
+            console.log("currentCourse ", currentCourse);
+          } else {
+            throw new Error("Something is wrong, No Quiz");
+          }
+
           setAppState({
             ...appState,
             initiated: true,
             platformType: platformTypeParam,
-            form: currentCourseQuizExist && currentCourse.quiz,
+            form: currentCourse.quiz,
           });
         } catch (err) {
-          console.error(err);
-          clearTimeout(timeout);
+          if (Boolean(err)) {
+            setTimeout(() => {
+              setInformationScreen((prev) => {
+                return {
+                  ...prev,
+                  type: InformationScreenType.Error,
+                  error: err,
+                };
+              });
+            }, 300);
+          }
         }
-      }
-    })();
+      })();
+    }
+
+    window.addEventListener("message", handlePostMessage);
+    return () => window.removeEventListener("message", handlePostMessage);
   }, []);
 
   return (
-    <HashRouter>
-      <Route
-        render={({ location }) => (
-          <div className={`app show wrapper`}>
-            {informationScreen ? (
-              <InformationScreen {...informationScreen} />
-            ) : (
+    <div className={`app show wrapper`}>
+      {informationScreen ? (
+        <InformationScreen {...informationScreen} />
+      ) : (
+        <HashRouter>
+          <Route
+            render={({ location }) => (
               <AppContext.Provider
                 value={{
                   walkmeSDK,
@@ -190,9 +195,9 @@ export default function App() {
                 </TransitionGroup>
               </AppContext.Provider>
             )}
-          </div>
-        )}
-      />
-    </HashRouter>
+          />
+        </HashRouter>
+      )}
+    </div>
   );
 }
