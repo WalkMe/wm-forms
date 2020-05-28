@@ -6,6 +6,7 @@ export interface IAppState {
   debugError: string;
   platformType: string;
   form: IFormBE;
+  isLoadedInIframe?: boolean;
 }
 
 export interface sidebarOptions {

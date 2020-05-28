@@ -78,6 +78,7 @@ export default function App() {
         ...appState,
         initiated: true,
         form: event.data.data,
+        isLoadedInIframe: isLoadedInIframe(),
       });
     }
   };

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 
 import { AppContext } from "../../../App";
@@ -20,17 +20,14 @@ export default function SummaryScreen(props: IResultsScreenProps) {
   const { appState } = useContext(AppContext);
   const score = parseInt(props.match.params.score);
   const { overviewButtonLabel } = localization;
-  const { successScreen, failScreen, properties } = appState.form;
+  const {
+    form: { successScreen, failScreen, properties },
+    isLoadedInIframe,
+  } = appState;
   const { passmark } = properties;
   const isSuccess = score >= passmark;
-  const screenProps = isSuccess ? successScreen : failScreen;
+  const screen = isSuccess ? successScreen : failScreen;
   const summaryClassName = isSuccess ? "success" : "fail";
-
-  if (isSuccess) {
-    // temporary encoding solution
-    // TODO: discuss encoding issues
-    screenProps.description = screenProps.description.replace(/&#39;/, "'");
-  }
 
   return (
     <MasterScreen
@@ -41,7 +38,12 @@ export default function SummaryScreen(props: IResultsScreenProps) {
     >
       <>
         <ContentScreenTemplate
-          {...screenProps}
+          // {...screen}
+          // temporary solution preventing render RouteButton
+          title={screen.title}
+          description={screen.description}
+          buttons={!isLoadedInIframe ? screen.buttons : undefined}
+          buttonText={!isLoadedInIframe ? screen.buttonText : undefined}
           buttonTargetRoute="/"
           buttonType={ButtonType.Link}
         />

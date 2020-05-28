@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { IFormScreenBE } from "../../interfaces/form/form.interface";
 import { ScreenType } from "../../interfaces/screen/screen.interface";
 
 import RouteButton from "../buttons/route-button/RouteButton";
 import { ButtonType } from "../buttons/Button";
+import SummaryScreen from "../../layout/screens/summary-screen/SummaryScreen";
 
 interface IContentScreenTemplate {
   type?: ScreenType;
@@ -24,10 +25,10 @@ export default function ContentScreenTemplate(
     buttonType = ButtonType.Default,
   } = props;
   const includeContent = Boolean(description);
-  const includeFooter = buttons.length || Boolean(buttonText);
+  const includeFooter = buttons || Boolean(buttonText);
 
   const getLabel = () => {
-    return buttons.length ? buttons[0].text : buttonText;
+    return buttons && buttons.length ? buttons[0].text : buttonText;
   };
 
   return (
