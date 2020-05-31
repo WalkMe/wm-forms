@@ -12,15 +12,16 @@ export default function useViewManager() {
     timeout: number;
     remove?: boolean;
   }) => {
+    const currentElements = [...elements].filter((el) => Boolean(el));
     setTimeout(() => {
-      elements.map((el) => {
+      currentElements.map((el) => {
         el.classList.add(animateClassName);
       });
     }, timeout);
 
     if (remove) {
       setTimeout(() => {
-        elements.map((el) => {
+        currentElements.map((el) => {
           el.classList.remove(animateClassName);
         });
       }, 2000);

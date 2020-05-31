@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { IFormScreenBE } from "../../interfaces/form/form.interface";
 import { ScreenType } from "../../interfaces/screen/screen.interface";
 
 import RouteButton from "../buttons/route-button/RouteButton";
 import { ButtonType } from "../buttons/Button";
+import SummaryScreen from "../../layout/screens/summary-screen/SummaryScreen";
 
 interface IContentScreenTemplate {
   type?: ScreenType;
@@ -19,11 +20,16 @@ export default function ContentScreenTemplate(
     title,
     description,
     buttonText,
+    buttons,
     buttonTargetRoute = "/",
     buttonType = ButtonType.Default,
   } = props;
   const includeContent = Boolean(description);
-  const includeFooter = Boolean(buttonText);
+  const includeFooter = buttons || Boolean(buttonText);
+
+  const getLabel = () => {
+    return buttons && buttons.length ? buttons[0].text : buttonText;
+  };
 
   return (
     <>
@@ -44,7 +50,7 @@ export default function ContentScreenTemplate(
           <RouteButton
             id={`temp-button`}
             buttonType={buttonType}
-            label={buttonText}
+            label={getLabel()}
             linkTo={buttonTargetRoute}
           ></RouteButton>
         </footer>

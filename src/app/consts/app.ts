@@ -21,6 +21,7 @@ export const TEACHME_ERROR =
 
 export const defaultInitialAppState: IAppState = {
   initiated: false,
+  isLoadedInIframe: false,
   debugError: "",
   platformType: "",
   form: null as IFormBE,
