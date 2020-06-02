@@ -26,6 +26,13 @@ import OverviewScreen from "./layout/screens/overview-screen/OverviewScreen";
 
 import "../styles/index.less";
 
+declare global {
+  interface Window {
+    walkme: any;
+    teachme: any;
+  }
+}
+
 export const AppContext = createContext<IAppContext | null>(null);
 
 export default function App() {
@@ -53,6 +60,85 @@ export default function App() {
     });
   };
 
+  const setSDK = async () => {
+    const platformTypeParam = getUrlParamValueByName("platform");
+    const courseIdParam = getUrlParamValueByName("courseId");
+
+    try {
+      await walkme.init();
+      console.log("WalkMe ready =>", walkme);
+
+      // set walkme global
+      window.walkme = walkme;
+
+      // Walkme Guard
+      if (walkme) {
+        setWalkmeSDK(walkme);
+      }
+
+      const teachmeApp = await walkme.apps.getApp("teachme");
+
+      // teachmeApp Guard
+      if (!teachmeApp) {
+        throw new Error("Something is wrong, No teachmeApp");
+      }
+
+      // set teachme global
+      window.teachme = teachmeApp;
+      const tmCourses = await teachmeApp.getContent();
+
+      let currentCourse = null;
+
+      if (tmCourses) {
+        console.log("tmCourses =>", tmCourses);
+
+        currentCourse = tmCourses.find((course: any, index: number) => {
+          const courseIdIndex = parseInt(courseIdParam) - 1;
+          if (index === courseIdIndex) {
+            return course;
+          }
+        });
+      } else {
+        throw new Error("Something is wrong, No tmCourses");
+      }
+
+      const formSDK = await teachmeApp.getQuiz(currentCourse.quiz.id);
+
+      if (currentCourse && currentCourse.quiz && formSDK) {
+        console.log("currentCourse ", currentCourse);
+        console.log("quiz ", formSDK);
+      } else {
+        throw new Error("Something is wrong, No Quiz");
+      }
+
+      setAppState({
+        ...appState,
+        initiated: true,
+        platformType: platformTypeParam,
+        formSDK,
+      });
+    } catch (err) {
+      if (Boolean(err)) {
+        setTimeout(() => {
+          setInformationScreen((prev) => {
+            return {
+              ...prev,
+              type: InformationScreenType.Error,
+              error: err,
+            };
+          });
+        }, 300);
+      }
+    }
+  };
+
+  /**
+   * Initial SDK and
+   */
+  useEffect(() => {
+    setSDK();
+  }, []);
+
   /**
    * Calls to app method after app state initiated
    */
@@ -63,104 +149,6 @@ export default function App() {
       setInformationScreen(null as IInformationScreenData);
     }
   }, [initiated]);
-
-  const isLoadedInIframe = () => {
-    try {
-      return window.self !== window.top;
-    } catch (e) {
-      return true;
-    }
-  };
-
-  const handlePostMessage = (event: MessageEvent) => {
-    if (event.data.type === "loadData") {
-      setAppState({
-        ...appState,
-        initiated: true,
-        form: event.data.data,
-        isLoadedInIframe: isLoadedInIframe(),
-      });
-    }
-  };
-
-  /**
-   * Initial SDK and
-   */
-  useEffect(() => {
-    if (!isLoadedInIframe()) {
-      (async () => {
-        const platformTypeParam = getUrlParamValueByName("platform");
-        const courseIdParam = getUrlParamValueByName("courseId");
-
-        try {
-          await walkme.init();
-          console.log("WalkMe ready =>", walkme);
-
-          // Walkme Guard
-          if (walkme) {
-            setWalkmeSDK(walkme);
-          }
-
-          const teachmeApp = await walkme.apps.getApp("teachme");
-
-          // teachmeApp Guard
-          if (!teachmeApp) {
-            throw new Error("Something is wrong, No teachmeApp");
-          }
-
-          const data = await walkme.content.getContent({
-            types: ["teachme"],
-            segmentation: true,
-          });
-
-          const tmCourses = (data as any).teachme;
-
-          let currentCourse = null;
-
-          if (tmCourses) {
-            console.log("tmCourses =>", tmCourses);
-
-            currentCourse = tmCourses.find((course: any, index: number) => {
-              const courseIdIndex = parseInt(courseIdParam) - 1;
-              if (index === courseIdIndex) {
-                return course;
-              }
-            });
-          } else {
-            throw new Error("Something is wrong, No tmCourses");
-          }
-
-          if (currentCourse && currentCourse.quiz.questions) {
-            console.log("currentCourse ", currentCourse);
-          } else {
-            throw new Error("Something is wrong, No Quiz");
-          }
-
-          setAppState({
-            ...appState,
-            initiated: true,
-            platformType: platformTypeParam,
-            form: currentCourse.quiz,
-          });
-        } catch (err) {
-          if (Boolean(err)) {
-            setTimeout(() => {
-              setInformationScreen((prev) => {
-                return {
-                  ...prev,
-                  type: InformationScreenType.Error,
-                  error: err,
-                };
-              });
-            }, 300);
-          }
-        }
-      })();
-    }
-
-    window.addEventListener("message", handlePostMessage);
-    return () => window.removeEventListener("message", handlePostMessage);
-  }, []);
 
   return (
     <div className={`app show wrapper`}>

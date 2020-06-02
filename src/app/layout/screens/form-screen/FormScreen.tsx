@@ -38,7 +38,7 @@ type FormParams = { id: string; score: string };
 export interface IFormScreenProps extends RouteComponentProps<FormParams> {}
 
 export interface IFormContext {
-  currentId: number;
+  currentRouteId: number;
   currentIndex: number;
   currentQuestion: IFormQuestionBE;
   questionsLength: number;
@@ -51,20 +51,23 @@ export interface IFormContext {
 
 export default function FormScreen(props?: IFormScreenProps) {
   const { appState } = useContext(AppContext);
-  const { questions } = appState.form;
+  const {
+    data: { questions },
+    submit,
+  } = appState.formSDK;
   const { id, score } = props.match.params;
-
   const [selectedAnswers, setSelectedAnswers] = useState([] as IFormAnswerBE[]);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const currentId = parseInt(id);
-  const currentIndex = currentId - 1;
+  const currentRouteId = parseInt(id);
+  const currentIndex = currentRouteId - 1;
+  const currentQuestion = questions[currentIndex];
   const formGlobals = {
-    currentId,
+    currentRouteId,
     currentIndex,
     currentScore: score ? parseInt(score) : 0,
-    currentQuestion: questions[currentIndex],
+    currentQuestion,
     questionsLength: questions.length,
     selectedAnswers,
     submitted,
@@ -83,7 +86,13 @@ export default function FormScreen(props?: IFormScreenProps) {
 
   const [formData, setFormData] = useState(form);
 
+  const getSelectedAnswersId = () => {
+    return selectedAnswers.map((selected) => selected.id);
+  };
+
   const handleSubmitted = () => {
+    appState.formSDK.submit(currentQuestion.id, getSelectedAnswersId());
+
     /**
      * fake loading button
      * Preparation for future asynchronous behavior

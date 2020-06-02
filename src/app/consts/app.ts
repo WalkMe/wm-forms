@@ -1,5 +1,5 @@
 import { IAppState } from "../interfaces/walkme-app/walkmeApp.interface";
-import { IFormBE } from "../interfaces/form/form.interface";
+import { IFormSDK } from "../interfaces/form/form.interface";
 
 export enum wmPlatformType {
   Mac = "mac",
@@ -24,5 +24,5 @@ export const defaultInitialAppState: IAppState = {
   isLoadedInIframe: false,
   debugError: "",
   platformType: "",
-  form: null as IFormBE,
+  formSDK: null as IFormSDK,
 };

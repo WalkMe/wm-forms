@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import MasterScreen from "../master-screen/MasterScreen";
@@ -12,7 +12,22 @@ export interface IOverviewScreenProps {}
 
 export default function OverviewScreen(props: IOverviewScreenProps) {
   const { appState } = useContext(AppContext);
-  const { properties } = appState.form;
+  const {
+    data: { properties },
+  } = appState.formSDK;
+
+  const getSummary = async () => {
+    try {
+      const summary = await appState.formSDK.getSummary();
+      console.log("summary ", summary);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getSummary();
+  }, []);
 
   return (
     <MasterScreen

@@ -26,7 +26,7 @@ export default function Form({
   const { onSelected } = props;
   const [selectedIndexes, setSelectedIndexes] = useState([]);
   const { getInput } = useFormManager({ ...formContext, selectedIndexes });
-  const { currentQuestion, currentId } = formContext;
+  const { currentQuestion, currentRouteId } = formContext;
   const { type } = currentQuestion;
 
   const isSingleSelect = type === QuestionType.SingleSelect;
@@ -58,7 +58,7 @@ export default function Form({
 
   useEffect(() => {
     setSelectedIndexes([]);
-  }, [currentId]);
+  }, [currentRouteId]);
 
   /** managing   */
   useEffect(() => {
