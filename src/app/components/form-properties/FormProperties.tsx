@@ -19,7 +19,9 @@ export default function FormProperties({
 }) {
   const { getIconByType } = useIconManager();
   const { appState } = useContext(AppContext);
-  const { questions, properties } = appState.form;
+  const {
+    data: { questions, properties },
+  } = appState.formSDK;
   const { passmark } = properties;
 
   return (

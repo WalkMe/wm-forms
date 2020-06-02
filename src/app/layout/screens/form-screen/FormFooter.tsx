@@ -14,7 +14,7 @@ interface IFormFooterProps {
 
 const confettiConfig = {
   angle: 90,
-  spread: 120,
+  spread: 100,
   colors: ["#348bd8", "#1F569D", "#89d1ef", "#348bd8", "#ACD2ED"],
 };
 
@@ -31,19 +31,19 @@ export default function FormFooter({
     selectedAnswers,
     submitted,
     questionsLength,
-    currentId,
+    currentRouteId,
     loading,
   } = formContext;
 
   const { calculateScore, isCorrectAnswers } = useFormManager(formContext);
   const { animateCoreElements } = useViewManager();
 
-  const isLastQuestion = currentId >= questionsLength;
+  const isLastQuestion = currentRouteId >= questionsLength;
   const formCTALabel = isLastQuestion ? "Finish" : "Next";
 
   const formCTATargetLink = isLastQuestion
     ? `/summary/${calculateScore()}`
-    : `/form/${currentId + 1}/${calculateScore()}`;
+    : `/form/${currentRouteId + 1}/${calculateScore()}`;
 
   useEffect(() => {
     if (formCTA.current) {

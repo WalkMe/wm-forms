@@ -21,7 +21,9 @@ export default function SummaryScreen(props: IResultsScreenProps) {
   const score = parseInt(props.match.params.score);
   const { overviewButtonLabel } = localization;
   const {
-    form: { successScreen, failScreen, properties },
+    formSDK: {
+      data: { successScreen, failScreen, properties },
+    },
     isLoadedInIframe,
   } = appState;
   const { passmark } = properties;

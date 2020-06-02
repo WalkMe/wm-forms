@@ -10,7 +10,9 @@ export interface IWelcomeScreenProps {}
 
 export default function WelcomeScreen(props?: IWelcomeScreenProps) {
   const { appState } = useContext(AppContext);
-  const { welcomeScreen } = appState.form;
+  const {
+    data: { welcomeScreen },
+  } = appState.formSDK;
 
   return (
     <>

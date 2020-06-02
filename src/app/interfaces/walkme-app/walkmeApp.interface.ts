@@ -1,11 +1,11 @@
 import { ISdk } from "@walkme/sdk/dist/interfaces/sdk";
-import { IFormBE } from "../form/form.interface";
+import { IFormSDK } from "../form/form.interface";
 
 export interface IAppState {
   initiated: boolean;
   debugError: string;
   platformType: string;
-  form: IFormBE;
+  formSDK: IFormSDK;
   isLoadedInIframe?: boolean;
 }
 

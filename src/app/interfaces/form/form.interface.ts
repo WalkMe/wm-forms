@@ -13,11 +13,13 @@ export interface IProperties {
 }
 
 export interface IFormAnswerBE {
+  id: number;
   isCorrect: boolean;
   text: string;
 }
 
 export interface IFormQuestionBE {
+  id: number;
   type: QuestionType;
   title: string;
   description: string;
@@ -36,11 +38,24 @@ export interface IFormScreenBE {
   buttonText?: string;
   buttons?: IScreenButton[];
 }
-
 export interface IFormBE {
   welcomeScreen: IFormScreenBE;
   successScreen: IFormScreenBE;
   failScreen: IFormScreenBE;
   questions: IFormQuestionBE[];
   properties: IProperties;
+}
+
+export type QuizSummary = Array<QuestionSummary>;
+export type QuestionSummary = {
+  question: IFormQuestionBE;
+  answerIds: Array<number>;
+};
+
+export interface IFormSDK {
+  id: number;
+  data: IFormBE;
+  submit: (questionId: number, answers: Array<number>) => Promise<void>;
+  questions: AsyncIterator<IFormQuestionBE>;
+  getSummary: () => Promise<QuizSummary>;
 }

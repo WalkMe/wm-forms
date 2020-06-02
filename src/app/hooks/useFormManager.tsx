@@ -17,7 +17,7 @@ export default function useFormManager(
   }) => ISelectInput;
 } {
   const {
-    currentId,
+    currentRouteId,
     questionsLength,
     submitted,
     currentScore,
@@ -44,10 +44,11 @@ export default function useFormManager(
 
   const calculateCompletion = () => {
     // Default current percentages calculation
-    const defaultCalculation = ((currentId - 1) / questionsLength / 1) * 100;
+    const defaultCalculation =
+      ((currentRouteId - 1) / questionsLength / 1) * 100;
 
     // current percentages calculation changing id current question submitted
-    const submittedCalculation = (currentId / questionsLength / 1) * 100;
+    const submittedCalculation = (currentRouteId / questionsLength / 1) * 100;
 
     return submitted && !loading ? submittedCalculation : defaultCalculation;
   };
@@ -91,8 +92,8 @@ export default function useFormManager(
       className: selectedResultsClass,
       disabled: submitted,
       name: isSingleSelect
-        ? `question-${currentId}`
-        : `question-${currentId}-${index}`,
+        ? `question-${currentRouteId}`
+        : `question-${currentRouteId}-${index}`,
       iconType: submitted && resultsIcon,
     };
   };
