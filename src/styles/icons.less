@@ -1,23 +1,24 @@
 .icon {
-  --articleIcon: url("../images/icons/Article.svg");
-  --videoIcon: url("../images/icons/Video.svg");
-  --walkthruIcon: url("../images/icons/Walkthru.svg");
-  --arrowDownIcon: url("../images/icons/arrow-down.svg");
-  --doubleArrowsLeftIcon: url("../images/icons/double-arrows-left.svg");
-  --checkMarkIcon: url("../images/icons/checkmark.svg");
-  --closeIcon: url("../images/icons/close.svg");
-  --backArrowIcon: url("../images/icons/back-arrow.svg");
-  --doubleCheckMarkIcon: url("../images/icons/double-checkmarks.svg");
-
   position: relative;
   display: block;
   width: 20px;
   height: 20px;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  background-repeat: no-repeat;
-  transition: background-color 0.3s;
   pointer-events: none;
+
+  svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    fill: currentColor;
+
+    > * {
+      transform: fill 0.3s, stroke 0.3s;
+    }
+  }
 
   &.tested {
     .doubleCheckMarkIcon();
@@ -36,7 +37,7 @@
   }
 
   &.check {
-    .checkIcon();
+    .checkIcon( var(--primary));
   }
 
   &.success {
@@ -71,9 +72,6 @@
 .triangleDown(@color: currentColor) {
   width: 8px;
   height: 5px;
-  background-color: @color;
-  -webkit-mask-image: var(--arrowDownIcon);
-  mask-image: var(--arrowDownIcon);
 }
 
 .triangleRight(@color: currentColor) {
@@ -89,17 +87,11 @@
 .doubleArrowsLeftIcon(@color: currentColor) {
   width: 8px;
   height: 6px;
-  background-color: @color;
-  -webkit-mask-image: var(--doubleArrowsLeftIcon);
-  mask-image: var(--doubleArrowsLeftIcon);
 }
 
 .doubleCheckMarkIcon(@color: var(--primary)) {
   width: 15px;
   height: 8px;
-  background-color: @color;
-  -webkit-mask-image: var(--doubleCheckMarkIcon);
-  mask-image: var(--doubleCheckMarkIcon);
 }
 
 .fillTriangleDown(@color: currentColor, @size: 4.5px) {
@@ -129,55 +121,53 @@
 .backArrowIcon() {
   height: 18px;
   width: 20px;
-  background-color: var(--primary300);
-  -webkit-mask-image: var(--backArrowIcon);
-  mask-image: var(--backArrowIcon);
 }
 
-.checkIcon () {
+.checkIcon (@color) {
   height: 8px;
   width: 11px;
-  background-color: var(--primary);
-  -webkit-mask-image: var(--checkMarkIcon);
-  mask-image: var(--checkMarkIcon);
+
+  svg path {
+    fill: @color;
+  }
 }
 
-.articleIcon () {
-  background-color: var(--bgLight);
-  -webkit-mask-image: var(--articleIcon);
-  mask-image: var(--articleIcon);
+.articleIcon (@color: var(--iconBGLight)) {
+  svg path {
+    stroke: @color;
+  }
 }
 
-.walkthruIcon () {
-  background-color: var(--bgLight);
-  -webkit-mask-image: var(--walkthruIcon);
-  mask-image: var(--walkthruIcon);
+.walkthruIcon (@color: var(--iconBGLight)) {
+  svg path {
+    stroke: @color;
+  }
 }
 
-.videoIcon () {
-  background-color: var(--bgLight);
-  -webkit-mask-image: var(--videoIcon);
-  mask-image: var(--videoIcon);
+.videoIcon (@color: var(--iconBGLight)) {
+  svg path {
+    stroke: @color;
+  }
 }
 
 .closeIcon (@color: currentColor) {
   width: 9px;
   height: 9px;
-  background-color: @color;
-  -webkit-mask-image: var(--closeIcon);
-  mask-image: var(--closeIcon);
+
+  svg path {
+    fill: @color;
+  }
 }
 
 .successIcon() {
-  .checkIcon();
-  background-color: var(--success);
+  .checkIcon( var(--success));
 }
 
 .errorIcon() {
   .closeIcon(var(--error));
 }
 
-.questionIcon() {
+.questionIcon(@bg: var(--primary), @color: var(--white)) {
   width: 15px;
   height: 15px;
 
@@ -185,9 +175,9 @@
     content: "?";
     width: 100%;
     height: 100%;
-    color: var(--white);
+    color: @color;
     border-radius: 50%;
-    background: var(--primary);
+    background: @bg;
     display: block;
     font-size: 10px;
     line-height: 15px;
