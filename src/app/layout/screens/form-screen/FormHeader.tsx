@@ -1,9 +1,7 @@
 import React from "react";
 import { IFormContext } from "./FormScreen";
 
-export default function FormHeader(
-  props: IFormContext & { hideDescription?: boolean }
-) {
+export default function FormHeader(props: IFormContext) {
   const { currentRouteId, questionsLength, currentQuestion } = props;
 
   return (

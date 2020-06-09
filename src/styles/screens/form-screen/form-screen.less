@@ -1,6 +1,25 @@
 @import "../form-screen/form-options.less";
 @import "../../animations.less";
 
+.fadeInDown () {
+  &.fadeInDown {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.fadeInUp () {
+  -webkit-transform: translate3d(0, 20px, 0);
+  transform: translate3d(0, 20px, 0);
+
+  &.fadeInUp {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .form {
   .screen-scroll-wrapper {
     height: 100%;
@@ -45,12 +64,13 @@
       max-width: none;
       padding: 10px 20px;
       background-color: var(--primary100Alpha9);
+      .animateElement();
+      .fadeInDown ();
 
       .description {
         .fLight();
         font-size: 12px;
         color: var(--neutral900);
-        margin-bottom: 10px;
       }
 
       // TODO: if should change container message font-weight remove the following comment
@@ -61,12 +81,16 @@
       // }
     }
 
-    > .form-answers {
+    .form-options {
       max-width: none;
       justify-content: flex-start;
+      .animateElement();
+      .fadeInUp ();
     }
 
     .form-footer {
+      .animateElement();
+      .fadeInUp ();
       #button-form-action {
         opacity: 0;
         animation: fadeIn 0.3s linear both;
