@@ -67,10 +67,14 @@
       .animateElement();
       .fadeInDown ();
 
-      .description {
+      .description:not(:empty) {
         .fLight();
         font-size: 12px;
         color: var(--neutral900);
+
+        + .container-message {
+          margin-top: 10px;
+        }
       }
 
       // TODO: if should change container message font-weight remove the following comment
