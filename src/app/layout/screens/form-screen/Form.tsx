@@ -5,13 +5,11 @@ import {
 } from "../../../interfaces/form/form.interface";
 import { IFormContext } from "./FormScreen";
 
-import { config } from "../../../config";
 import localization from "../../../consts/localization";
 import RadioInput from "../../../components/inputs/radio-input/RadioInput";
 import CheckboxInput from "../../../components/inputs/checkbox-input/CheckboxInput";
 import useFormManager from "../../../hooks/useFormManager";
 import MessageContainer from "../../../components/message-container/MessageContainer";
-
 interface IFormProps {
   onSelected: (selected: IFormAnswerBE[]) => void;
 }
@@ -28,17 +26,12 @@ export default function Form({
   const { getInput } = useFormManager({ ...formContext, selectedIndexes });
   const { currentQuestion, currentRouteId } = formContext;
   const { type } = currentQuestion;
+  const options = currentQuestion.answers;
 
   const isSingleSelect = type === QuestionType.SingleSelect;
   const isMultipleSelect = type === QuestionType.MultipleSelect;
   const { multipleSelectMsg } = localization;
   const formClass = isSingleSelect ? "single" : "multiple";
-
-  // In case one of the answers characters greater than configuration property
-  const options = currentQuestion.answers;
-  const isLongTextAnswer = options.some(
-    (option) => option.text.length > config.answerMinimumCharacters
-  );
 
   const handleChange = (index: number) => {
     if (isSingleSelect) {
@@ -76,7 +69,6 @@ export default function Form({
           const inputData = getInput({ type, option, index });
           const input = {
             ...inputData,
-            labelType: isLongTextAnswer ? "long-text" : "",
             handleChange: () => handleChange(index),
           };
 
