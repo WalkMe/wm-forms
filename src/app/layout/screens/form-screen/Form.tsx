@@ -62,27 +62,34 @@ export default function Form({
   }, [selectedIndexes]);
 
   return (
-    <div className={`form-options ${formClass}`}>
-      <MessageContainer message={isMultipleSelect ? multipleSelectMsg : ""} />
-      <ul className={`options`}>
-        {options.map((option, index) => {
-          const inputData = getInput({ type, option, index });
-          const input = {
-            ...inputData,
-            handleChange: () => handleChange(index),
-          };
+    <>
+      <div className="form-top-section">
+        {currentQuestion.description && (
+          <p className="description">{currentQuestion.description}</p>
+        )}
+        {isMultipleSelect && <MessageContainer message={multipleSelectMsg} />}
+      </div>
+      <div className={`form-options ${formClass}`}>
+        <ul className={`options`}>
+          {options.map((option, index) => {
+            const inputData = getInput({ type, option, index });
+            const input = {
+              ...inputData,
+              handleChange: () => handleChange(index),
+            };
 
-          return (
-            <li className="option" key={`option-${index}`}>
-              {isSingleSelect ? (
-                <RadioInput {...input} />
-              ) : (
-                <CheckboxInput {...input} />
-              )}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+            return (
+              <li className="option" key={`option-${index}`}>
+                {isSingleSelect ? (
+                  <RadioInput {...input} />
+                ) : (
+                  <CheckboxInput {...input} />
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </>
   );
 }

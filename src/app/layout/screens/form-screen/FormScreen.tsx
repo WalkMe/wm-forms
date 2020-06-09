@@ -124,7 +124,7 @@ export default function FormScreen(props?: IFormScreenProps) {
     <MasterScreen
       isAnimatedScreen
       type={ScreenType.Form}
-      header={<FormHeader {...formData} />}
+      header={<FormHeader {...formData} hideDescription />}
       percentCompletion={percentCompletion}
     >
       <>
