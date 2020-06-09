@@ -5,7 +5,6 @@ import { ScreenType } from "../../interfaces/screen/screen.interface";
 
 import RouteButton from "../buttons/route-button/RouteButton";
 import { ButtonType } from "../buttons/Button";
-import SummaryScreen from "../../layout/screens/summary-screen/SummaryScreen";
 
 interface IContentScreenTemplate {
   type?: ScreenType;
@@ -20,16 +19,11 @@ export default function ContentScreenTemplate(
     title,
     description,
     buttonText,
-    buttons,
     buttonTargetRoute = "/",
     buttonType = ButtonType.Default,
   } = props;
   const includeContent = Boolean(description);
-  const includeFooter = buttons || Boolean(buttonText);
-
-  const getLabel = () => {
-    return buttons && buttons.length ? buttons[0].text : buttonText;
-  };
+  const includeFooter = Boolean(buttonText);
 
   return (
     <>
@@ -50,7 +44,7 @@ export default function ContentScreenTemplate(
           <RouteButton
             id={`temp-button`}
             buttonType={buttonType}
-            label={getLabel()}
+            label={buttonText}
             linkTo={buttonTargetRoute}
           ></RouteButton>
         </footer>

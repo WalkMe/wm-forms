@@ -4,7 +4,7 @@ const localization = {
   submit: "submit",
   next: "next",
   back: "back",
-  overviewButtonLabel: "see quiz results view",
+  BackToMainMenu: "back to main menu",
   informationScreen: {
     loadingMassage: "Loading",
     noConnectionMessage: {
