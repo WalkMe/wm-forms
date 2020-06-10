@@ -13,6 +13,7 @@ export interface IMasterScreenProps {
   isAnimatedScreen?: boolean;
   percentCompletion?: number;
   hideProgressBar?: boolean;
+  hideHeader?: boolean;
 }
 
 export interface IScreenAnimationConfig {
@@ -33,6 +34,7 @@ export default function MasterScreen(props: IMasterScreenProps) {
     type = ScreenType.Default,
     percentCompletion = 0,
     hideProgressBar,
+    hideHeader,
   } = props;
 
   const animatedClass = isAnimatedScreen ? "animated-screen" : "";
@@ -48,7 +50,7 @@ export default function MasterScreen(props: IMasterScreenProps) {
   return (
     <div className={`screen ${type} ${animatedClass} ${className}`}>
       <div className="screen-scroll-wrapper">
-        <Header type={type}>{header}</Header>
+        {!hideHeader && <Header type={type}>{header}</Header>}
         <div ref={screenContent} className="screen-content">
           {children}
         </div>

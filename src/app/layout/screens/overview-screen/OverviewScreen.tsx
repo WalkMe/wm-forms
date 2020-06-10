@@ -5,8 +5,11 @@ import MasterScreen from "../master-screen/MasterScreen";
 import { AppContext } from "../../../App";
 import Header from "../../header/Header";
 import { IFormQuestionBE } from "../../../interfaces/form/form.interface";
-
 export interface IOverviewScreenProps {}
+export interface ISummaryItem {
+  question: IFormQuestionBE;
+  answerIds: number[];
+}
 
 const fakeSummary = [
   {
@@ -129,15 +132,14 @@ const fakeSummary = [
 export default function OverviewScreen(props: IOverviewScreenProps) {
   const { appState } = useContext(AppContext);
   const [summary, setSummary] = useState(null);
+  const [correctAnswers, setCorrectAnswers] = useState(null);
 
   const {
     data: { questions },
   } = appState.formSDK;
 
-  const getTotalCorrectAnswers = (
-    summaryData: { question: IFormQuestionBE; answerIds: number[] }[]
-  ) => {
-    const totalCorrectAnswers =
+  const getTotalCorrectAnswers = (summaryData: ISummaryItem[]) => {
+    const correctAnswersArr =
       summaryData &&
       summaryData.filter((item) => {
         const {
@@ -157,13 +159,14 @@ export default function OverviewScreen(props: IOverviewScreenProps) {
             );
           });
 
-        console.log("isCorrect ", isCorrect);
         if (isCorrect) {
           return item;
         }
       });
-    console.log("totalCorrectAnswers ", totalCorrectAnswers);
-    return totalCorrectAnswers;
+
+    console.log("totalCorrectAnswers ", correctAnswersArr);
+    setCorrectAnswers(correctAnswersArr);
+    return correctAnswersArr;
   };
 
   const getSummaryData = async () => {
@@ -193,14 +196,40 @@ export default function OverviewScreen(props: IOverviewScreenProps) {
   }, []);
 
   return (
-    <MasterScreen isAnimatedScreen type={ScreenType.Overview} hideProgressBar>
-      <>
-        <Header>
+    summary && (
+      <MasterScreen
+        isAnimatedScreen
+        type={ScreenType.Overview}
+        header={
           <h2 className="title">
-            <span className="text">Your Quiz Summary</span>
+            <span className="text">Your Quiz Summary </span>
+            <span className="details">
+              <span className="bold">
+                {correctAnswers && correctAnswers.length}
+              </span>
+              /{questions.length}
+            </span>
           </h2>
-        </Header>
-      </>
-    </MasterScreen>
+        }
+      >
+        <>
+          <div className="overview-summary-list">
+            <ul className="list">
+              {summary.map((item: ISummaryItem, index: number) => {
+                const itemCounter = `${index + 1}. `;
+                return (
+                  <li className="question-item">
+                    <p>
+                      <span className="counter">{itemCounter}</span>{" "}
+                      {item.question.title}
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </>
+      </MasterScreen>
+    )
   );
 }
