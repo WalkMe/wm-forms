@@ -16,11 +16,12 @@ import useFormManager from "../../../hooks/useFormManager";
 
 type FormParams = { id: string; score: string };
 
-export interface IFormAnimationConfig {
-  topSection: number;
-  options: number;
-  footer: number;
-}
+const formAnimationConfig = {
+  topSection: 300,
+  options: 600,
+  footer: 900,
+};
+
 export interface IFormScreenProps extends RouteComponentProps<FormParams> {}
 
 export interface IFormContext {
@@ -49,11 +50,7 @@ export default function FormScreen(props?: IFormScreenProps) {
   const currentRouteId = parseInt(id);
   const currentIndex = currentRouteId - 1;
   const currentQuestion = questions[currentIndex];
-  const formAnimationConfig = {
-    topSection: 300,
-    options: 600,
-    footer: 900,
-  };
+
   const formGlobals = {
     currentRouteId,
     currentIndex,

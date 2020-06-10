@@ -2,7 +2,9 @@ import React, { useRef, useEffect } from "react";
 import Confetti from "react-dom-confetti";
 
 import { config } from "../../../config";
-import { IFormContext, IFormAnimationConfig } from "./FormScreen";
+import { IFormContext } from "./FormScreen";
+import { IScreenAnimationConfig } from "../master-screen/MasterScreen";
+
 import Button, { ButtonType } from "../../../components/buttons/Button";
 import RouteButton from "../../../components/buttons/route-button/RouteButton";
 import useFormManager from "../../../hooks/useFormManager";
@@ -10,7 +12,7 @@ import useViewManager from "../../../hooks/useViewManager";
 
 interface IFormFooterProps {
   onSubmitted: () => void;
-  animationConfig: IFormAnimationConfig;
+  animationConfig: IScreenAnimationConfig;
 }
 
 const confettiConfig = {

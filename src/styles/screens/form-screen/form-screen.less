@@ -54,10 +54,6 @@
         .fLight();
         font-size: 12px;
         color: var(--neutral900);
-
-        + .container-message {
-          margin-top: 10px;
-        }
       }
 
       // TODO: if should change container message font-weight remove the following comment
@@ -66,6 +62,27 @@
       //     .fLight();
       //   }
       // }
+    }
+
+    .container-message:not(:empty) {
+      padding: 10px 20px;
+      justify-content: flex-start;
+      max-width: none;
+      background-color: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        background-color: var(--primary100Alpha9);
+      }
     }
 
     .form-options {

@@ -1,6 +1,5 @@
-import React, { ReactElement, useRef, useState, useEffect } from "react";
+import React, { ReactElement, useRef, useEffect } from "react";
 
-import { config } from "../../../config";
 import Header from "../../header/Header";
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import { ProgressBar } from "../../../components/progress-bar/ProgressBar";
@@ -14,6 +13,13 @@ export interface IMasterScreenProps {
   isAnimatedScreen?: boolean;
   percentCompletion?: number;
   hideProgressBar?: boolean;
+}
+
+export interface IScreenAnimationConfig {
+  topSection?: number;
+  containerMessage?: number;
+  options?: number;
+  footer?: number;
 }
 
 export default function MasterScreen(props: IMasterScreenProps) {

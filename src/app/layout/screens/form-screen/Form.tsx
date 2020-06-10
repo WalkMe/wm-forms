@@ -3,7 +3,8 @@ import {
   IFormAnswerBE,
   QuestionType,
 } from "../../../interfaces/form/form.interface";
-import { IFormContext, IFormAnimationConfig } from "./FormScreen";
+import { IFormContext } from "./FormScreen";
+import { IScreenAnimationConfig } from "../master-screen/MasterScreen";
 
 import localization from "../../../consts/localization";
 import RadioInput from "../../../components/inputs/radio-input/RadioInput";
@@ -11,9 +12,10 @@ import CheckboxInput from "../../../components/inputs/checkbox-input/CheckboxInp
 import useFormManager from "../../../hooks/useFormManager";
 import MessageContainer from "../../../components/message-container/MessageContainer";
 import useViewManager from "../../../hooks/useViewManager";
+
 interface IFormProps {
   onSelected: (selected: IFormAnswerBE[]) => void;
-  animationConfig?: IFormAnimationConfig;
+  animationConfig?: IScreenAnimationConfig;
 }
 
 export default function Form({
@@ -85,8 +87,16 @@ export default function Form({
         {currentQuestion.description && (
           <p className="description">{currentQuestion.description}</p>
         )}
-        {isMultipleSelect && <MessageContainer message={multipleSelectMsg} />}
       </div>
+      {isMultipleSelect && (
+        <MessageContainer
+          message={multipleSelectMsg}
+          animateConfig={{
+            animateClass: "fadeInDown",
+            timeout: animationConfig.topSection,
+          }}
+        />
+      )}
       <div ref={formOptions} className={`form-options ${formClass}`}>
         <ul className={`options`}>
           {options.map((option, index) => {
