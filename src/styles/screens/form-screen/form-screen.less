@@ -2,28 +2,34 @@
 @import "../../animations.less";
 
 .form {
+  .screen-scroll-wrapper {
+    height: 100%;
+    display: -webkit-inline-box;
+    display: inline-flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+  }
+
   &.header {
     .header-inner {
-      padding: 5px 20px;
+      width: 100%;
+      padding: 10px 25px;
       margin: 0 auto;
+      border-bottom: 1px solid var(--borderLightGray);
 
       .pager {
-        margin: 5px auto;
         .fLight();
-        color: var(--neutral700);
         font-size: 12px;
+        color: var(--neutral700);
+        align-self: flex-start;
+        margin: 5px 0;
       }
 
       .title {
+        width: 100%;
         font-size: 15px;
-      }
-
-      .description {
-        .fLight();
-        font-size: 12px;
-        color: var(--neutral900);
-        margin-top: 10px;
-        text-align: center;
+        text-align: left;
       }
     }
   }
@@ -34,12 +40,62 @@
     max-height: none;
     justify-content: flex-start;
 
-    > .form-answers {
+    .form-top-section:not(:empty) {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      max-width: none;
+      padding: 10px 25px;
+      background-color: var(--primary100Alpha9);
+
+      .animateElement();
+      .fadeInDown ();
+
+      .description:not(:empty) {
+        .fLight();
+        font-size: 12px;
+        color: var(--neutral900);
+      }
+
+      // TODO: if should change container message font-weight remove the following comment
+      // .container-message {
+      //   .text {
+      //     .fLight();
+      //   }
+      // }
+    }
+
+    .container-message:not(:empty) {
+      padding: 10px 25px;
+      justify-content: flex-start;
+      max-width: none;
+      background-color: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        background-color: var(--primary100Alpha9);
+      }
+    }
+
+    .form-options {
       max-width: none;
       justify-content: flex-start;
+      .animateElement();
+      .fadeInUp ();
     }
 
     .form-footer {
+      .animateElement();
+      .fadeInUp ();
       #button-form-action {
         opacity: 0;
         animation: fadeIn 0.3s linear both;

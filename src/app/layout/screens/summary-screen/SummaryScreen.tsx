@@ -19,7 +19,7 @@ export interface IResultsScreenProps
 export default function SummaryScreen(props: IResultsScreenProps) {
   const { appState } = useContext(AppContext);
   const score = parseInt(props.match.params.score);
-  const { overviewButtonLabel } = localization;
+  const { BackToMainMenu, overviewButtonLabel } = localization;
   const {
     formSDK: {
       data: { successScreen, failScreen, properties },
@@ -40,14 +40,13 @@ export default function SummaryScreen(props: IResultsScreenProps) {
     >
       <>
         <ContentScreenTemplate
-          // {...screen}
-          // temporary solution preventing render RouteButton
           title={screen.title}
           description={screen.description}
-          buttons={!isLoadedInIframe ? screen.buttons : undefined}
-          buttonText={!isLoadedInIframe ? screen.buttonText : undefined}
-          buttonTargetRoute="/"
+          // temporary solution to render back button CTA
+          // TODO: need to add logic to effect the main application route
+          buttonText={screen.buttons[0].text}
           buttonType={ButtonType.Link}
+          buttonTargetRoute="/"
         />
         <PropertyLabel className="score-info">
           <>

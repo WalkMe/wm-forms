@@ -110,6 +110,25 @@
   }
 }
 
+.fadeInDown () {
+  &.fadeInDown {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.fadeInUp () {
+  -webkit-transform: translate3d(0, 20px, 0);
+  transform: translate3d(0, 20px, 0);
+
+  &.fadeInUp {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @keyframes fadeInUp {
   0% {
     transform: translateY(100px);
@@ -235,6 +254,15 @@
   }
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes animatedBGFadeInDown {
+  from {
+    background-position: 50% -500px;
+  }
+  to {
+    background-position: 50% 0;
   }
 }
 

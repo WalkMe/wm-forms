@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import MasterScreen from "../master-screen/MasterScreen";
 import { RouteComponentProps } from "react-router-dom";
@@ -7,33 +8,19 @@ import {
   IFormQuestionBE,
   IFormAnswerBE,
 } from "../../../interfaces/form/form.interface";
+
 import FormHeader from "./FormHeader";
 import FormFooter from "./FormFooter";
 import Form from "./Form";
 import useFormManager from "../../../hooks/useFormManager";
 
-// For Checking edge cases
-const fakeAnswers = [
-  {
-    isCorrect: true,
-    text:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
-  },
-  { isCorrect: false, text: "This is not the correct answer" },
-  { isCorrect: false, text: "This is not the correct answer" },
-  { isCorrect: false, text: "This is not the correct answer" },
-];
-
-const fakeFormQuestion = {
-  answers: fakeAnswers,
-  description:
-    "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages Lorem Ipsum.",
-  explanation: "You should have known this...",
-  title: "This is a single answer question with a description and explanation",
-  type: 1,
-};
-
 type FormParams = { id: string; score: string };
+
+const formAnimationConfig = {
+  topSection: 300,
+  options: 600,
+  footer: 900,
+};
 
 export interface IFormScreenProps extends RouteComponentProps<FormParams> {}
 
@@ -63,6 +50,7 @@ export default function FormScreen(props?: IFormScreenProps) {
   const currentRouteId = parseInt(id);
   const currentIndex = currentRouteId - 1;
   const currentQuestion = questions[currentIndex];
+
   const formGlobals = {
     currentRouteId,
     currentIndex,
@@ -128,10 +116,19 @@ export default function FormScreen(props?: IFormScreenProps) {
       percentCompletion={percentCompletion}
     >
       <>
-        <Form formContext={formData} props={{ onSelected: handleSelected }} />
+        <Form
+          formContext={formData}
+          props={{
+            onSelected: handleSelected,
+            animationConfig: formAnimationConfig,
+          }}
+        />
         <FormFooter
           formContext={formData}
-          props={{ onSubmitted: handleSubmitted }}
+          props={{
+            onSubmitted: handleSubmitted,
+            animationConfig: formAnimationConfig,
+          }}
         />
       </>
     </MasterScreen>

@@ -3,6 +3,8 @@ import Confetti from "react-dom-confetti";
 
 import { config } from "../../../config";
 import { IFormContext } from "./FormScreen";
+import { IScreenAnimationConfig } from "../master-screen/MasterScreen";
+
 import Button, { ButtonType } from "../../../components/buttons/Button";
 import RouteButton from "../../../components/buttons/route-button/RouteButton";
 import useFormManager from "../../../hooks/useFormManager";
@@ -10,11 +12,14 @@ import useViewManager from "../../../hooks/useViewManager";
 
 interface IFormFooterProps {
   onSubmitted: () => void;
+  animationConfig: IScreenAnimationConfig;
 }
 
 const confettiConfig = {
-  angle: 90,
-  spread: 100,
+  angle: 80,
+  spread: 60,
+  dragFriction: 0.15,
+  duration: 1500,
   colors: ["#348bd8", "#1F569D", "#89d1ef", "#348bd8", "#ACD2ED"],
 };
 
@@ -25,8 +30,9 @@ export default function FormFooter({
   props: IFormFooterProps;
   formContext: IFormContext;
 }) {
-  const formCTA = useRef();
-  const { onSubmitted } = props;
+  const formFooter = useRef<HTMLDivElement>(null);
+  const formCTA = useRef<HTMLDivElement>(null);
+  const { onSubmitted, animationConfig } = props;
   const {
     selectedAnswers,
     submitted,
@@ -56,8 +62,18 @@ export default function FormFooter({
     }
   }, [submitted]);
 
+  useEffect(() => {
+    if (formFooter.current) {
+      animateCoreElements({
+        elements: [formFooter.current],
+        animateClassName: "fadeInUp",
+        timeout: animationConfig.footer,
+      });
+    }
+  }, []);
+
   return (
-    <footer className="form-footer">
+    <footer ref={formFooter} className="form-footer">
       {config.successConfetti && (
         <Confetti
           active={submitted && isCorrectAnswers()}

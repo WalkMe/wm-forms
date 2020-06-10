@@ -3,6 +3,7 @@ import { IFormContext } from "./FormScreen";
 
 export default function FormHeader(props: IFormContext) {
   const { currentRouteId, questionsLength, currentQuestion } = props;
+
   return (
     <>
       <div className="pager">
@@ -13,9 +14,6 @@ export default function FormHeader(props: IFormContext) {
       <h2 className="title">
         <span className="text">{currentQuestion.title}</span>
       </h2>
-      {currentQuestion.description && (
-        <p className="description">{currentQuestion.description}</p>
-      )}
     </>
   );
 }

@@ -1,9 +1,15 @@
 .container-message {
   padding: 0 5px;
   font-size: 11px;
+
   .text {
     &:not(:empty)::before {
       content: "* ";
     }
+  }
+
+  &.animate-element {
+    .animateElement();
+    .fadeInDown ();
   }
 }

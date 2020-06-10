@@ -1,38 +1,15 @@
 @import "../../variables.less";
 
-.optionIcons() {
-  .text {
-    position: relative;
-    padding: 0 20px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    line-height: 18px;
-
-    .icon {
-      position: absolute;
-      left: 0;
-    }
-  }
-}
-
 .form-options {
   position: relative;
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
+  margin-top: 15px;
 
   > * {
     max-width: var(--screenContentMaxWidth);
     margin: 0 auto;
-  }
-
-  .container-message {
-    height: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
   }
 
   .options {
@@ -40,70 +17,97 @@
   }
 
   .option {
+    position: relative;
     width: 100%;
+    min-height: 25px;
     height: auto;
-    text-align: center;
     display: flex;
+    align-items: center;
     margin-bottom: 20px;
 
-    input[type="radio"] {
-      opacity: 0;
-
-      + label {
-        padding-left: 10px;
-      }
-    }
-
-    input[type="radio"],
-    input[type="checkbox"] {
-      -webkit-appearance: none;
-      position: absolute;
-    }
-  }
-
-  label {
-    border: 1px solid var(--borderLightGray);
-    padding: 10px 30px 10px 30px;
-    width: 100%;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: border 0.3s, background-color 0.3s;
-    .optionIcons();
-
-    &.long-text {
+    label {
+      padding: 0 30px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
       text-align: left;
+      transition: padding-left 0.3s;
+      .optionIcons();
+    }
 
-      .selection-icon {
-        top: 9px;
-        transform: none;
+    input[type="radio"] {
+      &:before {
+        content: "";
+        box-sizing: border-box;
+        position: absolute;
+        background-color: var(--white);
+        border: 1px solid var(--borderLightGray);
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+        transition: border 0.3s;
+        box-shadow: var(--elementShadow);
+        cursor: pointer;
       }
 
-      .text {
-        .icon {
-          top: 5px;
+      &:checked {
+        .radioCheckedStyles();
+
+        &:hover:not(:disabled) {
+          .radioCheckedStyles();
+        }
+      }
+    }
+
+    input[type="checkbox"] {
+      &:before {
+        content: "";
+        box-sizing: border-box;
+        position: absolute;
+        background-color: var(--white);
+        border: 1px solid var(--borderLightGray);
+        border-radius: 5px;
+        width: 100%;
+        height: 100%;
+        transition: border 0.3s;
+        box-shadow: var(--elementShadow);
+        cursor: pointer;
+      }
+
+      &:checked {
+        .checkboxCheckedStyles();
+
+        &:hover:not(:disabled) {
+          .checkboxCheckedStyles();
+        }
+
+        + label .selection-icon {
+          position: absolute;
+          top: 8px;
+          left: 5px;
+
+          .icon.check {
+            svg path {
+              fill: var(--white);
+            }
+          }
         }
       }
     }
   }
 
-  .selection-icon {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: var(--borderLightGray);
-    border-radius: 50%;
-    top: 50%;
-    left: 5px;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
   input[type="radio"],
   input[type="checkbox"] {
-    &:disabled,
+    position: absolute;
+    -webkit-appearance: none;
+    margin: 0;
+    width: 22px;
+    height: 22px;
+    top: 2px;
+
     &:disabled {
+      pointer-events: none;
+
       + label {
         cursor: auto;
 
@@ -113,15 +117,37 @@
       }
     }
 
-    &:not(:disabled) {
-      + label {
-        .hoverFloating();
+    &:checked {
+      &.success,
+      &.error {
+        + label {
+          .icon svg path {
+            fill: var(--white);
+          }
+        }
+      }
+
+      &.success {
+        &::before {
+          background-color: var(--success);
+          border: 1px solid var(--success);
+        }
+      }
+
+      &.error {
+        &::before {
+          background-color: var(--error);
+          border: 1px solid var(--error);
+        }
       }
     }
 
-    // selected option
-    &:checked + label {
-      border: 1px solid var(--primary);
+    &:not(:disabled) {
+      &:hover {
+        &::before {
+          border: 1px solid var(--primary);
+        }
+      }
     }
 
     // hiding icon for unselected option
@@ -133,25 +159,45 @@
       }
     }
 
-    // correct option - selected & unselected styles
-    &:checked.success,
+    //styles for unselected correct option
     &.unselected-success {
-      + label {
+      &:before {
         border: 1px solid var(--success);
       }
     }
+  }
+}
 
-    // correct option - selected styles
-    &:checked.success + label {
-      background-color: var(--success200);
-    }
+.optionIcons() {
+  .text {
+    padding: 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 18px;
 
-    // wrong option - selected styles
-    &:checked.error {
-      + label {
-        border: 1px solid var(--error);
-        background-color: var(--error200);
+    .icon {
+      position: absolute;
+      left: 5px;
+      top: 9px;
+
+      &.error {
+        left: 6px;
+        top: 8px;
       }
     }
+  }
+}
+
+.radioCheckedStyles() {
+  &::before {
+    background-color: var(--white);
+    border: 6px solid var(--primary);
+  }
+}
+
+.checkboxCheckedStyles() {
+  &::before {
+    border: 11px solid var(--primary);
   }
 }

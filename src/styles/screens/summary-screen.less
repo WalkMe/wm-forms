@@ -9,25 +9,28 @@
     height: 170px;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: top;
   }
 
   &.fail .header {
     background-image: var(--summaryFailBG);
+    animation: animatedBGFadeInDown 0.3s linear both;
+    animation-delay: 0.1s;
   }
 
   &.success .header {
     background-image: var(--summarySuccessBG);
+    animation: animatedBGFadeInDown 0.3s linear both;
+    animation-delay: 0.1s;
   }
 
   .screen-content {
     display: flex;
     flex-direction: column;
-    padding-top: 30px;
+    padding-top: 20px;
 
     .temp {
       &-footer {
-        margin-top: 20px;
+        margin-top: 15px;
         order: 5;
       }
 
@@ -41,7 +44,7 @@
     }
 
     .form-properties {
-      margin: 20px auto 20px;
+      margin: 15px auto;
     }
 
     .score-info {

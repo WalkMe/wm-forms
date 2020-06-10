@@ -23,7 +23,7 @@ export interface IFormQuestionBE {
   type: QuestionType;
   title: string;
   description: string;
-  explanation: string;
+  explanation?: string;
   answers: IFormAnswerBE[];
 }
 
