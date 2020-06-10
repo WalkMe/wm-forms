@@ -1,11 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router-dom";
+
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
-import MasterScreen from "../master-screen/MasterScreen";
+import {
+  IFormQuestionBE,
+  IFormAnswerBE,
+} from "../../../interfaces/form/form.interface";
 import { AppContext } from "../../../App";
-import Header from "../../header/Header";
-import { IFormQuestionBE } from "../../../interfaces/form/form.interface";
+
+import MasterScreen from "../master-screen/MasterScreen";
+
 export interface IOverviewScreenProps {}
+
 export interface ISummaryItem {
   question: IFormQuestionBE;
   answerIds: number[];
@@ -138,6 +143,39 @@ export default function OverviewScreen(props: IOverviewScreenProps) {
     data: { questions },
   } = appState.formSDK;
 
+  const getAnswerIds = (item: ISummaryItem) => {
+    const { answerIds } = item;
+    return item.question.answers.filter((answer) => {
+      if (answerIds.includes(answer.id)) {
+        return answer;
+      }
+    });
+  };
+
+  const isCorrectAnswer = (answerIds: number[], answers: IFormAnswerBE[]) => {
+    return answerIds.every((id: number) => {
+      const correctAnswers = answers.filter(
+        (answer) => answer.isCorrect && answer.id === id
+      );
+
+      return (
+        Boolean(correctAnswers) && correctAnswers.length === answerIds.length
+      );
+    });
+  };
+
+  const getSummaryItemCorrectAnswers = (item: ISummaryItem) => {
+    const {
+      question: { answers },
+    } = item;
+
+    return answers.filter((answer) => {
+      if (answer.isCorrect) {
+        return answer;
+      }
+    });
+  };
+
   const getTotalCorrectAnswers = (summaryData: ISummaryItem[]) => {
     const correctAnswersArr =
       summaryData &&
@@ -146,20 +184,8 @@ export default function OverviewScreen(props: IOverviewScreenProps) {
           question: { answers },
           answerIds,
         } = item;
-        const isCorrect =
-          answerIds &&
-          answerIds.every((id: number) => {
-            const correctAnswers = answers.filter(
-              (answer) => answer.isCorrect && answer.id === id
-            );
 
-            return (
-              Boolean(correctAnswers) &&
-              correctAnswers.length === answerIds.length
-            );
-          });
-
-        if (isCorrect) {
+        if (answerIds && isCorrectAnswer(answerIds, answers)) {
           return item;
         }
       });
@@ -201,15 +227,17 @@ export default function OverviewScreen(props: IOverviewScreenProps) {
         isAnimatedScreen
         type={ScreenType.Overview}
         header={
-          <h2 className="title">
-            <span className="text">Your Quiz Summary </span>
-            <span className="details">
-              <span className="bold">
-                {correctAnswers && correctAnswers.length}
+          <>
+            <h2 className="title">
+              <span className="text">Your Quiz Summary </span>
+              <span className="details">
+                <span className="bold">
+                  {correctAnswers && correctAnswers.length}
+                </span>
+                /{questions.length}
               </span>
-              /{questions.length}
-            </span>
-          </h2>
+            </h2>
+          </>
         }
       >
         <>
@@ -218,11 +246,53 @@ export default function OverviewScreen(props: IOverviewScreenProps) {
               {summary.map((item: ISummaryItem, index: number) => {
                 const itemCounter = `${index + 1}. `;
                 return (
-                  <li className="question-item">
-                    <p>
+                  <li
+                    key={`summary-item-${itemCounter}`}
+                    className="summary-item"
+                  >
+                    <p className="summary-title">
                       <span className="counter">{itemCounter}</span>{" "}
                       {item.question.title}
                     </p>
+                    <div className="summary-overview">
+                      <div className="user-selection">
+                        <span className="sub-title bold">Your Answers</span>
+                        {getAnswerIds(item).map((answer, index) => {
+                          return (
+                            <div
+                              key={`answer-selection-${itemCounter}-${index}`}
+                              className={`answer ${
+                                answer.isCorrect ? "success" : "error"
+                              }`}
+                            >
+                              <span className="text">{answer.text}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      {!isCorrectAnswer(
+                        item.answerIds,
+                        item.question.answers
+                      ) && (
+                        <div className="correct-answers">
+                          <span className="sub-title bold">
+                            Correct Answers
+                          </span>
+                          {getSummaryItemCorrectAnswers(item).map(
+                            (answer, index) => {
+                              return (
+                                <div
+                                  key={`correct-answer-${itemCounter}-${index}`}
+                                  className="answer success"
+                                >
+                                  <span className="text">{answer.text}</span>
+                                </div>
+                              );
+                            }
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </li>
                 );
               })}

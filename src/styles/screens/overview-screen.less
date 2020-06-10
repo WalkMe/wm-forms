@@ -1,7 +1,6 @@
 .overview {
   span.bold {
-    font-weight: bold;
-    font-weight: 500;
+    font-weight: 700;
   }
 
   &.header {
@@ -34,18 +33,53 @@
     .list {
       text-align: start;
 
-      .question-item {
+      .summary-item {
         padding: 25px;
-        border-bottom: 1px solid var(--borderLightGray);
 
-        p {
+        > div {
+          border: none;
+        }
+
+        &:not(:last-child) {
+          border-bottom: 1px solid var(--borderLightGray);
+        }
+
+        .summary-title {
           position: relative;
           padding-left: 23px;
+          margin-bottom: 10px;
+          font-size: 13px;
+          .fBold();
 
           .counter {
             position: absolute;
             top: 0;
             left: 0;
+          }
+        }
+
+        .summary-overview {
+          font-size: 12px;
+          padding-left: 23px;
+
+          .correct-answers {
+            margin-top: 10px;
+          }
+
+          .answer {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+
+            &.success {
+              border: 1px solid var(--success);
+              color: var(--success);
+            }
+
+            &.error {
+              border: 1px solid var(--error);
+              color: var(--error);
+            }
           }
         }
       }
