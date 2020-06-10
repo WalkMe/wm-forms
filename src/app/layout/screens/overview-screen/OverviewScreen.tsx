@@ -8,6 +8,8 @@ import {
 import { AppContext } from "../../../App";
 
 import MasterScreen from "../master-screen/MasterScreen";
+import useIconManager, { Icon } from "../../../hooks/useIconManager";
+import { useHistory } from "react-router-dom";
 
 export interface IOverviewScreenProps {}
 
@@ -135,6 +137,7 @@ const fakeSummary = [
 ];
 
 export default function OverviewScreen(props: IOverviewScreenProps) {
+  const { getIconByType } = useIconManager();
   const { appState } = useContext(AppContext);
   const [summary, setSummary] = useState(null);
   const [correctAnswers, setCorrectAnswers] = useState(null);
@@ -228,6 +231,7 @@ export default function OverviewScreen(props: IOverviewScreenProps) {
         type={ScreenType.Overview}
         header={
           <>
+            {/* {getIconByType(Icon.Close)} */}
             <h2 className="title">
               <span className="text">Your Quiz Summary </span>
               <span className="details">
