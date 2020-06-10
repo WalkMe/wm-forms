@@ -135,6 +135,14 @@
       }
     }
 
+    &:not(:disabled) {
+      &:hover {
+        &::before {
+          border: 1px solid var(--primary);
+        }
+      }
+    }
+
     // hiding icon for unselected option
     &.unselected-error {
       + label {

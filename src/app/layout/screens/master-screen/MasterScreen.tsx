@@ -13,6 +13,7 @@ export interface IMasterScreenProps {
   children: ReactElement;
   isAnimatedScreen?: boolean;
   percentCompletion?: number;
+  hideProgressBar?: boolean;
 }
 
 export default function MasterScreen(props: IMasterScreenProps) {
@@ -25,6 +26,7 @@ export default function MasterScreen(props: IMasterScreenProps) {
     children,
     type = ScreenType.Default,
     percentCompletion = 0,
+    hideProgressBar,
   } = props;
 
   const animatedClass = isAnimatedScreen ? "animated-screen" : "";
@@ -45,9 +47,11 @@ export default function MasterScreen(props: IMasterScreenProps) {
           {children}
         </div>
       </div>
-      <footer className={`footer ${type}`}>
-        <ProgressBar percentCompletion={percentCompletion} showPercentages />
-      </footer>
+      {!hideProgressBar && (
+        <footer className={`footer ${type}`}>
+          <ProgressBar percentCompletion={percentCompletion} showPercentages />
+        </footer>
+      )}
     </div>
   );
 }

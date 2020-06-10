@@ -19,7 +19,7 @@ export interface IResultsScreenProps
 export default function SummaryScreen(props: IResultsScreenProps) {
   const { appState } = useContext(AppContext);
   const score = parseInt(props.match.params.score);
-  const { BackToMainMenu } = localization;
+  const { BackToMainMenu, overviewButtonLabel } = localization;
   const {
     formSDK: {
       data: { successScreen, failScreen, properties },
@@ -44,7 +44,7 @@ export default function SummaryScreen(props: IResultsScreenProps) {
           description={screen.description}
           // temporary solution to render back button CTA
           // TODO: need to add logic to effect the main application route
-          buttonText={BackToMainMenu}
+          buttonText={screen.buttons[0].text}
           buttonType={ButtonType.Link}
           buttonTargetRoute="/"
         />
@@ -61,7 +61,7 @@ export default function SummaryScreen(props: IResultsScreenProps) {
           className="overview-cta"
           buttonType={ButtonType.Default}
           id="overview-button"
-          label={screen.buttons[0].text}
+          label={overviewButtonLabel}
           linkTo="/overview"
         />
       </>
