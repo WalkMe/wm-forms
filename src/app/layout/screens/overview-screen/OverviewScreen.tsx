@@ -229,6 +229,7 @@ export default function OverviewScreen(props: IOverviewScreenProps) {
       <MasterScreen
         isAnimatedScreen
         type={ScreenType.Overview}
+        hideProgressBar
         header={
           <>
             {/* {getIconByType(Icon.Close)} */}
