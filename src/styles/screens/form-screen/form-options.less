@@ -47,12 +47,14 @@
         height: 100%;
         transition: border 0.3s;
         box-shadow: var(--elementShadow);
+        cursor: pointer;
       }
 
       &:checked {
-        &::before {
-          background-color: var(--white);
-          border: 6px solid var(--primary);
+        .radioCheckedStyles();
+
+        &:hover:not(:disabled) {
+          .radioCheckedStyles();
         }
       }
     }
@@ -69,11 +71,14 @@
         height: 100%;
         transition: border 0.3s;
         box-shadow: var(--elementShadow);
+        cursor: pointer;
       }
 
       &:checked {
-        &::before {
-          border: 11px solid var(--primary);
+        .checkboxCheckedStyles();
+
+        &:hover:not(:disabled) {
+          .checkboxCheckedStyles();
         }
 
         + label .selection-icon {
@@ -101,6 +106,8 @@
     top: 2px;
 
     &:disabled {
+      pointer-events: none;
+
       + label {
         cursor: auto;
 
@@ -179,5 +186,18 @@
         top: 8px;
       }
     }
+  }
+}
+
+.radioCheckedStyles() {
+  &::before {
+    background-color: var(--white);
+    border: 6px solid var(--primary);
+  }
+}
+
+.checkboxCheckedStyles() {
+  &::before {
+    border: 11px solid var(--primary);
   }
 }
