@@ -9,7 +9,7 @@ import ContentScreenTemplate from "../../../components/content-screen-template/C
 import FormProperties from "../../../components/form-properties/FormProperties";
 import PropertyLabel from "../../../components/property-label/PropertyLabel";
 import Button, { ButtonType } from "../../../components/buttons/Button";
-import OverviewScreen from "../overview-screen/OverviewScreen";
+import SummaryOverviewScreen from "../summary-overview-screen/SummaryOverviewScreen";
 import { fakeSummary } from "../../../hooks/useSummaryManager";
 
 type SummaryParams = { score: string };
@@ -19,16 +19,16 @@ export interface IResultsScreenProps
 
 export default function SummaryScreen(props: IResultsScreenProps) {
   const { appState } = useContext(AppContext);
-  const [isOverviewVisible, setIsOverviewVisible] = useState(false);
-  const [overviewData, setOverviewData] = useState(null);
-  const score = parseInt(props.match.params.score);
-  const { overviewButtonLabel } = localization;
   const {
     formSDK: {
       data: { successScreen, failScreen, properties },
     },
   } = appState;
-  const { passmark } = properties;
+  const { passmark, showSummary } = properties;
+  const [isOverviewVisible, setIsOverviewVisible] = useState(false);
+  const [overviewData, setOverviewData] = useState(null);
+  const score = parseInt(props.match.params.score);
+  const { overviewButtonLabel } = localization;
   const isSuccess = score >= passmark;
   const screen = isSuccess ? successScreen : failScreen;
   const summaryClassName = isSuccess ? "success" : "fail";
@@ -57,7 +57,9 @@ export default function SummaryScreen(props: IResultsScreenProps) {
   };
 
   useEffect(() => {
-    getOverviewData();
+    if (showSummary) {
+      getOverviewData();
+    }
   }, []);
 
   return (
@@ -85,25 +87,29 @@ export default function SummaryScreen(props: IResultsScreenProps) {
             </>
           </PropertyLabel>
           <FormProperties config={{ passmark: true, questions: true }} />
-          <Button
-            className="overview-cta"
-            id="overview-button"
-            tmButtonType={ButtonType.Default}
-            buttonClicked={() => {
-              setIsOverviewVisible(true);
-            }}
-          >
-            <span className="btn-label">{overviewButtonLabel}</span>
-          </Button>
+          {showSummary && (
+            <Button
+              className="overview-cta"
+              id="overview-button"
+              tmButtonType={ButtonType.Default}
+              buttonClicked={() => {
+                setIsOverviewVisible(true);
+              }}
+            >
+              <span className="btn-label">{overviewButtonLabel}</span>
+            </Button>
+          )}
         </>
       </MasterScreen>
-      <OverviewScreen
-        isVisible={isOverviewVisible}
-        onClose={() => {
-          setIsOverviewVisible(false);
-        }}
-        overviewData={overviewData}
-      />
+      {showSummary && (
+        <SummaryOverviewScreen
+          isVisible={isOverviewVisible}
+          onClose={() => {
+            setIsOverviewVisible(false);
+          }}
+          overviewData={overviewData}
+        />
+      )}
     </>
   );
 }

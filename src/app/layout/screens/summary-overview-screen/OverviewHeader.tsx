@@ -1,7 +1,8 @@
 import React from "react";
 
-import { ISummaryItem } from "../overview-screen/OverviewScreen";
-import useSummaryManager from "../../../hooks/useSummaryManager";
+import useSummaryManager, {
+  ISummaryItem,
+} from "../../../hooks/useSummaryManager";
 
 export default function OverviewHeader({
   summary,

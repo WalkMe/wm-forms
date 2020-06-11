@@ -13,6 +13,7 @@ export interface IProperties {
   passmark?: number;
   resultsViewActive?: boolean;
   isCompleted?: boolean;
+  showSummary?: boolean;
 }
 
 export interface IFormAnswerBE {

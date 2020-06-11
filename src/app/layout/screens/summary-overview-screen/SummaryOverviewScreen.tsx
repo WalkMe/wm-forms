@@ -1,19 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
-import {
-  IFormQuestionBE,
-  IFormAnswerBE,
-} from "../../../interfaces/form/form.interface";
 import Popup from "../../../components/popup/Popup";
-import useSummaryManager from "../../../hooks/useSummaryManager";
+import useSummaryManager, {
+  ISummaryItem,
+} from "../../../hooks/useSummaryManager";
 import OverviewHeader from "./OverviewHeader";
 import SummaryContent from "./OverviewContent";
 
-export interface ISummaryItem {
-  question: IFormQuestionBE;
-  answerIds: number[];
-}
 export interface IOverviewScreenProps {
   isVisible: boolean;
   onClose: () => void;
