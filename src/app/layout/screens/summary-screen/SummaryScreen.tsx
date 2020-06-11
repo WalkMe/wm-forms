@@ -57,8 +57,6 @@ export default function SummaryScreen(props: IResultsScreenProps) {
     getOverviewData();
   }, []);
 
-  console.log("overviewData ", overviewData);
-
   return (
     <>
       <MasterScreen

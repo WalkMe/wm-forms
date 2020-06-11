@@ -1,5 +1,22 @@
 .popup {
-  &.header {
+  &.loaded {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &.close-popup {
+    -webkit-animation: scale-down-center 0.3s
+      cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: scale-down-center 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+
+  &.open-popup {
+    -webkit-animation: scale-up-center 0.3s cubic-bezier(0.39, 0.575, 0.565, 1)
+      both;
+    animation: scale-up-center 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  }
+
+  .header {
     .close {
       position: absolute;
       top: 10px;
