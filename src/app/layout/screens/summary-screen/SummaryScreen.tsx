@@ -9,7 +9,8 @@ import ContentScreenTemplate from "../../../components/content-screen-template/C
 import FormProperties from "../../../components/form-properties/FormProperties";
 import PropertyLabel from "../../../components/property-label/PropertyLabel";
 import Button, { ButtonType } from "../../../components/buttons/Button";
-import OverviewScreen, { fakeSummary } from "../overview-screen/OverviewScreen";
+import OverviewScreen from "../overview-screen/OverviewScreen";
+import { fakeSummary } from "../../../hooks/useSummaryManager";
 
 type SummaryParams = { score: string };
 

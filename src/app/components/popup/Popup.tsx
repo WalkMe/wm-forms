@@ -3,7 +3,6 @@ import MasterScreen from "../../layout/screens/master-screen/MasterScreen";
 import { ScreenType } from "../../interfaces/screen/screen.interface";
 import Button, { ButtonType } from "../buttons/Button";
 import useIconManager, { Icon } from "../../hooks/useIconManager";
-import { CSSTransition } from "react-transition-group";
 
 export interface IPopupProps {
   header: ReactElement;
