@@ -22,12 +22,7 @@ export interface IOverviewScreenProps {
 
 export default function OverviewScreen(props: IOverviewScreenProps) {
   const { isVisible, overviewData, onClose } = props;
-  const {
-    getTotalCorrectAnswers,
-    getAnswerIds,
-    isCorrectAnswer,
-    filterCorrectAnswers,
-  } = useSummaryManager();
+  const { getTotalCorrectAnswers } = useSummaryManager();
   const [summary, setSummary] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
 

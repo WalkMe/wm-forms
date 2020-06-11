@@ -21,6 +21,7 @@ export const fakeSummary = [
       description: "",
       title: "Ask the first quiz question",
       type: 0,
+      explanation: null as string,
     },
     answerIds: [28205], // correct
   },
@@ -53,6 +54,8 @@ export const fakeSummary = [
       title:
         "An example of 190 characters question to check edge cases, using Lorem ipsum as a dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text.",
       type: 1,
+      explanation:
+        "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn&#39;t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet",
     },
     answerIds: [28605, 28608, 28610], // wrong
   },
@@ -77,6 +80,8 @@ export const fakeSummary = [
       title:
         "This is the third question, you should know the answer, don&#39;t guess",
       type: 0,
+      explanation:
+        "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from &quot;de Finibus Bonorum et Malorum&quot; by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.",
     },
     answerIds: [28612], // wrong
   },
@@ -100,6 +105,8 @@ export const fakeSummary = [
       description: "",
       title: "What is Lorem Ipsum?",
       type: 1,
+      explanation:
+        "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old",
     },
     answerIds: [28614], // wrong
   },
@@ -123,6 +130,8 @@ export const fakeSummary = [
       description: "",
       title: "How can I use Lorem ipsum?",
       type: 0,
+      explanation:
+        "here are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don&#39;t look even slightly believable",
     },
     answerIds: [28616], // correct
   },

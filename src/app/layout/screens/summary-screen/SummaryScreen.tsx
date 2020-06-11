@@ -44,6 +44,8 @@ export default function SummaryScreen(props: IResultsScreenProps) {
 
       if (isValidSummaryData) {
         console.log("summaryData ", summaryData);
+        console.log("summaryData stringify ", JSON.stringify(summaryData));
+
         setOverviewData(summaryData);
       } else {
         console.log("fakeSummary ", fakeSummary);

@@ -13,6 +13,8 @@ export interface IPopupProps {
 }
 
 export default function Popup(props: IPopupProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [scrollContainer, setScrollContainer] = useState(null);
   const { children, className = "", header, isOpen, onClose } = props;
   const [open, setOpen] = useState(false);
   const [loadedClass, setLoadedClass] = useState("");
@@ -21,43 +23,63 @@ export default function Popup(props: IPopupProps) {
   useEffect(() => {
     if (isOpen) {
       setOpen(true);
+      scrollContainer.scrollTo({
+        top: 0,
+      });
     }
   }, [isOpen]);
 
   // Detect component did mount to prevent the popup animation on load
   useEffect(() => {
     setLoadedClass("loaded");
+    setScrollContainer(ref.current.querySelector(".screen-scroll-wrapper"));
     setTimeout(() => {
       setLoadedClass("");
     }, 3000);
   }, []);
 
   return (
-    <MasterScreen
-      isAnimatedScreen
-      hideProgressBar
-      type={ScreenType.Popup}
-      className={`${className} ${loadedClass} ${
-        open ? "open-popup" : "close-popup"
-      }`}
-      header={
+    <div ref={ref} className="container">
+      <MasterScreen
+        isAnimatedScreen
+        hideProgressBar
+        type={ScreenType.Popup}
+        className={`${className} ${loadedClass} ${
+          open ? "open-popup" : "close-popup"
+        }`}
+        header={
+          <>
+            <Button
+              className="close"
+              id="close-popup"
+              tmButtonType={ButtonType.NoBorder}
+              buttonClicked={() => {
+                setOpen(false);
+                onClose();
+              }}
+            >
+              {getIconByType(Icon.Close)}
+            </Button>
+            {header}
+          </>
+        }
+      >
         <>
-          <Button
-            className="close"
-            id="close-popup"
-            tmButtonType={ButtonType.NoBorder}
-            buttonClicked={() => {
-              setOpen(false);
-              onClose();
-            }}
-          >
-            {getIconByType(Icon.Close)}
-          </Button>
-          {header}
+          {children}
+          <footer className="popup-footer">
+            <Button
+              id="close-popup-cta"
+              tmButtonType={ButtonType.Default}
+              buttonClicked={() => {
+                setOpen(false);
+                onClose();
+              }}
+            >
+              <span className="btn-label">Cancel</span>
+            </Button>
+          </footer>
         </>
-      }
-    >
-      <>{children}</>
-    </MasterScreen>
+      </MasterScreen>
+    </div>
   );
 }
