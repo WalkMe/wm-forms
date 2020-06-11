@@ -39,6 +39,7 @@ export default function FormFooter({
     questionsLength,
     currentRouteId,
     loading,
+    currentQuestion: { explanation },
   } = formContext;
 
   const { calculateScore, isCorrectAnswers } = useFormManager(formContext);
@@ -81,12 +82,20 @@ export default function FormFooter({
         />
       )}
       {submitted ? (
-        <RouteButton
-          linkTo={formCTATargetLink}
-          id="form-action"
-          buttonType={ButtonType.Default}
-          label={formCTALabel}
-        />
+        <>
+          <RouteButton
+            linkTo={formCTATargetLink}
+            id="form-action"
+            buttonType={ButtonType.Default}
+            label={formCTALabel}
+          />
+          {explanation && (
+            <div className="explanation">
+              <span className="sub-title bold">Explanation</span>
+              <p className="text">{explanation}</p>
+            </div>
+          )}
+        </>
       ) : (
         <Button
           id="form-submit"
