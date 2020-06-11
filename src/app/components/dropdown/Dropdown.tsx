@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, ReactElement } from "react";
 
 import Button, { ButtonType } from "../buttons/Button";
-import List from "../list/List";
-import { IListItem } from "../list/list-item/ListItem";
 
 export default function Dropdown<T>({
   id,
   title,
-  items,
+  children,
   className,
   isOpen,
   isCollapsible = true,
 }: {
   id: string;
   title: string;
-  items: IListItem<T>[];
+  children: ReactElement;
   className?: string;
   isOpen?: boolean;
   isCollapsible?: boolean;
@@ -43,7 +41,7 @@ export default function Dropdown<T>({
         </Button>
       </header>
       <div className={`dropdown-items ${open ? "open" : "close"}`}>
-        <List className="dropdown-list" items={items} />
+        {children}
       </div>
     </div>
   );
