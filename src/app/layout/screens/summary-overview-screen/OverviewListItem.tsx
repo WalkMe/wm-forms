@@ -55,6 +55,12 @@ export default function OverviewListItem({
             )}
           </div>
         )}
+        {item.question.explanation && (
+          <div className="explanation">
+            <span className="sub-title bold">Explanation</span>
+            <p className="text">{item.question.explanation}</p>
+          </div>
+        )}
       </div>
     </li>
   );

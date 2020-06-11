@@ -94,11 +94,28 @@
     }
 
     .form-footer {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
       .animateElement();
       .fadeInUp ();
+
       #button-form-action {
         opacity: 0;
         animation: fadeIn 0.3s linear both;
+      }
+      .explanation {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        align-items: flex-start;
+        text-align: left;
+        font-size: 12px;
+
+        .text {
+          margin-top: 10px;
+        }
       }
     }
   }
