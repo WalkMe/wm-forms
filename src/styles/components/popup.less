@@ -1,4 +1,25 @@
 .popup {
+  &.header {
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .header-inner {
+      width: 100%;
+      padding: 25px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--borderLightGray);
+
+      .title {
+        width: 100%;
+        font-size: 15px;
+        text-align: left;
+      }
+    }
+  }
+
   &.screen {
     background-color: var(--white);
     padding-bottom: 0;

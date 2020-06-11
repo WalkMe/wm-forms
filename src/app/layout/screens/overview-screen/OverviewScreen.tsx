@@ -141,7 +141,6 @@ export default function OverviewScreen(props: IOverviewScreenProps) {
 
   const [summary, setSummary] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-  const [correctAnswers, setCorrectAnswers] = useState(null);
 
   const { appState } = useContext(AppContext);
   const {
@@ -190,8 +189,8 @@ export default function OverviewScreen(props: IOverviewScreenProps) {
 
   useEffect(() => {
     if (overviewData) {
-      setSummary(overviewData);
       getTotalCorrectAnswers(overviewData);
+      setSummary(overviewData);
     }
   }, [overviewData]);
 
@@ -215,7 +214,7 @@ export default function OverviewScreen(props: IOverviewScreenProps) {
             <span className="text">Your Quiz Summary </span>
             <span className="details">
               <span className="bold">
-                {correctAnswers && correctAnswers.length}
+                {summary && getTotalCorrectAnswers(summary).length}
               </span>
               /{questions.length}
             </span>

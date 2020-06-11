@@ -33,6 +33,7 @@ export default function Popup(props: IPopupProps) {
         header={
           <>
             <Button
+              className="close"
               id="close-popup"
               tmButtonType={ButtonType.NoBorder}
               buttonClicked={() => {
