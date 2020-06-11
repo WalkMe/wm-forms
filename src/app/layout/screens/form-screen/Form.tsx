@@ -12,6 +12,7 @@ import CheckboxInput from "../../../components/inputs/checkbox-input/CheckboxInp
 import useFormManager from "../../../hooks/useFormManager";
 import MessageContainer from "../../../components/message-container/MessageContainer";
 import useViewManager from "../../../hooks/useViewManager";
+import List from "../../../components/list/List";
 
 interface IFormProps {
   onSelected: (selected: IFormAnswerBE[]) => void;
@@ -98,25 +99,27 @@ export default function Form({
         />
       )}
       <div ref={formOptions} className={`form-options ${formClass}`}>
-        <ul className={`options`}>
-          {options.map((option, index) => {
-            const inputData = getInput({ type, option, index });
-            const input = {
-              ...inputData,
-              handleChange: () => handleChange(index),
-            };
+        <List className="options">
+          <>
+            {options.map((option, index) => {
+              const inputData = getInput({ type, option, index });
+              const input = {
+                ...inputData,
+                handleChange: () => handleChange(index),
+              };
 
-            return (
-              <li className="option" key={`option-${index}`}>
-                {isSingleSelect ? (
-                  <RadioInput {...input} />
-                ) : (
-                  <CheckboxInput {...input} />
-                )}
-              </li>
-            );
-          })}
-        </ul>
+              return (
+                <li className="option" key={`option-${index}`}>
+                  {isSingleSelect ? (
+                    <RadioInput {...input} />
+                  ) : (
+                    <CheckboxInput {...input} />
+                  )}
+                </li>
+              );
+            })}
+          </>
+        </List>
       </div>
     </>
   );

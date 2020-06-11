@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-import { IFormScreenBE } from "../../interfaces/form/form.interface";
 import { ScreenType } from "../../interfaces/screen/screen.interface";
 
 import RouteButton from "../buttons/route-button/RouteButton";
 import { ButtonType } from "../buttons/Button";
+import { IFormScreenBE } from "../../interfaces/form/screen.interface";
 
 interface IContentScreenTemplate {
   type?: ScreenType;

@@ -1,3 +1,6 @@
+import { IFormScreenBE } from "./screen.interface";
+import { FormSummary } from "./summary.interface";
+
 export enum QuestionType {
   SingleSelect,
   MultipleSelect,
@@ -27,17 +30,6 @@ export interface IFormQuestionBE {
   answers: IFormAnswerBE[];
 }
 
-export interface IScreenButton {
-  text: string;
-  id: string;
-}
-
-export interface IFormScreenBE {
-  title: string;
-  description?: string;
-  buttonText?: string;
-  buttons?: IScreenButton[];
-}
 export interface IFormBE {
   welcomeScreen: IFormScreenBE;
   successScreen: IFormScreenBE;
@@ -46,16 +38,10 @@ export interface IFormBE {
   properties: IProperties;
 }
 
-export type QuizSummary = Array<QuestionSummary>;
-export type QuestionSummary = {
-  question: IFormQuestionBE;
-  answerIds: Array<number>;
-};
-
 export interface IFormSDK {
   id: number;
   data: IFormBE;
   submit: (questionId: number, answers: Array<number>) => Promise<void>;
   questions: AsyncIterator<IFormQuestionBE>;
-  getSummary: () => Promise<QuizSummary>;
+  getSummary: () => Promise<FormSummary>;
 }
