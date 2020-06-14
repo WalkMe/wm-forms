@@ -1,29 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 
-export function ProgressBar({
-  percentCompletion = 0,
-  showTitle = false,
-  customTitle,
-  showPercentages = false,
-}: {
+export interface IProgressBarProps {
   percentCompletion: number;
   showTitle?: boolean;
   customTitle?: string;
   showPercentages?: boolean;
-}) {
+}
+
+export default function ProgressBar({
+  percentCompletion,
+  showTitle = false,
+  customTitle,
+  showPercentages = false,
+}: IProgressBarProps) {
   const [progressValue, setProgressValue] = useState(percentCompletion);
   const percentages = `${progressValue}%`;
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setProgressValue(percentCompletion);
-    }, 300);
+    if (isNaN(percentCompletion) && typeof percentCompletion === "number") {
+      const timer = setTimeout(() => {
+        setProgressValue(percentCompletion);
+      }, 300);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   useEffect(() => {
-    setProgressValue(percentCompletion);
+    if (progressValue !== percentCompletion) {
+      setProgressValue(percentCompletion);
+    }
   }, [percentCompletion]);
 
   return (

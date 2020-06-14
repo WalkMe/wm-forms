@@ -1,7 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import Confetti from "react-dom-confetti";
 
-import { config } from "../../../config";
 import { IFormContext } from "./FormScreen";
 import { IScreenAnimationConfig } from "../master-screen/MasterScreen";
 
@@ -9,19 +7,13 @@ import Button, { ButtonType } from "../../../components/buttons/Button";
 import RouteButton from "../../../components/buttons/route-button/RouteButton";
 import useFormManager from "../../../hooks/useFormManager";
 import useViewManager from "../../../hooks/useViewManager";
+import MessageContainer from "../../../components/message-container/MessageContainer";
+import { AppAnimation } from "../../../interfaces/walkme-app/walkmeApp.interface";
 
 interface IFormFooterProps {
   onSubmitted: () => void;
   animationConfig: IScreenAnimationConfig;
 }
-
-const confettiConfig = {
-  angle: 80,
-  spread: 60,
-  dragFriction: 0.15,
-  duration: 1500,
-  colors: ["#348bd8", "#1F569D", "#89d1ef", "#348bd8", "#ACD2ED"],
-};
 
 export default function FormFooter({
   props,
@@ -56,7 +48,7 @@ export default function FormFooter({
     if (formCTA.current) {
       animateCoreElements({
         elements: [formCTA.current],
-        animateClassName: "fadeInUp",
+        animateClassName: AppAnimation.FadeInUp,
         timeout: 3200,
         remove: true,
       });
@@ -67,7 +59,7 @@ export default function FormFooter({
     if (formFooter.current) {
       animateCoreElements({
         elements: [formFooter.current],
-        animateClassName: "fadeInUp",
+        animateClassName: AppAnimation.FadeInUp,
         timeout: animationConfig.footer,
       });
     }
@@ -75,12 +67,6 @@ export default function FormFooter({
 
   return (
     <footer ref={formFooter} className="form-footer">
-      {config.successConfetti && (
-        <Confetti
-          active={submitted && isCorrectAnswers()}
-          config={confettiConfig}
-        />
-      )}
       {submitted ? (
         <>
           <RouteButton
@@ -90,10 +76,15 @@ export default function FormFooter({
             label={formCTALabel}
           />
           {explanation && (
-            <div className="explanation">
-              <span className="sub-title bold">Explanation</span>
-              <p className="text">{explanation}</p>
-            </div>
+            <MessageContainer
+              className="explanation"
+              subTitle="Explanation"
+              message={explanation}
+              animateConfig={{
+                animateClass: AppAnimation.FadeInDown,
+                timeout: 300,
+              }}
+            />
           )}
         </>
       ) : (

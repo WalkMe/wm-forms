@@ -14,6 +14,7 @@ import {
 import {
   IAppContext,
   IAppState,
+  AppAnimation,
 } from "./interfaces/walkme-app/walkmeApp.interface";
 
 import useAppManager from "./hooks/useAppManager";
@@ -24,6 +25,7 @@ import SummaryScreen from "./layout/screens/summary-screen/SummaryScreen";
 import FormScreen from "./layout/screens/form-screen/FormScreen";
 
 import "../styles/index.less";
+import FooterProgressBar from "./layout/footer-progress-bar/FooterProgressBar";
 
 declare global {
   interface Window {
@@ -40,6 +42,7 @@ export default function App() {
     getDebugError,
     getUrlParamValueByName,
   } = useAppManager();
+
   const [walkmeSDK, setWalkmeSDK] = useState({} as ISdk);
   const [appState, setAppState] = useState(defaultInitialAppState as IAppState);
   const { initiated } = appState;
@@ -47,9 +50,6 @@ export default function App() {
     type: InformationScreenType.Loading,
   } as IInformationScreenData);
 
-  /**
-   * displayDebugInfo
-   */
   const displayDebugInfo = () => {
     setAppState((prevAppState) => {
       return {
@@ -132,7 +132,7 @@ export default function App() {
   };
 
   /**
-   * Initial SDK and
+   * Initiate SDK
    */
   useEffect(() => {
     setSDK();
@@ -161,6 +161,7 @@ export default function App() {
                 value={{
                   walkmeSDK,
                   appState,
+                  setAppState,
                 }}
               >
                 <Debug />
@@ -168,16 +169,22 @@ export default function App() {
                   <CSSTransition
                     key={location.pathname}
                     timeout={300}
-                    classNames="fade-in-left"
+                    classNames={AppAnimation.FadeInLeft}
                   >
-                    <Switch location={location}>
-                      <Route exact path="/" component={WelcomeScreen} />
-                      <Route path="/form/:id/:score?" component={FormScreen} />
-                      <Route
-                        path="/summary/:score?"
-                        component={SummaryScreen}
-                      />
-                    </Switch>
+                    <>
+                      <Switch location={location}>
+                        <Route exact path="/" component={WelcomeScreen} />
+                        <Route
+                          path="/form/:id/:score?"
+                          component={FormScreen}
+                        />
+                        <Route
+                          path="/summary/:score?"
+                          component={SummaryScreen}
+                        />
+                      </Switch>
+                      <FooterProgressBar />
+                    </>
                   </CSSTransition>
                 </TransitionGroup>
               </AppContext.Provider>

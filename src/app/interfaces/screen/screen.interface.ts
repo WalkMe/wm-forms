@@ -5,4 +5,5 @@ export enum ScreenType {
   Summary = "summary",
   Overview = "overview",
   Popup = "popup",
+  AnimatedScreen = "animated-screen",
 }

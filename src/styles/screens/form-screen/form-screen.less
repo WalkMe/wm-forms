@@ -40,6 +40,11 @@
     max-height: none;
     justify-content: flex-start;
 
+    .confetti-container {
+      position: absolute;
+      z-index: 2;
+    }
+
     .form-top-section:not(:empty) {
       text-align: left;
       display: flex;
@@ -74,15 +79,31 @@
       top: 0;
       z-index: 2;
 
-      &:before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: -1;
-        background-color: var(--primary100Alpha9);
+      &.multiple-select-message {
+        &:before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: -1;
+          background-color: var(--primary100Alpha9);
+        }
+      }
+
+      &.explanation {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        align-items: flex-start;
+        text-align: left;
+        font-size: 12px;
+        padding: 10px 0 50px;
+
+        .text {
+          margin-top: 10px;
+        }
       }
     }
 
@@ -104,18 +125,6 @@
       #button-form-action {
         opacity: 0;
         animation: fadeIn 0.3s linear both;
-      }
-      .explanation {
-        display: flex;
-        flex-direction: column;
-        margin-top: 20px;
-        align-items: flex-start;
-        text-align: left;
-        font-size: 12px;
-
-        .text {
-          margin-top: 10px;
-        }
       }
     }
   }

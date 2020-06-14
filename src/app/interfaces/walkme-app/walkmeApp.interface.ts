@@ -7,14 +7,18 @@ export interface IAppState {
   platformType: string;
   formSDK: IFormSDK;
   isLoadedInIframe?: boolean;
-}
-
-export interface sidebarOptions {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  percentCompletion?: number;
 }
 
 export interface IAppContext {
   appState: IAppState;
   walkmeSDK: ISdk;
+  setAppState: (updated: IAppState) => void;
+}
+
+export enum AppAnimation {
+  FadeInLeft = "fade-in-left",
+  FadeInRight = "fade-in-right",
+  FadeInUp = "fade-in-up",
+  FadeInDown = "fade-in-down",
 }

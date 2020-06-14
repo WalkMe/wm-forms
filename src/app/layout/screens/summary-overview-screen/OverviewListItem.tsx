@@ -4,6 +4,7 @@ import { IFormAnswerBE } from "../../../interfaces/form/form.interface";
 import useSummaryManager, {
   ISummaryItem,
 } from "../../../hooks/useSummaryManager";
+import MessageContainer from "../../../components/message-container/MessageContainer";
 
 export default function OverviewListItem({
   item,
@@ -56,10 +57,11 @@ export default function OverviewListItem({
           </div>
         )}
         {item.question.explanation && (
-          <div className="explanation">
-            <span className="sub-title bold">Explanation</span>
-            <p className="text">{item.question.explanation}</p>
-          </div>
+          <MessageContainer
+            className="explanation"
+            subTitle="Explanation"
+            message={item.question.explanation}
+          />
         )}
       </div>
     </li>
