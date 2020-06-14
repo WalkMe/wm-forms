@@ -7,6 +7,7 @@ export interface IAppState {
   platformType: string;
   formSDK: IFormSDK;
   isLoadedInIframe?: boolean;
+  percentCompletion?: number;
 }
 
 export interface sidebarOptions {
@@ -17,4 +18,5 @@ export interface sidebarOptions {
 export interface IAppContext {
   appState: IAppState;
   walkmeSDK: ISdk;
+  setAppState: (updated: IAppState) => void;
 }

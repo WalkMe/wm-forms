@@ -42,7 +42,6 @@ export default function Popup(props: IPopupProps) {
   return (
     <MasterScreen
       isAnimatedScreen
-      hideProgressBar
       type={ScreenType.Popup}
       className={`${className} ${loadedClass} ${
         open ? "open-popup" : "close-popup"

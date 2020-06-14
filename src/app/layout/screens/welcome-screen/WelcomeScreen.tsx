@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import { AppContext } from "../../../App";
@@ -9,11 +9,17 @@ import FormProperties from "../../../components/form-properties/FormProperties";
 export interface IWelcomeScreenProps {}
 
 export default function WelcomeScreen(props?: IWelcomeScreenProps) {
-  const { appState } = useContext(AppContext);
+  const { appState, setAppState } = useContext(AppContext);
   const {
     data: { welcomeScreen },
   } = appState.formSDK;
 
+  useEffect(() => {
+    setAppState({
+      ...appState,
+      percentCompletion: 0,
+    });
+  }, []);
   return (
     <>
       <MasterScreen isAnimatedScreen type={ScreenType.Welcome}>

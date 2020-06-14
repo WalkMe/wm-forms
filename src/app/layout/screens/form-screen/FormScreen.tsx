@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import MasterScreen from "../master-screen/MasterScreen";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, useHistory } from "react-router-dom";
 import { AppContext } from "../../../App";
 import {
   IFormQuestionBE,
@@ -13,6 +13,7 @@ import FormHeader from "./FormHeader";
 import FormFooter from "./FormFooter";
 import Form from "./Form";
 import useFormManager from "../../../hooks/useFormManager";
+import { IAppState } from "../../../interfaces/walkme-app/walkmeApp.interface";
 
 type FormParams = { id: string; score: string };
 
@@ -37,26 +38,26 @@ export interface IFormContext {
 }
 
 export default function FormScreen(props?: IFormScreenProps) {
-  const { appState } = useContext(AppContext);
+  const { appState, setAppState } = useContext(AppContext);
   const {
     data: { questions },
   } = appState.formSDK;
-
+  const routeHistory = useHistory();
   const { id, score } = props.match.params;
   const [selectedAnswers, setSelectedAnswers] = useState([] as IFormAnswerBE[]);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const currentRouteId = parseInt(id);
   const currentIndex = currentRouteId - 1;
   const currentQuestion = questions[currentIndex];
+  const currentScore = score ? parseInt(score) : 0;
 
   const formGlobals = {
     currentRouteId,
     currentIndex,
-    currentScore: score ? parseInt(score) : 0,
+    currentScore,
     currentQuestion,
     questionsLength: questions.length,
     selectedAnswers,
@@ -102,20 +103,27 @@ export default function FormScreen(props?: IFormScreenProps) {
   useEffect(() => {
     setSubmitted(false);
     setSelectedAnswers([]);
-  }, [id]);
+  }, [id, score]);
 
   /** updating data when each of dependencies change */
   useEffect(() => {
     setFormData(form);
     setPercentCompletion(calculateCompletion());
 
+    setAppState({
+      ...appState,
+      percentCompletion: calculateCompletion(),
+    });
+
     if (submitted && currentQuestion.explanation) {
       const explanationContainer = scrollRef.current.querySelector(
         ".explanation"
       );
-      console.log("explanationContainer ", explanationContainer);
       if (explanationContainer) {
-        explanationContainer.scrollIntoView({ block: "end" });
+        explanationContainer.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+        });
       }
     }
   }, [id, selectedAnswers, submitted, loading]);
@@ -125,7 +133,6 @@ export default function FormScreen(props?: IFormScreenProps) {
       isAnimatedScreen
       type={ScreenType.Form}
       header={<FormHeader {...formData} />}
-      percentCompletion={percentCompletion}
       scrollForwardedRef={scrollRef}
     >
       <>

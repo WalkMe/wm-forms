@@ -2,7 +2,6 @@ import React, { ReactElement, useRef, useEffect, RefObject } from "react";
 
 import Header from "../../header/Header";
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
-import { ProgressBar } from "../../../components/progress-bar/ProgressBar";
 import useViewManager from "../../../hooks/useViewManager";
 
 export interface IMasterScreenProps {
@@ -11,8 +10,6 @@ export interface IMasterScreenProps {
   header?: ReactElement;
   children: ReactElement;
   isAnimatedScreen?: boolean;
-  percentCompletion?: number;
-  hideProgressBar?: boolean;
   hideHeader?: boolean;
   scrollForwardedRef?: RefObject<HTMLDivElement>;
 }
@@ -34,8 +31,6 @@ export default function MasterScreen(props: IMasterScreenProps) {
     header,
     children,
     type = ScreenType.Default,
-    percentCompletion = 0,
-    hideProgressBar,
     hideHeader,
     scrollForwardedRef,
   } = props;
@@ -58,11 +53,6 @@ export default function MasterScreen(props: IMasterScreenProps) {
           {children}
         </div>
       </div>
-      {!hideProgressBar && (
-        <footer className={`footer ${type}`}>
-          <ProgressBar percentCompletion={percentCompletion} showPercentages />
-        </footer>
-      )}
     </div>
   );
 }

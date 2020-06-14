@@ -14,7 +14,7 @@ export interface IOverviewScreenProps {
   overviewData: ISummaryItem[];
 }
 
-export default function OverviewScreen(props: IOverviewScreenProps) {
+export default function SummaryOverviewScreen(props: IOverviewScreenProps) {
   const { isVisible, overviewData, onClose } = props;
   const { getTotalCorrectAnswers } = useSummaryManager();
   const [summary, setSummary] = useState(null);

@@ -1,5 +1,11 @@
 import React, { useEffect, createContext, useState } from "react";
-import { Switch, Route, HashRouter } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  HashRouter,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import walkme, { ISdk } from "@walkme/sdk";
@@ -24,6 +30,7 @@ import SummaryScreen from "./layout/screens/summary-screen/SummaryScreen";
 import FormScreen from "./layout/screens/form-screen/FormScreen";
 
 import "../styles/index.less";
+import FooterProgressBar from "./layout/footer-progress-bar/FooterProgressBar";
 
 declare global {
   interface Window {
@@ -161,6 +168,7 @@ export default function App() {
                 value={{
                   walkmeSDK,
                   appState,
+                  setAppState,
                 }}
               >
                 <Debug />
@@ -170,14 +178,20 @@ export default function App() {
                     timeout={300}
                     classNames="fade-in-left"
                   >
-                    <Switch location={location}>
-                      <Route exact path="/" component={WelcomeScreen} />
-                      <Route path="/form/:id/:score?" component={FormScreen} />
-                      <Route
-                        path="/summary/:score?"
-                        component={SummaryScreen}
-                      />
-                    </Switch>
+                    <>
+                      <Switch location={location}>
+                        <Route exact path="/" component={WelcomeScreen} />
+                        <Route
+                          path="/form/:id/:score?"
+                          component={FormScreen}
+                        />
+                        <Route
+                          path="/summary/:score?"
+                          component={SummaryScreen}
+                        />
+                      </Switch>
+                      <FooterProgressBar />
+                    </>
                   </CSSTransition>
                 </TransitionGroup>
               </AppContext.Provider>

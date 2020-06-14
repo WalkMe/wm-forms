@@ -67,7 +67,6 @@ export default function SummaryScreen(props: IResultsScreenProps) {
       <MasterScreen
         isAnimatedScreen
         type={ScreenType.Summary}
-        percentCompletion={100}
         className={summaryClassName}
       >
         <>
