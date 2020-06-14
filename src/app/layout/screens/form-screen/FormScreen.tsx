@@ -13,7 +13,8 @@ import FormHeader from "./FormHeader";
 import FormFooter from "./FormFooter";
 import Form from "./Form";
 import useFormManager from "../../../hooks/useFormManager";
-import { IAppState } from "../../../interfaces/walkme-app/walkmeApp.interface";
+import Confetti from "react-dom-confetti";
+import { config } from "../../../config";
 
 type FormParams = { id: string; score: string };
 
@@ -36,6 +37,16 @@ export interface IFormContext {
   currentScore?: number;
   selectedIndexes?: number[];
 }
+
+const confettiConfig = {
+  angle: 270,
+  spread: 160,
+  dragFriction: 0.1,
+  startVelocity: 15,
+  duration: 1500,
+  stagger: 5,
+  colors: ["#348bd8", "#1F569D", "#89d1ef", "#348bd8", "#ACD2ED"],
+};
 
 export default function FormScreen(props?: IFormScreenProps) {
   const { appState, setAppState } = useContext(AppContext);
@@ -65,7 +76,7 @@ export default function FormScreen(props?: IFormScreenProps) {
     loading,
   };
 
-  const { calculateCompletion } = useFormManager(formGlobals);
+  const { calculateCompletion, isCorrectAnswers } = useFormManager(formGlobals);
   const [percentCompletion, setPercentCompletion] = useState(
     calculateCompletion()
   );
@@ -136,6 +147,14 @@ export default function FormScreen(props?: IFormScreenProps) {
       scrollForwardedRef={scrollRef}
     >
       <>
+        {config.successConfetti && (
+          <div className="confetti-container">
+            <Confetti
+              active={submitted && isCorrectAnswers()}
+              config={confettiConfig}
+            />
+          </div>
+        )}
         <Form
           formContext={formData}
           props={{

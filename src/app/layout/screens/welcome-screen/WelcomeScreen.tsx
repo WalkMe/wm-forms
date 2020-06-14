@@ -20,6 +20,7 @@ export default function WelcomeScreen(props?: IWelcomeScreenProps) {
       percentCompletion: 0,
     });
   }, []);
+
   return (
     <>
       <MasterScreen isAnimatedScreen type={ScreenType.Welcome}>

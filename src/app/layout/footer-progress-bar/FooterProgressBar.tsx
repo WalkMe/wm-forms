@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, memo } from "react";
+import React, { useContext } from "react";
 import ProgressBar from "../../components/progress-bar/ProgressBar";
 import { AppContext } from "../../App";
 

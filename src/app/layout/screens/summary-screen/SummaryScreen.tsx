@@ -10,7 +10,9 @@ import FormProperties from "../../../components/form-properties/FormProperties";
 import PropertyLabel from "../../../components/property-label/PropertyLabel";
 import Button, { ButtonType } from "../../../components/buttons/Button";
 import SummaryOverviewScreen from "../summary-overview-screen/SummaryOverviewScreen";
-import { fakeSummary } from "../../../hooks/useSummaryManager";
+import useSummaryManager, {
+  fakeSummary,
+} from "../../../hooks/useSummaryManager";
 
 type SummaryParams = { score: string };
 
@@ -18,7 +20,8 @@ export interface IResultsScreenProps
   extends RouteComponentProps<SummaryParams> {}
 
 export default function SummaryScreen(props: IResultsScreenProps) {
-  const { appState } = useContext(AppContext);
+  const { appState, setAppState } = useContext(AppContext);
+  const { isValidSummaryData } = useSummaryManager();
   const {
     formSDK: {
       data: { successScreen, failScreen, properties },
@@ -33,19 +36,12 @@ export default function SummaryScreen(props: IResultsScreenProps) {
   const screen = isSuccess ? successScreen : failScreen;
   const summaryClassName = isSuccess ? "success" : "fail";
 
-  // TODO: call to SDK get summary data
   const getOverviewData = async () => {
     try {
       const summaryData = await appState.formSDK.getSummary();
 
-      // Checking valid data for develop mode
-      const isValidSummaryData =
-        summaryData && summaryData.every((item) => item.answerIds);
-
-      if (isValidSummaryData) {
+      if (isValidSummaryData(summaryData)) {
         console.log("summaryData ", summaryData);
-        console.log("summaryData stringify ", JSON.stringify(summaryData));
-
         setOverviewData(summaryData);
       } else {
         console.log("fakeSummary ", fakeSummary);
@@ -60,6 +56,11 @@ export default function SummaryScreen(props: IResultsScreenProps) {
     if (showSummary) {
       getOverviewData();
     }
+
+    setAppState({
+      ...appState,
+      percentCompletion: 100,
+    });
   }, []);
 
   return (

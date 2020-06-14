@@ -1,7 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import Confetti from "react-dom-confetti";
 
-import { config } from "../../../config";
 import { IFormContext } from "./FormScreen";
 import { IScreenAnimationConfig } from "../master-screen/MasterScreen";
 
@@ -15,14 +13,6 @@ interface IFormFooterProps {
   onSubmitted: () => void;
   animationConfig: IScreenAnimationConfig;
 }
-
-const confettiConfig = {
-  angle: 80,
-  spread: 60,
-  dragFriction: 0.15,
-  duration: 1500,
-  colors: ["#348bd8", "#1F569D", "#89d1ef", "#348bd8", "#ACD2ED"],
-};
 
 export default function FormFooter({
   props,
@@ -76,12 +66,6 @@ export default function FormFooter({
 
   return (
     <footer ref={formFooter} className="form-footer">
-      {config.successConfetti && (
-        <Confetti
-          active={submitted && isCorrectAnswers()}
-          config={confettiConfig}
-        />
-      )}
       {submitted ? (
         <>
           <RouteButton

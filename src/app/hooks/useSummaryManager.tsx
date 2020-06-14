@@ -177,11 +177,14 @@ export default function useSummaryManager() {
       }
     });
   };
+  const isValidSummaryData = (summaryData: ISummaryItem[]) =>
+    summaryData && summaryData.every((item) => item.answerIds);
 
   return {
     getAnswerIds,
     getTotalCorrectAnswers,
     isCorrectAnswer,
     filterCorrectAnswers,
+    isValidSummaryData,
   };
 }

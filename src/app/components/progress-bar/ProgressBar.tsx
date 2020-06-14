@@ -8,7 +8,7 @@ export interface IProgressBarProps {
 }
 
 export default function ProgressBar({
-  percentCompletion = 0,
+  percentCompletion,
   showTitle = false,
   customTitle,
   showPercentages = false,
@@ -17,7 +17,7 @@ export default function ProgressBar({
   const percentages = `${progressValue}%`;
 
   useEffect(() => {
-    if (percentCompletion) {
+    if (isNaN(percentCompletion) && typeof percentCompletion === "number") {
       const timer = setTimeout(() => {
         setProgressValue(percentCompletion);
       }, 300);
