@@ -135,7 +135,6 @@ export default function App() {
    * Initiate SDK
    */
   useEffect(() => {
-    console.log("location ", location);
     setSDK();
   }, []);
 

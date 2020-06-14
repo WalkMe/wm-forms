@@ -37,6 +37,8 @@ export default function Popup(props: IPopupProps) {
     setTimeout(() => {
       setLoadedClass("");
     }, 3000);
+
+    return () => setLoadedClass("");
   }, []);
 
   return (
