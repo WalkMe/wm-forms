@@ -8,6 +8,7 @@ import RouteButton from "../../../components/buttons/route-button/RouteButton";
 import useFormManager from "../../../hooks/useFormManager";
 import useViewManager from "../../../hooks/useViewManager";
 import MessageContainer from "../../../components/message-container/MessageContainer";
+import { AppAnimation } from "../../../interfaces/walkme-app/walkmeApp.interface";
 
 interface IFormFooterProps {
   onSubmitted: () => void;
@@ -47,7 +48,7 @@ export default function FormFooter({
     if (formCTA.current) {
       animateCoreElements({
         elements: [formCTA.current],
-        animateClassName: "fadeInUp",
+        animateClassName: AppAnimation.FadeInUp,
         timeout: 3200,
         remove: true,
       });
@@ -58,7 +59,7 @@ export default function FormFooter({
     if (formFooter.current) {
       animateCoreElements({
         elements: [formFooter.current],
-        animateClassName: "fadeInUp",
+        animateClassName: AppAnimation.FadeInUp,
         timeout: animationConfig.footer,
       });
     }
@@ -80,7 +81,7 @@ export default function FormFooter({
               subTitle="Explanation"
               message={explanation}
               animateConfig={{
-                animateClass: "fadeInDown",
+                animateClass: AppAnimation.FadeInDown,
                 timeout: 300,
               }}
             />

@@ -1,11 +1,5 @@
 import React, { useEffect, createContext, useState } from "react";
-import {
-  Switch,
-  Route,
-  HashRouter,
-  useLocation,
-  useHistory,
-} from "react-router-dom";
+import { Switch, Route, HashRouter } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import walkme, { ISdk } from "@walkme/sdk";
@@ -20,6 +14,7 @@ import {
 import {
   IAppContext,
   IAppState,
+  AppAnimation,
 } from "./interfaces/walkme-app/walkmeApp.interface";
 
 import useAppManager from "./hooks/useAppManager";
@@ -47,6 +42,7 @@ export default function App() {
     getDebugError,
     getUrlParamValueByName,
   } = useAppManager();
+
   const [walkmeSDK, setWalkmeSDK] = useState({} as ISdk);
   const [appState, setAppState] = useState(defaultInitialAppState as IAppState);
   const { initiated } = appState;
@@ -54,9 +50,6 @@ export default function App() {
     type: InformationScreenType.Loading,
   } as IInformationScreenData);
 
-  /**
-   * displayDebugInfo
-   */
   const displayDebugInfo = () => {
     setAppState((prevAppState) => {
       return {
@@ -139,9 +132,10 @@ export default function App() {
   };
 
   /**
-   * Initial SDK and
+   * Initiate SDK
    */
   useEffect(() => {
+    console.log("location ", location);
     setSDK();
   }, []);
 
@@ -176,7 +170,7 @@ export default function App() {
                   <CSSTransition
                     key={location.pathname}
                     timeout={300}
-                    classNames="fade-in-left"
+                    classNames={AppAnimation.FadeInLeft}
                   >
                     <>
                       <Switch location={location}>

@@ -8,6 +8,7 @@ import {
 } from "../../../interfaces/information-screen/informationScreen.interface";
 
 import useViewManager from "../../../hooks/useViewManager";
+import { AppAnimation } from "../../../interfaces/walkme-app/walkmeApp.interface";
 
 export default function InformationScreen(props: IInformationScreenData) {
   const { type, error } = props;
@@ -24,7 +25,7 @@ export default function InformationScreen(props: IInformationScreenData) {
   useEffect(() => {
     animateCoreElements({
       elements: [noResults.current, loading.current],
-      animateClassName: "fadeInUp",
+      animateClassName: AppAnimation.FadeInUp,
       timeout: 300,
     });
 

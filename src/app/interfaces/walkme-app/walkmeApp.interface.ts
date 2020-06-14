@@ -10,13 +10,15 @@ export interface IAppState {
   percentCompletion?: number;
 }
 
-export interface sidebarOptions {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 export interface IAppContext {
   appState: IAppState;
   walkmeSDK: ISdk;
   setAppState: (updated: IAppState) => void;
+}
+
+export enum AppAnimation {
+  FadeInLeft = "fade-in-left",
+  FadeInRight = "fade-in-right",
+  FadeInUp = "fade-in-up",
+  FadeInDown = "fade-in-down",
 }

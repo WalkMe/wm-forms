@@ -3,6 +3,7 @@ import React, { ReactElement, useRef, useEffect, RefObject } from "react";
 import Header from "../../header/Header";
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import useViewManager from "../../../hooks/useViewManager";
+import { AppAnimation } from "../../../interfaces/walkme-app/walkmeApp.interface";
 
 export interface IMasterScreenProps {
   className?: string;
@@ -40,7 +41,7 @@ export default function MasterScreen(props: IMasterScreenProps) {
   useEffect(() => {
     animateCoreElements({
       elements: [screenContent.current],
-      animateClassName: "fadeInUp",
+      animateClassName: AppAnimation.FadeInUp,
       timeout: 300,
     });
   }, []);

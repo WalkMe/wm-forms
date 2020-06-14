@@ -13,6 +13,7 @@ import useFormManager from "../../../hooks/useFormManager";
 import MessageContainer from "../../../components/message-container/MessageContainer";
 import useViewManager from "../../../hooks/useViewManager";
 import List from "../../../components/list/List";
+import { AppAnimation } from "../../../interfaces/walkme-app/walkmeApp.interface";
 
 interface IFormProps {
   onSelected: (selected: IFormAnswerBE[]) => void;
@@ -72,12 +73,12 @@ export default function Form({
   useEffect(() => {
     animateCoreElements({
       elements: [formTopSection.current],
-      animateClassName: "fadeInDown",
+      animateClassName: AppAnimation.FadeInDown,
       timeout: animationConfig.topSection,
     });
     animateCoreElements({
       elements: [formOptions.current],
-      animateClassName: "fadeInUp",
+      animateClassName: AppAnimation.FadeInUp,
       timeout: animationConfig.options,
     });
   }, []);
@@ -94,7 +95,7 @@ export default function Form({
           message={multipleSelectMsg}
           className="multiple-select-message star-message"
           animateConfig={{
-            animateClass: "fadeInDown",
+            animateClass: AppAnimation.FadeInDown,
             timeout: animationConfig.topSection,
           }}
         />

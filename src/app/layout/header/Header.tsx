@@ -3,6 +3,7 @@ import React, { useEffect, useRef, ReactElement } from "react";
 import { ScreenType } from "../../interfaces/screen/screen.interface";
 
 import useViewManager from "../../hooks/useViewManager";
+import { AppAnimation } from "../../interfaces/walkme-app/walkmeApp.interface";
 
 export interface IHeaderProps {
   type?: ScreenType;
@@ -18,7 +19,7 @@ export default function Header(props: IHeaderProps) {
     if (children) {
       animateCoreElements({
         elements: [innerHeader.current],
-        animateClassName: "fadeInDown",
+        animateClassName: AppAnimation.FadeInDown,
         timeout: 300,
       });
     }
