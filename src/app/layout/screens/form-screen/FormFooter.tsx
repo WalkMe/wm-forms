@@ -9,6 +9,7 @@ import Button, { ButtonType } from "../../../components/buttons/Button";
 import RouteButton from "../../../components/buttons/route-button/RouteButton";
 import useFormManager from "../../../hooks/useFormManager";
 import useViewManager from "../../../hooks/useViewManager";
+import MessageContainer from "../../../components/message-container/MessageContainer";
 
 interface IFormFooterProps {
   onSubmitted: () => void;
@@ -90,10 +91,15 @@ export default function FormFooter({
             label={formCTALabel}
           />
           {explanation && (
-            <div className="explanation">
-              <span className="sub-title bold">Explanation</span>
-              <p className="text">{explanation}</p>
-            </div>
+            <MessageContainer
+              className="explanation"
+              subTitle="Explanation"
+              message={explanation}
+              animateConfig={{
+                animateClass: "fadeInDown",
+                timeout: 300,
+              }}
+            />
           )}
         </>
       ) : (

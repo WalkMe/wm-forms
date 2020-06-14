@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import MasterScreen from "../master-screen/MasterScreen";
@@ -40,12 +40,14 @@ export default function FormScreen(props?: IFormScreenProps) {
   const { appState } = useContext(AppContext);
   const {
     data: { questions },
-    submit,
   } = appState.formSDK;
+
   const { id, score } = props.match.params;
   const [selectedAnswers, setSelectedAnswers] = useState([] as IFormAnswerBE[]);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const currentRouteId = parseInt(id);
   const currentIndex = currentRouteId - 1;
@@ -106,6 +108,16 @@ export default function FormScreen(props?: IFormScreenProps) {
   useEffect(() => {
     setFormData(form);
     setPercentCompletion(calculateCompletion());
+
+    if (submitted && currentQuestion.explanation) {
+      const explanationContainer = scrollRef.current.querySelector(
+        ".explanation"
+      );
+      console.log("explanationContainer ", explanationContainer);
+      if (explanationContainer) {
+        explanationContainer.scrollIntoView({ block: "end" });
+      }
+    }
   }, [id, selectedAnswers, submitted, loading]);
 
   return (
@@ -114,6 +126,7 @@ export default function FormScreen(props?: IFormScreenProps) {
       type={ScreenType.Form}
       header={<FormHeader {...formData} />}
       percentCompletion={percentCompletion}
+      scrollForwardedRef={scrollRef}
     >
       <>
         <Form

@@ -5,7 +5,11 @@ export default function MessageContainer({
   message,
   className = "",
   animateConfig,
+  title,
+  subTitle,
 }: {
+  title?: string;
+  subTitle?: string;
   message: string;
   className?: string;
   animateConfig?: { animateClass: string; timeout: number };
@@ -26,7 +30,9 @@ export default function MessageContainer({
 
   return (
     <div ref={ref} className={`container-message ${className} ${animateClass}`}>
-      <span className="text">{message}</span>
+      {title && <h3 className="title">{title}</h3>}
+      {subTitle && <span className="sub-title bold">{subTitle}</span>}
+      <p className="text">{message}</p>
     </div>
   );
 }

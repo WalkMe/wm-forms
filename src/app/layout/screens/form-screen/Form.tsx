@@ -92,6 +92,7 @@ export default function Form({
       {isMultipleSelect && (
         <MessageContainer
           message={multipleSelectMsg}
+          className="multiple-select-message star-message"
           animateConfig={{
             animateClass: "fadeInDown",
             timeout: animationConfig.topSection,

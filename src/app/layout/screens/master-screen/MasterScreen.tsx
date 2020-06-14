@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef, useEffect } from "react";
+import React, { ReactElement, useRef, useEffect, RefObject } from "react";
 
 import Header from "../../header/Header";
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
@@ -14,6 +14,7 @@ export interface IMasterScreenProps {
   percentCompletion?: number;
   hideProgressBar?: boolean;
   hideHeader?: boolean;
+  scrollForwardedRef?: RefObject<HTMLDivElement>;
 }
 
 export interface IScreenAnimationConfig {
@@ -26,6 +27,7 @@ export interface IScreenAnimationConfig {
 export default function MasterScreen(props: IMasterScreenProps) {
   const { animateCoreElements } = useViewManager();
   const screenContent = useRef<HTMLDivElement>(null);
+
   const {
     className = "",
     isAnimatedScreen,
@@ -35,6 +37,7 @@ export default function MasterScreen(props: IMasterScreenProps) {
     percentCompletion = 0,
     hideProgressBar,
     hideHeader,
+    scrollForwardedRef,
   } = props;
 
   const animatedClass = isAnimatedScreen ? "animated-screen" : "";
@@ -49,7 +52,7 @@ export default function MasterScreen(props: IMasterScreenProps) {
 
   return (
     <div className={`screen ${type} ${animatedClass} ${className}`}>
-      <div className="screen-scroll-wrapper">
+      <div ref={scrollForwardedRef} className="screen-scroll-wrapper">
         {!hideHeader && <Header type={type}>{header}</Header>}
         <div ref={screenContent} className="screen-content">
           {children}

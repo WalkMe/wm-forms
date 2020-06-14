@@ -2,14 +2,24 @@
   padding: 0 5px;
   font-size: 11px;
 
-  .text {
-    &:not(:empty)::before {
-      content: "* ";
+  &.star-message {
+    .text {
+      &:not(:empty)::before {
+        content: "* ";
+      }
     }
   }
 
   &.animate-element {
     .animateElement();
     .fadeInDown ();
+  }
+
+  .sub-title {
+    font-size: 12px;
+  }
+
+  .title {
+    font-size: 15px;
   }
 }
