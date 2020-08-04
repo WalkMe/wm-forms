@@ -44,5 +44,5 @@ export interface IFormSDK {
   data: IFormBE;
   submit: (questionId: number, answers: Array<number>) => Promise<void>;
   questions: AsyncIterator<IFormQuestionBE>;
-  getSummary: () => Promise<FormSummary>;
+  getSummary: (score? :number , isSuccess? : boolean) => Promise<FormSummary>;
 }
