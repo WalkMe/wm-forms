@@ -90,13 +90,9 @@ export default function App() {
 
       if (tmCourses) {
         console.log("tmCourses =>", tmCourses);
-
-        currentCourse = tmCourses.find((course: any, index: number) => {
-          const courseIdIndex = parseInt(courseIdParam) - 1;
-          if (index === courseIdIndex) {
-            return course;
-          }
-        });
+        const courseId = parseInt(courseIdParam);
+        
+        currentCourse = tmCourses.find((course: any) => course.id ===  courseId);
       } else {
         throw new Error("Something is wrong, No tmCourses");
       }

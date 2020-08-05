@@ -38,7 +38,7 @@ export default function SummaryScreen(props: IResultsScreenProps) {
 
   const getOverviewData = async () => {
     try {
-      const summaryData = await appState.formSDK.getSummary();
+      const summaryData = await appState.formSDK.getSummary(score , isSuccess);
 
       if (isValidSummaryData(summaryData)) {
         console.log("summaryData ", summaryData);
