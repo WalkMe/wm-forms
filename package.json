@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/WalkMe/wm-ui-template#readme",
   "dependencies": {
-    "@walkme/sdk": "^1.0.24-1",
+    "@walkme/sdk": "1.0.25",
     "file-loader": "^6.0.0",
     "pluralize": "^8.0.0",
     "react": "^16.13.1",
