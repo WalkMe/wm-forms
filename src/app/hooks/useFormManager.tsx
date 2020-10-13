@@ -3,6 +3,7 @@ import { IFormContext } from "../layout/screens/form-screen/FormScreen";
 import { ISelectInput } from "../components/inputs/input.interface";
 import { IFormAnswerBE, QuestionType } from "../interfaces/form/form.interface";
 import { Icon, IconType } from "./useIconManager";
+import { config } from "../config";
 
 export default function useFormManager(
   props: IFormContext
@@ -26,6 +27,7 @@ export default function useFormManager(
     currentQuestion,
     loading,
   } = props;
+  const { showUnselectedResultsOnSubmit } = config;
 
   const isCorrectAnswers = () => {
     const correctAnswers = currentQuestion.answers.filter(
@@ -75,26 +77,27 @@ export default function useFormManager(
   }): ISelectInput => {
     const isSingleSelect = type === QuestionType.SingleSelect;
     const optionId = `option-${index}`;
-    let selectedResultsClass = "unselected";
+    let iconType;
+    let className = "unselected";
     const isSelected = selectedIndexes.indexOf(index) > -1;
-    const resultsIcon = option.isCorrect ? Icon.Success : Icon.Error;
+    const iconStatus = option.isCorrect ? Icon.Success : Icon.Error;
 
     if (submitted) {
-      selectedResultsClass = isSelected
-        ? resultsIcon
-        : `unselected-${resultsIcon}`;
+      const unselectedClassName = showUnselectedResultsOnSubmit ? `unselected-${iconStatus}` : '';
+      className = isSelected ? iconStatus : unselectedClassName;
+      iconType = showUnselectedResultsOnSubmit ? iconStatus : isSelected && iconStatus;
     }
 
     return {
       id: optionId,
       value: option.text,
       checked: isSelected,
-      className: selectedResultsClass,
+      className,
       disabled: submitted,
       name: isSingleSelect
         ? `question-${currentRouteId}`
         : `question-${currentRouteId}-${index}`,
-      iconType: submitted && resultsIcon,
+      iconType,
     };
   };
 
