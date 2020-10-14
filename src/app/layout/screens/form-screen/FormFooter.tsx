@@ -12,7 +12,7 @@ import { AppAnimation } from "../../../interfaces/walkme-app/walkmeApp.interface
 import { config } from "../../../config";
 
 interface IFormFooterProps {
-	onSubmitted: () => void;
+	onSubmitted: (CTATargetLink: string) => void;
 	animationConfig: IScreenAnimationConfig;
 }
 
@@ -26,7 +26,7 @@ export default function FormFooter({
 	const formFooter = useRef<HTMLDivElement>(null);
 	const formCTA = useRef<HTMLDivElement>(null);
 	const { onSubmitted, animationConfig } = props;
-	const { showExplanationOnSubmit } = config;
+	const { showExplanationOnSubmit, showResultsOnSubmit } = config;
 	const {
 		selectedAnswers,
 		submitted,
@@ -71,12 +71,14 @@ export default function FormFooter({
 		<footer ref={formFooter} className="form-footer">
 			{submitted ? (
 				<>
-					<RouteButton
-						linkTo={formCTATargetLink}
-						id="form-action"
-						buttonType={ButtonType.Default}
-						label={formCTALabel}
-					/>
+					{showResultsOnSubmit && (
+						<RouteButton
+							linkTo={formCTATargetLink}
+							id="form-action"
+							buttonType={ButtonType.Default}
+							label={formCTALabel}
+						/>
+					)}
 					{showExplanationOnSubmit && explanation && (
 						<MessageContainer
 							className="explanation"
@@ -93,11 +95,15 @@ export default function FormFooter({
 				<Button
 					id="form-submit"
 					tmButtonType={ButtonType.Default}
-					buttonClicked={onSubmitted}
+					buttonClicked={() =>
+						onSubmitted(!showResultsOnSubmit && formCTATargetLink)
+					}
 					disabled={!Boolean(selectedAnswers.length)}
 					loading={loading}
 				>
-					<span className="btn-label">Submit</span>
+					<span className="btn-label">
+						{config.showResultsOnSubmit ? "Submit" : "Next"}
+					</span>
 				</Button>
 			)}
 		</footer>

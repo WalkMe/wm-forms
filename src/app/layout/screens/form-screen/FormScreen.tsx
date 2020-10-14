@@ -93,9 +93,9 @@ export default function FormScreen(props?: IFormScreenProps) {
 		return selectedAnswers.map((selected) => selected.id);
 	};
 
-	const handleSubmitted = () => {
+	const handleSubmitted = (CTATargetLink?: string) => {
 		appState.formSDK.submit(currentQuestion.id, getSelectedAnswersId());
-
+		console.log("CTATargetLink ", CTATargetLink);
 		/**
 		 * fake loading button
 		 * Preparation for future asynchronous behavior
@@ -104,6 +104,7 @@ export default function FormScreen(props?: IFormScreenProps) {
 		setTimeout(() => {
 			setSubmitted(true);
 			setLoading(false);
+			CTATargetLink && routeHistory.push(CTATargetLink);
 		}, 500);
 	};
 
@@ -166,7 +167,8 @@ export default function FormScreen(props?: IFormScreenProps) {
 				<FormFooter
 					formContext={formData}
 					props={{
-						onSubmitted: handleSubmitted,
+						onSubmitted: (CTATargetLink?: string) =>
+							handleSubmitted(CTATargetLink),
 						animationConfig: formAnimationConfig,
 					}}
 				/>
