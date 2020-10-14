@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import MasterScreen from "../master-screen/MasterScreen";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import { AppContext } from "../../../App";
 import {
 	IFormQuestionBE,
@@ -54,7 +54,6 @@ export default function FormScreen(props?: IFormScreenProps) {
 		data: { questions },
 	} = appState.formSDK;
 	const { successConfetti, showResultsOnSubmit } = config;
-	const routeHistory = useHistory();
 	const { id, score } = props.match.params;
 	const [selectedAnswers, setSelectedAnswers] = useState([] as IFormAnswerBE[]);
 	const [submitted, setSubmitted] = useState(false);
@@ -93,9 +92,9 @@ export default function FormScreen(props?: IFormScreenProps) {
 		return selectedAnswers.map((selected) => selected.id);
 	};
 
-	const handleSubmitted = (CTATargetLink?: string) => {
+	const handleSubmitted = () => {
 		appState.formSDK.submit(currentQuestion.id, getSelectedAnswersId());
-		console.log("CTATargetLink ", CTATargetLink);
+
 		/**
 		 * fake loading button
 		 * Preparation for future asynchronous behavior
@@ -104,7 +103,6 @@ export default function FormScreen(props?: IFormScreenProps) {
 		setTimeout(() => {
 			setSubmitted(true);
 			setLoading(false);
-			CTATargetLink && routeHistory.push(CTATargetLink);
 		}, 500);
 	};
 
@@ -167,8 +165,7 @@ export default function FormScreen(props?: IFormScreenProps) {
 				<FormFooter
 					formContext={formData}
 					props={{
-						onSubmitted: (CTATargetLink?: string) =>
-							handleSubmitted(CTATargetLink),
+						onSubmitted: handleSubmitted,
 						animationConfig: formAnimationConfig,
 					}}
 				/>

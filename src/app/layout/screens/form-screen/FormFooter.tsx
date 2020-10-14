@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import { IFormContext } from "./FormScreen";
 import { IScreenAnimationConfig } from "../master-screen/MasterScreen";
@@ -23,6 +24,8 @@ export default function FormFooter({
 	props: IFormFooterProps;
 	formContext: IFormContext;
 }) {
+	const routeHistory = useHistory();
+
 	const formFooter = useRef<HTMLDivElement>(null);
 	const formCTA = useRef<HTMLDivElement>(null);
 	const { onSubmitted, animationConfig } = props;
@@ -55,6 +58,8 @@ export default function FormFooter({
 				remove: true,
 			});
 		}
+
+		submitted && !showResultsOnSubmit && routeHistory.push(formCTATargetLink);
 	}, [submitted]);
 
 	useEffect(() => {
@@ -95,9 +100,7 @@ export default function FormFooter({
 				<Button
 					id="form-submit"
 					tmButtonType={ButtonType.Default}
-					buttonClicked={() =>
-						onSubmitted(!showResultsOnSubmit && formCTATargetLink)
-					}
+					buttonClicked={onSubmitted}
 					disabled={!Boolean(selectedAnswers.length)}
 					loading={loading}
 				>
