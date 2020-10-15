@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 
 import { ScreenType } from "../../../interfaces/screen/screen.interface";
 import MasterScreen from "../master-screen/MasterScreen";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import { AppContext } from "../../../App";
 import {
 	IFormQuestionBE,
@@ -55,7 +55,7 @@ export default function FormScreen(props?: IFormScreenProps) {
 	const {
 		data: { questions },
 	} = appState.formSDK;
-	const routeHistory = useHistory();
+	const { successConfetti, showResultsOnSubmit } = config;
 	const { id, score } = props.match.params;
 	const [selectedAnswers, setSelectedAnswers] = useState([] as IFormAnswerBE[]);
 	const [submitted, setSubmitted] = useState(false);
@@ -149,7 +149,7 @@ export default function FormScreen(props?: IFormScreenProps) {
 			scrollForwardedRef={scrollRef}
 		>
 			<>
-				{config.successConfetti && (
+				{showResultsOnSubmit && successConfetti && (
 					<div className="confetti-container">
 						<Confetti
 							active={submitted && isCorrectAnswers()}

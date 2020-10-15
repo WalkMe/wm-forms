@@ -10,9 +10,7 @@ import FormProperties from "../../../components/form-properties/FormProperties";
 import PropertyLabel from "../../../components/property-label/PropertyLabel";
 import Button, { ButtonType } from "../../../components/buttons/Button";
 import SummaryOverviewScreen from "../summary-overview-screen/SummaryOverviewScreen";
-import useSummaryManager, {
-	fakeSummary,
-} from "../../../hooks/useSummaryManager";
+import useSummaryManager from "../../../hooks/useSummaryManager";
 import useRedirect from "../../../hooks/useRedirect";
 
 type SummaryParams = { score: string };
@@ -45,9 +43,6 @@ export default function SummaryScreen(props: IResultsScreenProps) {
 			if (isValidSummaryData(summaryData)) {
 				console.log("summaryData ", summaryData);
 				setOverviewData(summaryData);
-			} else {
-				console.log("fakeSummary ", fakeSummary);
-				setOverviewData(fakeSummary);
 			}
 		} catch (error) {
 			console.error(error);
@@ -89,7 +84,7 @@ export default function SummaryScreen(props: IResultsScreenProps) {
 						</>
 					</PropertyLabel>
 					<FormProperties config={{ passmark: true, questions: true }} />
-					{showSummary && (
+					{showSummary && overviewData && (
 						<Button
 							className="overview-cta"
 							id="overview-button"
@@ -103,7 +98,7 @@ export default function SummaryScreen(props: IResultsScreenProps) {
 					)}
 				</>
 			</MasterScreen>
-			{showSummary && (
+			{showSummary && overviewData && (
 				<SummaryOverviewScreen
 					isVisible={isOverviewVisible}
 					onClose={() => {
