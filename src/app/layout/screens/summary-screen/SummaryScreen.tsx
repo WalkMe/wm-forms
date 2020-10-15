@@ -10,9 +10,8 @@ import FormProperties from "../../../components/form-properties/FormProperties";
 import PropertyLabel from "../../../components/property-label/PropertyLabel";
 import Button, { ButtonType } from "../../../components/buttons/Button";
 import SummaryOverviewScreen from "../summary-overview-screen/SummaryOverviewScreen";
-import useSummaryManager, {
-	fakeSummary,
-} from "../../../hooks/useSummaryManager";
+import useSummaryManager from "../../../hooks/useSummaryManager";
+import useRedirect from "../../../hooks/useRedirect";
 
 type SummaryParams = { score: string };
 
@@ -20,6 +19,7 @@ export interface IResultsScreenProps
 	extends RouteComponentProps<SummaryParams> {}
 
 export default function SummaryScreen(props: IResultsScreenProps) {
+	useRedirect();
 	const { appState, setAppState } = useContext(AppContext);
 	const { isValidSummaryData } = useSummaryManager();
 	const {

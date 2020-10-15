@@ -15,6 +15,7 @@ import Form from "./Form";
 import useFormManager from "../../../hooks/useFormManager";
 import Confetti from "react-dom-confetti";
 import { config } from "../../../config";
+import useRedirect from "../../../hooks/useRedirect";
 
 type FormParams = { id: string; score: string };
 
@@ -49,6 +50,7 @@ const confettiConfig = {
 };
 
 export default function FormScreen(props?: IFormScreenProps) {
+	useRedirect();
 	const { appState, setAppState } = useContext(AppContext);
 	const {
 		data: { questions },
