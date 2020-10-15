@@ -9,6 +9,7 @@ import {
 
 import useViewManager from "../../../hooks/useViewManager";
 import { AppAnimation } from "../../../interfaces/walkme-app/walkmeApp.interface";
+import useLogger from "../../../hooks/useLogger";
 
 export default function InformationScreen(props: IInformationScreenData) {
   const { type, error } = props;
@@ -21,6 +22,7 @@ export default function InformationScreen(props: IInformationScreenData) {
   } = localization;
 
   const { animateCoreElements } = useViewManager();
+  const { logError } = useLogger();
 
   useEffect(() => {
     animateCoreElements({
@@ -31,9 +33,9 @@ export default function InformationScreen(props: IInformationScreenData) {
 
     if (type === InformationScreenType.Error) {
       if (error) {
-        console.error(error);
+        logError(error);
       } else {
-        console.error(defaultErrorMassage);
+        logError(defaultErrorMassage);
       }
     }
   }, [type]);
