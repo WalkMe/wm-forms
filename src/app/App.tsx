@@ -26,6 +26,7 @@ import FormScreen from "./layout/screens/form-screen/FormScreen";
 
 import "../styles/index.less";
 import FooterProgressBar from "./layout/footer-progress-bar/FooterProgressBar";
+import useLogger from "./hooks/useLogger";
 
 declare global {
 	interface Window {
@@ -49,6 +50,7 @@ export default function App() {
 	const [informationScreen, setInformationScreen] = useState({
 		type: InformationScreenType.Loading,
 	} as IInformationScreenData);
+	const { log } = useLogger();
 
 	const displayDebugInfo = () => {
 		setAppState((prevAppState) => {
@@ -65,7 +67,7 @@ export default function App() {
 
 		try {
 			await walkme.init();
-			console.log("WalkMe ready =>", walkme);
+			log("WalkMe ready =>", walkme);
 
 			// set walkme global
 			window.walkme = walkme;
@@ -89,7 +91,7 @@ export default function App() {
 			let currentCourse = null;
 
 			if (tmCourses) {
-				console.log("tmCourses =>", tmCourses);
+				log("tmCourses =>", tmCourses);
 				const courseId = parseInt(courseIdParam);
 
 				currentCourse = tmCourses.find((course: any) => course.id === courseId);
@@ -100,8 +102,8 @@ export default function App() {
 			const formSDK = await teachmeApp.getQuiz(currentCourse.quiz.id);
 
 			if (currentCourse && currentCourse.quiz && formSDK) {
-				console.log("currentCourse ", currentCourse);
-				console.log("quiz ", formSDK);
+				log("currentCourse ", currentCourse);
+				log("quiz ", formSDK);
 			} else {
 				throw new Error("Something is wrong, No Quiz");
 			}

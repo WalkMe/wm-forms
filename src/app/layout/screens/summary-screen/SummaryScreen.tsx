@@ -12,6 +12,7 @@ import Button, { ButtonType } from "../../../components/buttons/Button";
 import SummaryOverviewScreen from "../summary-overview-screen/SummaryOverviewScreen";
 import useSummaryManager from "../../../hooks/useSummaryManager";
 import useRedirect from "../../../hooks/useRedirect";
+import useLogger from "../../../hooks/useLogger";
 
 type SummaryParams = { score: string };
 
@@ -30,6 +31,7 @@ export default function SummaryScreen(props: IResultsScreenProps) {
 	const { passmark, showSummary } = properties;
 	const [isOverviewVisible, setIsOverviewVisible] = useState(false);
 	const [overviewData, setOverviewData] = useState(null);
+	const { log, logError } = useLogger();
 	const score = parseInt(props.match.params.score);
 	const { overviewButtonLabel } = localization;
 	const isSuccess = score >= passmark;
@@ -41,11 +43,11 @@ export default function SummaryScreen(props: IResultsScreenProps) {
 			const summaryData = await appState.formSDK.getSummary(score, isSuccess);
 
 			if (isValidSummaryData(summaryData)) {
-				console.log("summaryData ", summaryData);
+				log("summaryData ", summaryData);
 				setOverviewData(summaryData);
 			}
 		} catch (error) {
-			console.error(error);
+			logError(error);
 		}
 	};
 

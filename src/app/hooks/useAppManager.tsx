@@ -1,7 +1,10 @@
 import React from "react";
 import { config } from "../config";
+import useLogger from "./useLogger";
 
 export default function useAppManager() {
+  const { log } = useLogger();
+
   const getUrlParamValueByName = (name: string) => {
     const searchUrlParam = new URLSearchParams(location.search);
     return searchUrlParam.get(name);
@@ -13,7 +16,7 @@ export default function useAppManager() {
    */
   const addGuidSpecificStyle = () => {
     const guid = getUrlParamValueByName("guid");
-    console.log("addGuidSpecificStyle guid => ", guid);
+    log("addGuidSpecificStyle guid => ", guid);
     // if (guid) {
     //   const cssSrc = `styles/${guid}/main.css`;
     //   const link = document.createElement("link");
