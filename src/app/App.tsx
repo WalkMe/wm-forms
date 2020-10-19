@@ -8,13 +8,13 @@ import { defaultInitialAppState } from "./consts/app";
 import { config } from "./config";
 
 import {
-  InformationScreenType,
-  IInformationScreenData,
+	InformationScreenType,
+	IInformationScreenData,
 } from "./interfaces/information-screen/informationScreen.interface";
 import {
-  IAppContext,
-  IAppState,
-  AppAnimation,
+	IAppContext,
+	IAppState,
+	AppAnimation,
 } from "./interfaces/walkme-app/walkmeApp.interface";
 
 import useAppManager from "./hooks/useAppManager";
@@ -26,168 +26,170 @@ import FormScreen from "./layout/screens/form-screen/FormScreen";
 
 import "../styles/index.less";
 import FooterProgressBar from "./layout/footer-progress-bar/FooterProgressBar";
+import useLogger from "./hooks/useLogger";
 
 declare global {
-  interface Window {
-    walkme: any;
-    teachme: any;
-  }
+	interface Window {
+		walkme: any;
+		teachme: any;
+	}
 }
 
 export const AppContext = createContext<IAppContext | null>(null);
 
 export default function App() {
-  const {
-    addGuidSpecificStyle,
-    getDebugError,
-    getUrlParamValueByName,
-  } = useAppManager();
+	const {
+		addGuidSpecificStyle,
+		getDebugError,
+		getUrlParamValueByName,
+	} = useAppManager();
 
-  const [walkmeSDK, setWalkmeSDK] = useState({} as ISdk);
-  const [appState, setAppState] = useState(defaultInitialAppState as IAppState);
-  const { initiated } = appState;
-  const [informationScreen, setInformationScreen] = useState({
-    type: InformationScreenType.Loading,
-  } as IInformationScreenData);
+	const [walkmeSDK, setWalkmeSDK] = useState({} as ISdk);
+	const [appState, setAppState] = useState(defaultInitialAppState as IAppState);
+	const { initiated } = appState;
+	const [informationScreen, setInformationScreen] = useState({
+		type: InformationScreenType.Loading,
+	} as IInformationScreenData);
+	const { log } = useLogger();
 
-  const displayDebugInfo = () => {
-    setAppState((prevAppState) => {
-      return {
-        ...prevAppState,
-        debugError: getDebugError(),
-      };
-    });
-  };
+	const displayDebugInfo = () => {
+		setAppState((prevAppState) => {
+			return {
+				...prevAppState,
+				debugError: getDebugError(),
+			};
+		});
+	};
 
-  const setSDK = async () => {
-    const platformTypeParam = getUrlParamValueByName("platform");
-    const courseIdParam = getUrlParamValueByName("courseId");
+	const setSDK = async () => {
+		const platformTypeParam = getUrlParamValueByName("platform");
+		const courseIdParam = getUrlParamValueByName("courseId");
 
-    try {
-      await walkme.init();
-      console.log("WalkMe ready =>", walkme);
+		try {
+			await walkme.init();
+			log("WalkMe ready =>", walkme);
 
-      // set walkme global
-      window.walkme = walkme;
+			// set walkme global
+			window.walkme = walkme;
 
-      // Walkme Guard
-      if (walkme) {
-        setWalkmeSDK(walkme);
-      }
+			// Walkme Guard
+			if (walkme) {
+				setWalkmeSDK(walkme);
+			}
 
-      const teachmeApp = await walkme.apps.getApp("teachme");
+			const teachmeApp = await walkme.apps.getApp("teachme");
 
-      // teachmeApp Guard
-      if (!teachmeApp) {
-        throw new Error("Something is wrong, No teachmeApp");
-      }
+			// teachmeApp Guard
+			if (!teachmeApp) {
+				throw new Error("Something is wrong, No teachmeApp");
+			}
 
-      // set teachme global
-      window.teachme = teachmeApp;
-      const tmCourses = await teachmeApp.getContent();
+			// set teachme global
+			window.teachme = teachmeApp;
+			const tmCourses = await teachmeApp.getContent();
 
-      let currentCourse = null;
+			let currentCourse = null;
 
-      if (tmCourses) {
-        console.log("tmCourses =>", tmCourses);
-        const courseId = parseInt(courseIdParam);
-        
-        currentCourse = tmCourses.find((course: any) => course.id ===  courseId);
-      } else {
-        throw new Error("Something is wrong, No tmCourses");
-      }
+			if (tmCourses) {
+				log("tmCourses =>", tmCourses);
+				const courseId = parseInt(courseIdParam);
 
-      const formSDK = await teachmeApp.getQuiz(currentCourse.quiz.id);
+				currentCourse = tmCourses.find((course: any) => course.id === courseId);
+			} else {
+				throw new Error("Something is wrong, No tmCourses");
+			}
 
-      if (currentCourse && currentCourse.quiz && formSDK) {
-        console.log("currentCourse ", currentCourse);
-        console.log("quiz ", formSDK);
-      } else {
-        throw new Error("Something is wrong, No Quiz");
-      }
+			const formSDK = await teachmeApp.getQuiz(currentCourse.quiz.id);
 
-      setAppState({
-        ...appState,
-        initiated: true,
-        platformType: platformTypeParam,
-        formSDK,
-      });
-    } catch (err) {
-      if (Boolean(err)) {
-        setTimeout(() => {
-          setInformationScreen((prev) => {
-            return {
-              ...prev,
-              type: InformationScreenType.Error,
-              error: err,
-            };
-          });
-        }, 300);
-      }
-    }
-  };
+			if (currentCourse && currentCourse.quiz && formSDK) {
+				log("currentCourse ", currentCourse);
+				log("quiz ", formSDK);
+			} else {
+				throw new Error("Something is wrong, No Quiz");
+			}
 
-  /**
-   * Initiate SDK
-   */
-  useEffect(() => {
-    setSDK();
-  }, []);
+			setAppState({
+				...appState,
+				initiated: true,
+				platformType: platformTypeParam,
+				formSDK,
+			});
+		} catch (err) {
+			if (Boolean(err)) {
+				setTimeout(() => {
+					setInformationScreen((prev) => {
+						return {
+							...prev,
+							type: InformationScreenType.Error,
+							error: err,
+						};
+					});
+				}, 300);
+			}
+		}
+	};
 
-  /**
-   * Calls to app method after app state initiated
-   */
-  useEffect(() => {
-    if (initiated) {
-      if (config.debug) displayDebugInfo();
-      addGuidSpecificStyle();
-      setInformationScreen(null as IInformationScreenData);
-    }
-  }, [initiated]);
+	/**
+	 * Initiate SDK
+	 */
+	useEffect(() => {
+		setSDK();
+	}, []);
 
-  return (
-    <div className={`app show wrapper`}>
-      {informationScreen ? (
-        <InformationScreen {...informationScreen} />
-      ) : (
-        <HashRouter>
-          <Route
-            render={({ location }) => (
-              <AppContext.Provider
-                value={{
-                  walkmeSDK,
-                  appState,
-                  setAppState,
-                }}
-              >
-                <Debug />
-                <TransitionGroup className="page-transition-group">
-                  <CSSTransition
-                    key={location.pathname}
-                    timeout={300}
-                    classNames={AppAnimation.FadeInLeft}
-                  >
-                    <>
-                      <Switch location={location}>
-                        <Route exact path="/" component={WelcomeScreen} />
-                        <Route
-                          path="/form/:id/:score?"
-                          component={FormScreen}
-                        />
-                        <Route
-                          path="/summary/:score?"
-                          component={SummaryScreen}
-                        />
-                      </Switch>
-                      <FooterProgressBar />
-                    </>
-                  </CSSTransition>
-                </TransitionGroup>
-              </AppContext.Provider>
-            )}
-          />
-        </HashRouter>
-      )}
-    </div>
-  );
+	/**
+	 * Calls to app method after app state initiated
+	 */
+	useEffect(() => {
+		if (initiated) {
+			if (config.debug) displayDebugInfo();
+			addGuidSpecificStyle();
+			setInformationScreen(null as IInformationScreenData);
+		}
+	}, [initiated]);
+
+	return (
+		<div className={`app show wrapper`}>
+			{informationScreen ? (
+				<InformationScreen {...informationScreen} />
+			) : (
+				<HashRouter>
+					<Route
+						render={({ location }) => (
+							<AppContext.Provider
+								value={{
+									walkmeSDK,
+									appState,
+									setAppState,
+								}}
+							>
+								<Debug />
+								<TransitionGroup className="page-transition-group">
+									<CSSTransition
+										key={location.pathname}
+										timeout={300}
+										classNames={AppAnimation.FadeInLeft}
+									>
+										<>
+											<Switch location={location}>
+												<Route exact path="/" component={WelcomeScreen} />
+												<Route
+													path="/form/:id/:score?"
+													component={FormScreen}
+												/>
+												<Route
+													path="/summary/:score?"
+													component={SummaryScreen}
+												/>
+											</Switch>
+											<FooterProgressBar />
+										</>
+									</CSSTransition>
+								</TransitionGroup>
+							</AppContext.Provider>
+						)}
+					/>
+				</HashRouter>
+			)}
+		</div>
+	);
 }
