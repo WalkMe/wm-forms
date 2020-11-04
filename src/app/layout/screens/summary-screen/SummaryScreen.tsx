@@ -38,9 +38,11 @@ export default function SummaryScreen(props: IResultsScreenProps) {
 	const screen = isSuccess ? successScreen : failScreen;
 	const summaryClassName = isSuccess ? "success" : "fail";
 
+	const quizSubmitted = async()=> await appState.formSDK.quizSubmitted(score, isSuccess);
+	
 	const getOverviewData = async () => {
 		try {
-			const summaryData = await appState.formSDK.getSummary(score, isSuccess);
+			const summaryData = await appState.formSDK.getSummary();
 
 			if (isValidSummaryData(summaryData)) {
 				log("summaryData ", summaryData);
@@ -52,6 +54,8 @@ export default function SummaryScreen(props: IResultsScreenProps) {
 	};
 
 	useEffect(() => {
+		quizSubmitted();
+
 		if (showSummary) {
 			getOverviewData();
 		}
