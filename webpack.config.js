@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ZipPlugin = require('zip-webpack-plugin');
 const package = require('./package.json');
 
-module.exports = env => ({
+module.exports = (env, options) => ({
   mode: "development",
   entry: path.resolve(__dirname, "src", "index.ts"),
   output: {
@@ -59,5 +59,5 @@ module.exports = env => ({
   // add a custom index.html as the template
   plugins: [
     new HtmlWebpackPlugin({ template: path.resolve(__dirname, "src", "index.html") })]
-    .concat(env === "prod" ? new ZipPlugin({ filename: package.name + '.bundle.zip' }) : []),
+    .concat(options && options.mode === 'production' ? new ZipPlugin({ filename: package.name + '.bundle.zip' }) : []),
 });
