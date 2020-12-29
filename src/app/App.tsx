@@ -108,6 +108,12 @@ export default function App() {
 				throw new Error("Something is wrong, No Quiz");
 			}
 
+			// set global config:
+			config.showResultsOnSubmit = formSDK.data.properties.revealChosenAnswer;
+			config.showUnselectedResultsOnSubmit =
+				formSDK.data.properties.revealCorrectAnswers;
+			config.showExplanationOnSubmit = formSDK.data.properties.showExplanation;
+
 			setAppState({
 				...appState,
 				initiated: true,
