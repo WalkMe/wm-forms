@@ -104,15 +104,18 @@ export default function App() {
 			if (currentCourse && currentCourse.quiz && formSDK) {
 				log("currentCourse ", currentCourse);
 				log("quiz ", formSDK);
+
+				// set global config
+				// TODO: rename config's properties
+				config.showResultsOnSubmit =
+					formSDK.data.properties.revealChosenAnswer === "True";
+				config.showUnselectedResultsOnSubmit =
+					formSDK.data.properties.revealCorrectAnswers === "True";
+				config.showExplanationOnSubmit =
+					formSDK.data.properties.showExplanation === "True";
 			} else {
 				throw new Error("Something is wrong, No Quiz");
 			}
-
-			// set global config:
-			config.showResultsOnSubmit = formSDK.data.properties.revealChosenAnswer;
-			config.showUnselectedResultsOnSubmit =
-				formSDK.data.properties.revealCorrectAnswers;
-			config.showExplanationOnSubmit = formSDK.data.properties.showExplanation;
 
 			setAppState({
 				...appState,
