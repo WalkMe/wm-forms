@@ -57,7 +57,6 @@ export default function FormScreen(props?: IFormScreenProps) {
 	} = appState.formSDK;
 	const { successConfetti, showResultsOnSubmit } = config;
 	const { id, score } = props.match.params;
-	console.log();
 	const [selectedAnswers, setSelectedAnswers] = useState([] as IFormAnswerBE[]);
 	const [submitted, setSubmitted] = useState(false);
 	const [loading, setLoading] = useState(false);
