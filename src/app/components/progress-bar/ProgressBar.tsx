@@ -42,7 +42,7 @@ export default function ProgressBar({
 				)}
 				{showPercentages && (
 					<span className="percentages">
-						{progressValue ? progressValue.toFixed(2) : 0}%
+						{progressValue ? Math.round(progressValue) : 0}%
 					</span>
 				)}
 			</div>

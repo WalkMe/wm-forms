@@ -32,7 +32,7 @@ export default function SummaryScreen(props: IResultsScreenProps) {
 	const [isOverviewVisible, setIsOverviewVisible] = useState(false);
 	const [overviewData, setOverviewData] = useState(null);
 	const { log, logError } = useLogger();
-	const score = parseFloat(props.match.params.score);
+	const score = Math.round(Number(props.match.params.score));
 	const { overviewButtonLabel } = localization;
 	const isSuccess = score >= passmark;
 	const screen = isSuccess ? successScreen : failScreen;
@@ -86,7 +86,7 @@ export default function SummaryScreen(props: IResultsScreenProps) {
 						<>
 							<span className="label">Score: </span>
 							<span className="text">
-								<span className="score"> {score.toFixed(2)} </span> / {passmark}
+								<span className="score"> {score} </span> / {passmark}
 							</span>
 						</>
 					</PropertyLabel>
