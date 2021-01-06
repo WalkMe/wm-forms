@@ -106,13 +106,11 @@ export default function App() {
 				log("quiz ", formSDK);
 
 				// set global config
-				// TODO: rename config's properties
-				config.showResultsOnSubmit =
-					formSDK.data.properties.revealChosenAnswer === "True";
+				config.showResultsOnSubmit = formSDK.data.properties.revealChosenAnswer;
 				config.showUnselectedResultsOnSubmit =
-					formSDK.data.properties.revealCorrectAnswers === "True";
+					formSDK.data.properties.revealCorrectAnswers;
 				config.showExplanationOnSubmit =
-					formSDK.data.properties.showExplanation === "True";
+					formSDK.data.properties.showExplanation;
 			} else {
 				throw new Error("Something is wrong, No Quiz");
 			}
