@@ -104,6 +104,13 @@ export default function App() {
 			if (currentCourse && currentCourse.quiz && formSDK) {
 				log("currentCourse ", currentCourse);
 				log("quiz ", formSDK);
+
+				// set global config
+				config.showResultsOnSubmit = formSDK.data.properties.revealChosenAnswer;
+				config.showUnselectedResultsOnSubmit =
+					formSDK.data.properties.revealCorrectAnswers;
+				config.showExplanationOnSubmit =
+					formSDK.data.properties.showExplanation;
 			} else {
 				throw new Error("Something is wrong, No Quiz");
 			}

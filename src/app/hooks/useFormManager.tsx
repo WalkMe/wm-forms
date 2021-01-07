@@ -60,10 +60,10 @@ export default function useFormManager(
 		const scoring = 100 / questionsLength;
 
 		if (submitted && isCorrectAnswers()) {
-			return currentScore + scoring;
+			return Number((currentScore + scoring).toFixed(2));
 		}
 
-		return currentScore;
+		return Number(currentScore.toFixed(2));
 	};
 
 	const getInputData = ({

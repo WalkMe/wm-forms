@@ -65,7 +65,7 @@ export default function FormScreen(props?: IFormScreenProps) {
 	const currentRouteId = parseInt(id);
 	const currentIndex = currentRouteId - 1;
 	const currentQuestion = questions[currentIndex];
-	const currentScore = score ? parseInt(score) : 0;
+	const currentScore = score ? Number(score) : 0;
 
 	const formGlobals = {
 		currentRouteId,
