@@ -32,14 +32,15 @@ export default function SummaryScreen(props: IResultsScreenProps) {
 	const [isOverviewVisible, setIsOverviewVisible] = useState(false);
 	const [overviewData, setOverviewData] = useState(null);
 	const { log, logError } = useLogger();
-	const score = parseInt(props.match.params.score);
+	const score = Math.round(Number(props.match.params.score));
 	const { overviewButtonLabel } = localization;
 	const isSuccess = score >= passmark;
 	const screen = isSuccess ? successScreen : failScreen;
 	const summaryClassName = isSuccess ? "success" : "fail";
 
-	const quizSubmitted = async()=> await appState.formSDK.quizSubmitted(score, isSuccess);
-	
+	const quizSubmitted = async () =>
+		await appState.formSDK.quizSubmitted(score, isSuccess);
+
 	const getOverviewData = async () => {
 		try {
 			const summaryData = await appState.formSDK.getSummary();
