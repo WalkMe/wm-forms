@@ -1,0 +1,4 @@
+{     
+    "develop": ["qa"],
+    "master": ["prod", "euprod"]
+}
