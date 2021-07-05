@@ -6,7 +6,7 @@
 	},
 	"euprod": {
 		"bucket": "eu-prod.s3.maketutorial.com",
-		"cdn": "https://cdn.walkme.com",
+		"cdn": "https://eu-cdn.walkme.com",
 		"mode": "production"
 	},
 	"prod": {
